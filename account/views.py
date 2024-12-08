@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomerProfileForm, ProviderProfileForm
+from .models import ProviderProfile
 
 def index_temp(request):
     return render(request, "account/index_temp.html")
@@ -65,3 +68,12 @@ def provider_profile_create(request):
         
     return render(request, "account/providerprofile/form.html", {"form": form})
     
+
+class ProviderProfileListview(LoginRequiredMixin, ListView):
+    model = ProviderProfile
+    context_object_name = 'profiles'
+    template_name = "account/providerprofile/list.html"
+    
+    def get_queryset(self):
+        user = self.request.user
+        return self.model.objects.filter(user=user)

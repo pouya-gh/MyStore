@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}My Providers{% endblock title %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Official Name</th>
+        <th>Name</th>
+        <th>Social Code</th>
+        <th>Is verified?</th>
+    </tr>
+{% for provider in profiles %}
+<tr>
+    <td>{{ provider.official_name }}</td>
+    <td>{{ provider.name }}</td>
+    <td>{{ provider.social_code }}</td>
+    <td>{{ provider.is_verified }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock content %}
