@@ -16,5 +16,5 @@ def user_create(request):
     else:
         form = UserCreationForm()
         
-    return render(request, "account/user/create.html", {"form": form})
+    return render(request, "registration/signup.html", {"form": form})
     
