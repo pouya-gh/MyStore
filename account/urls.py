@@ -9,4 +9,5 @@ urlpatterns = [
     path("login/", view=LoginView.as_view(), name="login"),
     path("logout/", view=LogoutView.as_view(), name="logout"),
     path("profile/update", view=views.user_profile_create, name='cutomer_profile_set'),
+    path("providerprofile/create", view=views.provider_profile_create, name='provider_profile_create'),
 ]

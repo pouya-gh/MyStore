@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
-from .forms import CustomerProfileForm
+from .forms import CustomerProfileForm, ProviderProfileForm
 
 def index_temp(request):
     return render(request, "account/index_temp.html")
@@ -44,10 +43,25 @@ def user_profile_create(request):
             form = CustomerProfileForm(instance=user.profile)
         except ObjectDoesNotExist:
             form = CustomerProfileForm()
-        # if user.profile:
-        #     form = CustomerProfileForm(user.profile)
-        # else:
-        #     form = CustomerProfileForm()
         
     return render(request, "account/customerprofile/form.html", {"form": form})
+
+
+@login_required
+def provider_profile_create(request):
+    user = request.user
+    
+    if request.POST:
+        form = ProviderProfileForm(request.POST) 
+
+        if form.is_valid():
+            cd = form.cleaned_data
+            profile = form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect("account:index_temp")
+    else:
+        form = ProviderProfileForm()
+        
+    return render(request, "account/providerprofile/form.html", {"form": form})
     

@@ -5,6 +5,8 @@
     {% csrf_token %}
     <input type='submit' value="Logout"/>
 </form>
+<p><a href="{% url "account:cutomer_profile_set" %}">My Profile</a></p>
+<p><a href="{% url "account:provider_profile_create" %}">Register a provider</a></p>
 {% else %}
 <p><a href="{% url "account:login" %}">Login</a></p>
 <p><a href="{% url "account:signup" %}">Sing up</a></p>
