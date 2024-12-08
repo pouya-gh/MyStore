@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 
 def index_temp(request):
-    return HttpResponse("hello!")
+    return render(request, "account/index_temp.html")
 
 def user_create(request):
     if request.POST:

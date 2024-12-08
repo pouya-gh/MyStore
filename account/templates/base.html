@@ -1,0 +1,15 @@
+<title>{% block title %}My Store{% endblock  %}</title>
+
+{% if request.user.is_authenticated %}
+<form method="post" action="{% url "account:logout" %}">
+    {% csrf_token %}
+    <input type='submit' value="Logout"/>
+</form>
+{% else %}
+<p><a href="{% url "account:login" %}">Login</a></p>
+<p><a href="{% url "account:signup" %}">Sing up</a></p>
+{% endif %}
+<p>______________________________</p>
+{% block content %}
+
+{% endblock content %}
