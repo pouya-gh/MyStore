@@ -7,7 +7,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomerProfileForm, ProviderProfileForm
-from .models import ProviderProfile
+from .models import ProviderProfile, ProfileStatus
 
 def index_temp(request):
     return render(request, "account/index_temp.html")
@@ -84,6 +84,12 @@ class ProviderProfileUpdateView(ProviderProfileQuerySetMixin,
                                 UpdateView):
     form_class = ProviderProfileForm
     template_name = "account/providerprofile/form.html"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.status = ProfileStatus.PENDING
+        self.object.save()
+        return redirect(reverse("account:provider_profiles_list"))
     
     
 class ProviderProfileDeleteView(ProviderProfileQuerySetMixin,

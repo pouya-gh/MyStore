@@ -2,6 +2,11 @@ from django.db import models
 from django.conf import settings
 from django_countries.fields import CountryField
 
+class ProfileStatus(models.TextChoices):
+    VERIFIED = 'VF', 'Verified'
+    PENDING = 'PN', 'Verfication pending'
+    DECLINED = 'DC', 'Declined'
+
 class CustomerProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, 
                                 on_delete=models.CASCADE, 
@@ -15,7 +20,13 @@ class CustomerProfile(models.Model):
     address = models.CharField(max_length=300)
     phone_number = models.CharField(max_length=11)
     phone_number2 = models.CharField(max_length=11, null=True, blank=True)
-    is_verified = models.BooleanField(default=False)
+    status = models.CharField(max_length=2, choices=ProfileStatus.choices, default=ProfileStatus.PENDING)
+
+    class Meta:
+        ordering = ["user", "social_code"]
+        indexes = [
+            models.Index(fields=['social_code']), 
+            ]
 
     def __str__(self):
         return self.user.username
@@ -32,7 +43,14 @@ class ProviderProfile(models.Model):
     address = models.CharField(max_length=300)
     phone_number = models.CharField(max_length=11)
     phone_number2 = models.CharField(max_length=11, null=True, blank=True)
-    is_verified = models.BooleanField(default=False)
+    status = models.CharField(max_length=2, choices=ProfileStatus.choices, default=ProfileStatus.PENDING)
+
+    class Meta:
+        ordering = ["user", "official_name"]
+        indexes = [
+            models.Index(fields=['social_code']), 
+            models.Index(fields=['official_name']), 
+            ]
 
     def __str__(self):
         if self.name:

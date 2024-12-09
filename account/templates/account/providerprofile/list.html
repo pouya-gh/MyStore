@@ -17,7 +17,7 @@
     {% comment %} <td>{{ provider.official_name }}</td> {% endcomment %}
     {% comment %} <td>{{ provider.name }}</td> {% endcomment %}
     <td>{{ provider.social_code }}</td>
-    <td>{{ provider.is_verified }}</td>
+    <td>{{ provider.status }}</td>
     <td>
         <form action="{% url "account:provider_profile_delete" provider.id %}" method="post">
             {% csrf_token %}
