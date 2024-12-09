@@ -70,29 +70,25 @@ def provider_profile_create(request):
         
     return render(request, "account/providerprofile/form.html", {"form": form})
     
-
-class ProviderProfileListview(LoginRequiredMixin, ListView):
+class ProviderProfileQuerySetMixin:
     model = ProviderProfile
+    def get_queryset(self):
+        user = self.request.user
+        return self.model.objects.filter(user=user)
+
+class ProviderProfileListview(ProviderProfileQuerySetMixin,
+                              LoginRequiredMixin, 
+                              ListView):
     context_object_name = 'profiles'
     template_name = "account/providerprofile/list.html"
     
-    def get_queryset(self):
-        user = self.request.user
-        return self.model.objects.filter(user=user)
-    
-class ProviderProfileUpdateView(LoginRequiredMixin, UpdateView):
-    model = ProviderProfile
+class ProviderProfileUpdateView(ProviderProfileQuerySetMixin,
+                                LoginRequiredMixin, 
+                                UpdateView):
     form_class = ProviderProfileForm
     template_name = "account/providerprofile/form.html"
-
-    def get_queryset(self):
-        user = self.request.user
-        return self.model.objects.filter(user=user)
     
-class ProviderProfileDeleteView(LoginRequiredMixin, DeleteView):
-    model = ProviderProfile
+class ProviderProfileDeleteView(ProviderProfileQuerySetMixin,
+                                LoginRequiredMixin, 
+                                DeleteView):
     success_url = reverse_lazy("account:provider_profiles_list")
-
-    def get_queryset(self):
-        user = self.request.user
-        return self.model.objects.filter(user=user)
