@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.list import ListView
-from django.views.generic.edit import UpdateView, DeleteView
+from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomerProfileForm, ProviderProfileForm
 from .models import ProviderProfile
@@ -51,30 +51,26 @@ def user_profile_create(request):
         
     return render(request, "account/customerprofile/form.html", {"form": form})
 
-
-@login_required
-def provider_profile_create(request):
-    user = request.user
-    
-    if request.POST:
-        form = ProviderProfileForm(request.POST) 
-
-        if form.is_valid():
-            cd = form.cleaned_data
-            profile = form.save(commit=False)
-            profile.user = user
-            profile.save()
-            return redirect("account:index_temp")
-    else:
-        form = ProviderProfileForm()
-        
-    return render(request, "account/providerprofile/form.html", {"form": form})
     
 class ProviderProfileQuerySetMixin:
     model = ProviderProfile
     def get_queryset(self):
         user = self.request.user
         return self.model.objects.filter(user=user)
+    
+
+class ProviderProfileCreateView(ProviderProfileQuerySetMixin,
+                                LoginRequiredMixin,
+                                CreateView):
+    form_class = ProviderProfileForm
+    template_name = "account/providerprofile/form.html"
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return redirect(reverse("account:provider_profiles_list"))
+
 
 class ProviderProfileListview(ProviderProfileQuerySetMixin,
                               LoginRequiredMixin, 
@@ -82,11 +78,13 @@ class ProviderProfileListview(ProviderProfileQuerySetMixin,
     context_object_name = 'profiles'
     template_name = "account/providerprofile/list.html"
     
+
 class ProviderProfileUpdateView(ProviderProfileQuerySetMixin,
                                 LoginRequiredMixin, 
                                 UpdateView):
     form_class = ProviderProfileForm
     template_name = "account/providerprofile/form.html"
+    
     
 class ProviderProfileDeleteView(ProviderProfileQuerySetMixin,
                                 LoginRequiredMixin, 
