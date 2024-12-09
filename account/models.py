@@ -22,7 +22,7 @@ class CustomerProfile(models.Model):
 
 
 class ProviderProfile(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='provider')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='providers_list')
     official_name = models.CharField(max_length=100)
     name = models.CharField(max_length=100, null=True, blank=True)
     social_code = models.CharField(max_length=10, unique=True)
