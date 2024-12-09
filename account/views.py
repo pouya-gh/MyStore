@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomerProfileForm, ProviderProfileForm
 from .models import ProviderProfile
@@ -74,6 +76,23 @@ class ProviderProfileListview(LoginRequiredMixin, ListView):
     context_object_name = 'profiles'
     template_name = "account/providerprofile/list.html"
     
+    def get_queryset(self):
+        user = self.request.user
+        return self.model.objects.filter(user=user)
+    
+class ProviderProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = ProviderProfile
+    form_class = ProviderProfileForm
+    template_name = "account/providerprofile/form.html"
+
+    def get_queryset(self):
+        user = self.request.user
+        return self.model.objects.filter(user=user)
+    
+class ProviderProfileDeleteView(LoginRequiredMixin, DeleteView):
+    model = ProviderProfile
+    success_url = reverse_lazy("account:provider_profiles_list")
+
     def get_queryset(self):
         user = self.request.user
         return self.model.objects.filter(user=user)

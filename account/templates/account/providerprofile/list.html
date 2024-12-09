@@ -5,17 +5,25 @@
 {% block content %}
 <table>
     <tr>
-        <th>Official Name</th>
+        {% comment %} <th>Official Name</th> {% endcomment %}
         <th>Name</th>
         <th>Social Code</th>
         <th>Is verified?</th>
+        <th>Delete</th>
     </tr>
 {% for provider in profiles %}
 <tr>
-    <td>{{ provider.official_name }}</td>
-    <td>{{ provider.name }}</td>
+    <td><a href="{% url "account:provider_profile_update" provider.id %}">{{ provider }}</a></td>
+    {% comment %} <td>{{ provider.official_name }}</td> {% endcomment %}
+    {% comment %} <td>{{ provider.name }}</td> {% endcomment %}
     <td>{{ provider.social_code }}</td>
     <td>{{ provider.is_verified }}</td>
+    <td>
+        <form action="{% url "account:provider_profile_delete" provider.id %}" method="post">
+            {% csrf_token %}
+            <input type='submit' value='Delete'/>
+        </form>
+    </td>
 </tr>
 {% endfor %}
 </table>
