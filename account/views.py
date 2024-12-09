@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import CustomerProfileForm, ProviderProfileForm
+from .forms import CustomerProfileForm, ProviderProfileForm, MyUserChangeForm
 from .models import ProviderProfile, ProfileStatus
 
 def index_temp(request):
@@ -34,10 +34,12 @@ def user_profile_update(request):
             form = CustomerProfileForm(request.POST, instance=user.profile)
         except ObjectDoesNotExist:
             form = CustomerProfileForm(request.POST)
-            
+        auth_user_form = MyUserChangeForm(request.POST, instance=user)
 
-        if form.is_valid():
+        if form.is_valid() and auth_user_form.is_valid():
             cd = form.cleaned_data
+            cd2 = auth_user_form.cleaned_data
+            auth_user_form.save()
             profile = form.save(commit=False)
             if not profile.user_id:
                 profile.user = user
@@ -48,8 +50,10 @@ def user_profile_update(request):
             form = CustomerProfileForm(instance=user.profile)
         except ObjectDoesNotExist:
             form = CustomerProfileForm()
+        auth_user_form = MyUserChangeForm(instance=user)
         
-    return render(request, "account/customerprofile/form.html", {"form": form})
+    return render(request, "account/customerprofile/form.html", 
+                  {"form": form, "auth_user_form": auth_user_form})
 
     
 class ProviderProfileQuerySetMixin:
