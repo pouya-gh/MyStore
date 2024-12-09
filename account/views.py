@@ -26,7 +26,7 @@ def user_create(request):
     return render(request, "registration/signup.html", {"form": form})
 
 @login_required
-def user_profile_create(request):
+def user_profile_update(request):
     user = request.user
     
     if request.POST:
