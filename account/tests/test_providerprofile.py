@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import ProviderProfile, ProfileStatus
+from ..models import ProviderProfile, ProfileStatus
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 
@@ -19,9 +19,9 @@ class ProviderProfileTests(TestCase):
         
         
     def test_provider_profile_exists(self):
-        number_of_profile = ProviderProfile.objects.all().count()
+        number_of_profiles = ProviderProfile.objects.all().count()
 
-        self.assertEqual(number_of_profile, 1)
+        self.assertEqual(number_of_profiles, 1)
 
 
     def test_provider_profile_status_defaults_to_pending(self):
@@ -30,11 +30,10 @@ class ProviderProfileTests(TestCase):
         self.assertEqual(profile.status, ProfileStatus.PENDING)
 
 
-    def test_cant_create_provider_profile_withouth_social_code(self):
+    def test_cant_create_provider_profile_without_social_code(self):
         with self.assertRaises(IntegrityError):
             ProviderProfile.objects.create(user=self.user,
                                        official_name="official name",
-                                       social_code="1234567890",
                                        country="IR",
                                        province="province",
                                        city="city",
