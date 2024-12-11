@@ -9,8 +9,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CustomerProfileForm, ProviderProfileForm, MyUserChangeForm
 from .models import ProviderProfile, ProfileStatus
 
+
 def index_temp(request):
     return render(request, "account/index_temp.html")
+
 
 def user_create(request):
     if request.POST:
@@ -22,13 +24,14 @@ def user_create(request):
             return redirect("account:index_temp")
     else:
         form = UserCreationForm()
-        
+
     return render(request, "registration/signup.html", {"form": form})
+
 
 @login_required
 def user_profile_update(request):
     user = request.user
-    
+
     if request.POST:
         try:
             form = CustomerProfileForm(request.POST, instance=user.profile)
@@ -51,17 +54,18 @@ def user_profile_update(request):
         except ObjectDoesNotExist:
             form = CustomerProfileForm()
         auth_user_form = MyUserChangeForm(instance=user)
-        
-    return render(request, "account/customerprofile/form.html", 
+
+    return render(request, "account/customerprofile/form.html",
                   {"form": form, "auth_user_form": auth_user_form})
 
-    
+
 class ProviderProfileQuerySetMixin:
     model = ProviderProfile
+
     def get_queryset(self):
         user = self.request.user
         return self.model.objects.filter(user=user)
-    
+
 
 class ProviderProfileCreateView(ProviderProfileQuerySetMixin,
                                 LoginRequiredMixin,
@@ -77,14 +81,14 @@ class ProviderProfileCreateView(ProviderProfileQuerySetMixin,
 
 
 class ProviderProfileListview(ProviderProfileQuerySetMixin,
-                              LoginRequiredMixin, 
+                              LoginRequiredMixin,
                               ListView):
     context_object_name = 'profiles'
     template_name = "account/providerprofile/list.html"
-    
+
 
 class ProviderProfileUpdateView(ProviderProfileQuerySetMixin,
-                                LoginRequiredMixin, 
+                                LoginRequiredMixin,
                                 UpdateView):
     form_class = ProviderProfileForm
     template_name = "account/providerprofile/form.html"
@@ -94,9 +98,9 @@ class ProviderProfileUpdateView(ProviderProfileQuerySetMixin,
         self.object.status = ProfileStatus.PENDING
         self.object.save()
         return redirect(reverse("account:provider_profiles_list"))
-    
-    
+
+
 class ProviderProfileDeleteView(ProviderProfileQuerySetMixin,
-                                LoginRequiredMixin, 
+                                LoginRequiredMixin,
                                 DeleteView):
     success_url = reverse_lazy("account:provider_profiles_list")
