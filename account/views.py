@@ -19,7 +19,7 @@ def user_create(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            user = form.save(commit=False)
+            form.save()
 
             return redirect("account:index_temp")
     else:
