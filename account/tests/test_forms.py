@@ -1,6 +1,7 @@
 from django.test import TestCase
 from ..forms import MyUserChangeForm
 
+
 class FormsTests(TestCase):
     def test_myuserchangeform_has_correct_fields(self):
         form = MyUserChangeForm()
