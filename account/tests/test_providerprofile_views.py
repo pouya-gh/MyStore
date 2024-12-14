@@ -49,7 +49,7 @@ class ProviderProfileCreateViewsTests(TestCase):
         response = self.client.post(
             reverse("account:provider_profile_create"), data=self.valid_provider_form_data)
         final_profile_count = ProviderProfile.objects.all().count()
-        self.assertRedirects(response, "/providerprofile/list")
+        self.assertRedirects(response, "/myproviderprofiles")
         self.assertEqual(initial_profile_count, 0)
         self.assertEqual(final_profile_count, 1)
 

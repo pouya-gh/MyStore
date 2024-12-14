@@ -77,7 +77,7 @@ class ProviderProfileCreateView(ProviderProfileQuerySetMixin,
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        return redirect(reverse("account:provider_profiles_list"))
+        return redirect(reverse("account:my_provider_profiles_list"))
 
 
 class ProviderProfileListview(ProviderProfileQuerySetMixin,
@@ -97,10 +97,10 @@ class ProviderProfileUpdateView(ProviderProfileQuerySetMixin,
         self.object = form.save(commit=False)
         self.object.status = ProfileStatus.PENDING
         self.object.save()
-        return redirect(reverse("account:provider_profiles_list"))
+        return redirect(reverse("account:my_provider_profiles_list"))
 
 
 class ProviderProfileDeleteView(ProviderProfileQuerySetMixin,
                                 LoginRequiredMixin,
                                 DeleteView):
-    success_url = reverse_lazy("account:provider_profiles_list")
+    success_url = reverse_lazy("account:my_provider_profiles_list")
