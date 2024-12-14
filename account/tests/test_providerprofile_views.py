@@ -172,3 +172,65 @@ class ProviderProfileUpdateAndDeleteTests(TestCase):
             reverse("account:provider_profile_delete", args=[1]))
         self.assertEqual(response.status_code, 302)
         self.assertTrue(response.url.startswith("/login"))
+
+
+class ProviderProfileListViewTests(TestCase):
+    valid_provider_form_data = {"official_name": "fname",
+                                "name": "lname",
+                                "social_code": "1111111111",
+                                "country": "IR",
+                                "province": "Tehran",
+                                "city": "Tehran",
+                                "address": "123 fake street",
+                                "phone_number": "09875430512",
+                                "phone_number2": "09875430555",
+                                }
+
+    @classmethod
+    def setUpTestData(cls):
+        user_model = get_user_model()
+
+        user1 = user_model.objects.create_user(
+            username="user1", password="user1user1")
+        user2 = user_model.objects.create_user(
+            username="user2", password="user2user2")
+        user1.save()
+        user2.save()
+
+        ProviderProfile.objects.create(
+            **ProviderProfileUpdateAndDeleteTests.valid_provider_form_data, user=user1)
+
+        new_data = ProviderProfileUpdateAndDeleteTests.valid_provider_form_data.copy()
+        new_data["social_code"] = "2222222222"
+        ProviderProfile.objects.create(**new_data, user=user2)
+
+    def test_my_provider_list_url_exists(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get("/myproviderprofiles")
+        self.assertEqual(response.status_code, 200)
+
+    def test_my_provider_list_url_has_correct_name(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("account:my_provider_profiles_list"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_my_provider_list_url_works_only_logged_in(self):
+        response = self.client.get(
+            reverse("account:my_provider_profiles_list"))
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith("/login"))
+
+    def test_my_provider_list_uses_correct_template(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("account:my_provider_profiles_list"))
+        self.assertTemplateUsed(response, "account/providerprofile/list.html")
+
+    def test_my_provider_list_loads_only_loggedin_users_profiles(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("account:my_provider_profiles_list"))
+        self.assertEqual(len(response.context["profiles"]), 1)
+        self.assertEqual(response.context["profiles"][0].social_code,
+                         self.valid_provider_form_data["social_code"])
