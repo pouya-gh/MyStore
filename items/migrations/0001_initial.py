@@ -40,7 +40,8 @@ class Migration(migrations.Migration):
                 ("description", models.TextField()),
                 ("remaining_items", models.PositiveIntegerField(default=0)),
                 ("created", models.DateTimeField(auto_now_add=True)),
-                ("publish", models.DateTimeField(default=django.utils.timezone.now)),
+                ("publish", models.DateTimeField(
+                    default=django.utils.timezone.now)),
                 ("updated", models.DateTimeField(auto_now=True)),
                 (
                     "submission_status",
@@ -77,7 +78,8 @@ class Migration(migrations.Migration):
                     models.Index(
                         fields=["-publish"], name="items_item_publish_d84216_idx"
                     ),
-                    models.Index(fields=["slug"], name="items_item_slug_d94d1c_idx"),
+                    models.Index(fields=["slug"],
+                                 name="items_item_slug_d94d1c_idx"),
                 ],
             },
         ),
