@@ -5,11 +5,11 @@ from django.conf import settings
 from django.utils import timezone
 
 def _validate_item_properties(value):
-        for v in value.items():
+        for k, v in value.items():
             if not isinstance(v,list):
                 raise ValidationError("properties values must only be list of strings")
             if not all(isinstance(m, str) for m in v):
-                    raise ValidationError("properties values must only be list of strings")
+                    raise ValidationError("properties values must only be list of stringsdfsdf")
 
 class Item(models.Model):
     class ItemSubmissionStatus(models.TextChoices):
@@ -28,7 +28,7 @@ class Item(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
     submission_status = models.CharField(max_length=2, choices=ItemSubmissionStatus, default=ItemSubmissionStatus.PENDING)
-    submission_review_message = models.TextField(null=True)
+    submission_review_message = models.TextField(null=True, default="", blank=True)
 
     class Meta:
         ordering = ["-publish", "slug"]
@@ -38,4 +38,9 @@ class Item(models.Model):
         ]
 
     def __str__(self):
-         return self.name
+        return self.name
+    
+    def clean(self):
+         if self.provider.user != self.submitted_by:
+             raise ValidationError("provider of the item must be owned by submitter of the item. item provider is not owned but submitted_by user")
+         return super().clean()
