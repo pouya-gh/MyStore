@@ -7,8 +7,8 @@
     </tr>
 {% for item in items %}
 <tr>
-    {% comment %} <td><a href="{% url "account:provider_profile_update" provider.id %}">{{ provider }}</a></td> {% endcomment %}
-    <td>{{ item }}</td>
+    <td><a href="{{ item.get_absolute_url }}">{{ item }}</a></td>
+    {% comment %} <td>{{ item }}</td> {% endcomment %}
 </tr>
 {% endfor %}
 </table>

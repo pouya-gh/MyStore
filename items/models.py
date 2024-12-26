@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.urls import reverse
 from account.models import ProviderProfile
 from django.conf import settings
 from django.utils import timezone
@@ -52,3 +53,6 @@ class Item(models.Model):
             raise ValidationError(
                 "provider of the item must be owned by submitter of the item. item provider is not owned but submitted_by user")
         return super().clean()
+
+    def get_absolute_url(self):
+        return reverse("items:item_details", kwargs={"pk": self.pk})
