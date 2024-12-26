@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Items{% endblock title %}
+{% block content %}
+<table>
+    <tr>
+        <th>Name</th>
+    </tr>
+{% for item in items %}
+<tr>
+    {% comment %} <td><a href="{% url "account:provider_profile_update" provider.id %}">{{ provider }}</a></td> {% endcomment %}
+    <td>{{ item }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock content %}
