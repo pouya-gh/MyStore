@@ -20,7 +20,7 @@
     </head>
 
 
-
+<p><a href="{% url "items:items_list" %}">Items</a></p>
 {% if request.user.is_authenticated %}
 <form method="post" action="{% url "account:logout" %}">
     {% csrf_token %}

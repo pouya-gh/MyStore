@@ -17,8 +17,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from items.views import ItemListView
 
 urlpatterns = [
+    path("", view=ItemListView.as_view(), name="home"),
     path("", include("account.urls", namespace="account")),
     path("admin/", admin.site.urls),
     path("items/", include("items.urls", namespace="items")),
