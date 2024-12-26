@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item }}{% endblock title %}
+
+{% block content %}
+<p>{{ item.name }}</p>
+<p>{{ item.description }}</p>
+<p>Properties: {{ item.properties }}</p>
+<p>Remaining: {{ item.remaining_items }}</p>
+{% endblock content %}
