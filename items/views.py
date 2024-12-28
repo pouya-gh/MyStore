@@ -19,9 +19,11 @@ class ItemDetailView(DetailView):
     template_name = "items/detail.html"
     context_object_name = "item"
 
+
 class LoadOnlyOwnedItemsMixin:
     def get_queryset(self):
         return self.request.user.submitted_items
+
 
 class ItemUpdateView(LoginRequiredMixin,
                      LoadOnlyOwnedItemsMixin,
@@ -29,22 +31,22 @@ class ItemUpdateView(LoginRequiredMixin,
     model = Item
     template_name = 'items/form.html'
     form_class = ItemForm
-    
+
+
 class ItemDeleteView(LoginRequiredMixin,
                      LoadOnlyOwnedItemsMixin,
                      DeleteView):
     model = Item
     success_url = reverse_lazy("items:items_list")
-    
+
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
     template_name = "items/form.html"
     form_class = ItemForm
-    
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.submitted_by = self.request.user
         self.object.save()
         return super().form_valid(form)
-    

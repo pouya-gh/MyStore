@@ -10,10 +10,6 @@ from .forms import CustomerProfileForm, ProviderProfileForm, MyUserChangeForm
 from .models import ProviderProfile, ProfileStatus
 
 
-def index_temp(request):
-    return render(request, "account/index_temp.html")
-
-
 def user_create(request):
     if request.POST:
         form = UserCreationForm(request.POST)
@@ -21,7 +17,7 @@ def user_create(request):
             cd = form.cleaned_data
             form.save()
 
-            return redirect("account:index_temp")
+            return redirect("home")
     else:
         form = UserCreationForm()
 
@@ -47,7 +43,7 @@ def user_profile_update(request):
             if not profile.user_id:
                 profile.user = user
             profile.save()
-            return redirect("account:index_temp")
+            return redirect("home")
     else:
         try:
             form = CustomerProfileForm(instance=user.profile)
