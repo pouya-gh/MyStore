@@ -1,7 +1,11 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
+from django.views.generic.edit import DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Item
+from .forms import ItemForm
 
 
 class ItemListView(ListView):
@@ -14,3 +18,18 @@ class ItemDetailView(DetailView):
     model = Item
     template_name = "items/detail.html"
     context_object_name = "item"
+
+class ItemUpdateView(LoginRequiredMixin, UpdateView):
+    model = Item
+    template_name = 'items/form.html'
+    form_class = ItemForm
+
+    def get_queryset(self):
+        return self.request.user.submitted_items
+    
+class ItemDeleteView(LoginRequiredMixin, DeleteView):
+    model = Item
+    success_url = reverse_lazy("items:items_list")
+    
+    def get_queryset(self):
+        return self.request.user.submitted_items

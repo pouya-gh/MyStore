@@ -7,4 +7,10 @@
 <p>{{ item.description }}</p>
 <p>Properties: {{ item.properties }}</p>
 <p>Remaining: {{ item.remaining_items }}</p>
+
+{% if request.user.is_authenticated and item.submitted_by == request.user %}
+<p><form method="get" action="{% url "items:item_update" item.id %}"><input type='submit' Value="Edit"/></form></p>
+<p><form method="get" action="{% url "items:item_delete" item.id %}"><input type='submit' Value="Delete"/></form></p>
+{% endif %}
+
 {% endblock content %}

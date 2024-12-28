@@ -1,0 +1,7 @@
+<p>Are you sure? This can not be reversed!</p>
+
+<form method="post" action="{% url "items:item_delete" item.id %}">
+    {% csrf_token %}
+    <input type='submit' Value="Delete"/>
+</form>
+<p><a href="{{ item.get_absolute_url }}">Go Back!</a><p>
