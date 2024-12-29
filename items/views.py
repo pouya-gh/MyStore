@@ -4,6 +4,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ValidationError
 from .models import Item
 from .forms import ItemForm
 
@@ -47,6 +48,11 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.submitted_by = self.request.user
-        self.object.save()
-        return super().form_valid(form)
+        if self.object.provider.user_id == self.request.user.id:
+            self.object.submitted_by = self.request.user
+            self.object.save()
+            return super().form_valid(form)
+        else:
+            form.add_error("provider",
+                           ValidationError("item provider is not owned by you"))
+            return self.form_invalid(form)

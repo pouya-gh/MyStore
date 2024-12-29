@@ -49,9 +49,9 @@ class Item(models.Model):
         return self.name
 
     def clean(self):
-        if self.provider.user != self.submitted_by:
+        if self.submitted_by_id and self.provider.user.id != self.submitted_by_id:
             raise ValidationError(
-                "provider of the item must be owned by submitter of the item. item provider is not owned but submitted_by user")
+                "item provider is not owned by you")
         return super().clean()
 
     def get_absolute_url(self):
