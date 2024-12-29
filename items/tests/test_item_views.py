@@ -1,0 +1,243 @@
+from django import test
+from ..models import Item
+from ..forms import ItemForm
+from account.models import ProviderProfile
+from django.urls import reverse
+from django.contrib.auth import get_user_model
+
+
+class ItemViewsTestMixin:
+    valid_item_data = {"name": "Shoes",
+                       "slug": "shoes",
+                       "properties": '{"size": ["8", "9"], "color": ["white", "color"] }',
+                       "description": "a pair of very good shoes",
+                       "remaining_items": 100}
+
+    @classmethod
+    def setUpTestData(cls):
+        user_model = get_user_model()
+
+        user1 = user_model.objects.create_user(
+            username="user1", password="user1user1")
+        user1.save()
+        user2 = user_model.objects.create_user(
+            username="user2", password="user2user2")
+        user2.save()
+
+        provider1 = ProviderProfile.objects.create(user=user1,
+                                                   official_name="official name",
+                                                   social_code="1234567890",
+                                                   country="IR",
+                                                   province="province",
+                                                   city="city",
+                                                   address="123 fake street",
+                                                   phone_number="09345786523",
+                                                   phone_number2="09345786222",)
+
+        ProviderProfile.objects.create(user=user2,
+                                       official_name="official name2",
+                                       social_code="1111111111",
+                                       country="IR",
+                                       province="province",
+                                       city="city",
+                                       address="123 fake street",
+                                       phone_number="09345786523",
+                                       phone_number2="09345786222",)
+
+        Item.objects.create(submitted_by=user1,
+                            provider=provider1,
+                            **ItemViewsTestMixin.valid_item_data)
+
+
+class ItemListViewTests(ItemViewsTestMixin,
+                        test.TestCase):
+
+    def test_list_url_exits(self):
+        response = self.client.get("/items/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("items", response.context)
+        self.assertTemplateUsed(response, "items/list.html")
+        items = response.context["items"]
+        self.assertEqual(len(items), 1)
+
+    def test_list_view_has_correct_name(self):
+        response = self.client.get(reverse("items:items_list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("items", response.context)
+        self.assertTemplateUsed(response, "items/list.html")
+        items = response.context["items"]
+        self.assertEqual(len(items), 1)
+
+    def test_homepage_is_items_list(self):
+        url = reverse("home")
+        self.assertEqual(url, "/")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("items", response.context)
+        self.assertTemplateUsed(response, "items/list.html")
+        items = response.context["items"]
+        self.assertEqual(len(items), 1)
+
+
+class ItemDetailViewTests(ItemViewsTestMixin,
+                          test.TestCase):
+    def test_detail_url_exits(self):
+        response = self.client.get("/items/1")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("item", response.context)
+        self.assertTemplateUsed(response, "items/detail.html")
+
+    def test_detail_url_has_correct_name(self):
+        response = self.client.get(
+            reverse("items:item_details", kwargs={"pk": 1}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("item", response.context)
+        self.assertTemplateUsed(response, "items/detail.html")
+
+
+class ItemCreateViewTests(ItemViewsTestMixin,
+                          test.TestCase):
+    def test_create_view_exits(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get("/items/new")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("form", response.context)
+        self.assertIsInstance(response.context['form'], ItemForm)
+        self.assertTemplateUsed(response, "items/form.html")
+
+    def test_create_view_has_correct_name(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(reverse("items:item_create"))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("form", response.context)
+        self.assertIsInstance(response.context['form'], ItemForm)
+        self.assertTemplateUsed(response, "items/form.html")
+
+    def test_create_view_works_only_signed_in(self):
+        response = self.client.get(reverse("items:item_create"))
+        self.assertEqual(response.status_code, 302)
+        self.assertTemplateNotUsed(response, "items/form.html")
+
+    def test_create_view_works_with_valid_data(self):
+        self.client.login(username="user1", password="user1user1")
+        self.assertEqual(Item.objects.count(), 1)
+        data = ItemViewsTestMixin.valid_item_data.copy()
+        data['name'] = "New Item"
+        data['slug'] = "newitem"
+        data['provider'] = 1
+        response = self.client.post(reverse("items:item_create"), data=data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(Item.objects.count(), 2)
+
+    def test_create_view_doesnt_work_with_duplicate_slug(self):
+        self.client.login(username="user1", password="user1user1")
+        self.assertEqual(Item.objects.count(), 1)
+        data = ItemViewsTestMixin.valid_item_data.copy()
+        data['name'] = "New Item"
+        data['provider'] = 1
+        response = self.client.post(reverse("items:item_create"), data=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Item.objects.count(), 1)
+
+    def test_create_view_doesnt_work_if_current_user_doesnt_own_the_provider(self):
+        self.client.login(username="user1", password="user1user1")
+        self.assertEqual(Item.objects.count(), 1)
+        data = ItemViewsTestMixin.valid_item_data.copy()
+        data['name'] = "New Item"
+        data['provider'] = 2
+        response = self.client.post(reverse("items:item_create"), data=data)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Item.objects.count(), 1)
+
+
+class ItemUpdateViewTests(ItemViewsTestMixin,
+                          test.TestCase):
+
+    def test_update_url_exists(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get("/items/update/1")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("form", response.context)
+        self.assertIsInstance(response.context['form'], ItemForm)
+        self.assertTemplateUsed(response, "items/form.html")
+
+    def test_update_url_has_correct_name(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("items:item_update", kwargs={"pk": 1}))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("form", response.context)
+        self.assertIsInstance(response.context['form'], ItemForm)
+        self.assertTemplateUsed(response, "items/form.html")
+
+    def test_update_url_doesnt_work_if_not_loggedin(self):
+        response = self.client.get(
+            reverse("items:item_update", kwargs={"pk": 1}))
+        self.assertEqual(response.status_code, 302)
+        self.assertTemplateNotUsed(response, "items/form.html")
+
+    def test_update_only_works_if_user_owns_item(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("items:item_update", kwargs={"pk": 2}))
+        self.assertEqual(response.status_code, 404)
+        self.assertTemplateNotUsed(response, "items/form.html")
+
+    def test_update_url_works_with_valid_data(self):
+        self.client.login(username="user1", password="user1user1")
+        prev_description = Item.objects.first().description
+        data = ItemViewsTestMixin.valid_item_data.copy()
+        data["description"] = prev_description + "lorem ipsum"
+        data["provider"] = 1
+        response = self.client.post(reverse("items:item_update", kwargs={"pk": 1}),
+                                    data=data)
+        new_description = Item.objects.first().description
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(new_description, prev_description + "lorem ipsum")
+
+
+class ItemDeleteViewTests(ItemViewsTestMixin,
+                          test.TestCase):
+    def test_delete_url_exists(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get("/items/delete/1")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "items/item_confirm_delete.html")
+
+    def test_delete_url_has_correct_name(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("items:item_delete", kwargs={"pk": 1})
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "items/item_confirm_delete.html")
+
+    def test_delete_url_doesnt_work_if_not_loggedin(self):
+        response = self.client.get(
+            reverse("items:item_delete", kwargs={"pk": 1})
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith("/login"))
+
+    def test_delete_only_works_if_current_user_doesnt_own_it(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("items:item_delete", kwargs={"pk": 2})
+        )
+        self.assertEqual(response.status_code, 404)
+
+    def test_delete_works(self):
+        self.client.login(username="user1", password="user1user1")
+        user = get_user_model().objects.first()
+        provider = ProviderProfile.objects.first()
+        data = ItemViewsTestMixin.valid_item_data.copy()
+        data['slug'] = "item3"
+        new_item = Item.objects.create(submitted_by=user,
+                                       provider=provider,
+                                       **data)
+        old_count = Item.objects.count()
+        response = self.client.post(
+            reverse("items:item_delete", kwargs={"pk": new_item.id})
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertNotEqual(old_count, Item.objects.count())
