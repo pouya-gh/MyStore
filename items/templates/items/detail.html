@@ -5,6 +5,9 @@
 {% block content %}
 <p>{{ item.name }}</p>
 <p>{{ item.description }}</p>
+{% if item.category %}
+<p>Category: {{ item.category }}</p>
+{% endif %}
 <p>Properties: {{ item.properties }}</p>
 <p>Remaining: {{ item.remaining_items }}</p>
 
