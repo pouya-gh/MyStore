@@ -1,5 +1,5 @@
 from django import test
-from ..models import Item
+from ..models import Item, Category
 from ..forms import ItemForm
 from account.models import ProviderProfile
 from django.urls import reverse
@@ -44,8 +44,12 @@ class ItemViewsTestMixin:
                                        phone_number="09345786523",
                                        phone_number2="09345786222",)
 
+        category = Category.objects.create(name="Cat 1",
+                                           slug="cat1")
+
         Item.objects.create(submitted_by=user1,
                             provider=provider1,
+                            category=category,
                             **ItemViewsTestMixin.valid_item_data)
 
 
@@ -125,6 +129,7 @@ class ItemCreateViewTests(ItemViewsTestMixin,
         data['name'] = "New Item"
         data['slug'] = "newitem"
         data['provider'] = 1
+        data['category'] = 1
         response = self.client.post(reverse("items:item_create"), data=data)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Item.objects.count(), 2)
