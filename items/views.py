@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ValidationError
-from .models import Item
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from .models import Item, Category
 from .forms import ItemForm
 
 
@@ -13,6 +13,14 @@ class ItemListView(ListView):
     model = Item
     template_name = "items/list.html"
     context_object_name = "items"
+
+    def get_queryset(self):
+        category_slug = self.request.GET.get("cat", None)
+        if self.request.GET and self.request.GET["cat"]:
+            category = get_object_or_404(Category, slug=category_slug)
+            return Item.objects.filter(category=category)
+
+        return Item.objects.all()
 
 
 class ItemDetailView(DetailView):
