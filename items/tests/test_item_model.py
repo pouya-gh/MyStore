@@ -1,6 +1,6 @@
 from django.test import TestCase
 from account.models import ProviderProfile, ProfileStatus
-from ..models import Item
+from ..models import Item, Category
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.core.exceptions import ValidationError
@@ -29,11 +29,26 @@ class ItemModelTests(TestCase):
                                                   address="123 fake street",
                                                   phone_number="09345786523",
                                                   phone_number2="09345786222",)
+        category = Category.objects.create(name="Cat 1", slug="cat1")
         Item.objects.create(submitted_by=user,
                             provider=provider,
+                            category=category,
                             **ItemModelTests.valid_item_data)
 
     def test_item_is_created_with_valid_data(self):
+        user = get_user_model().objects.first()
+        provider = ProviderProfile.objects.first()
+        category = Category.objects.first()
+        self.assertEqual(Item.objects.count(), 1)
+        data = self.valid_item_data.copy()
+        data['slug'] = 'shoes2'
+        Item.objects.create(submitted_by=user,
+                            provider=provider,
+                            category=category,
+                            **data)
+        self.assertEqual(Item.objects.count(), 2)
+
+    def test_item_category_can_be_null(self):
         user = get_user_model().objects.first()
         provider = ProviderProfile.objects.first()
         self.assertEqual(Item.objects.count(), 1)
