@@ -9,7 +9,12 @@
 {% for item in items %}
 <tr>
     <td><a href="{{ item.get_absolute_url }}">{{ item }}</a></td>
-    <td>{{ item.category }}</td>
+    {% if item.category %}
+    <td><a href="{% url "items:items_list" %}?cat={{ item.category.slug }}">{{ item.category }}</td>
+    {% else %}
+    <td>None</td>
+    {% endif %}
+    
     {% comment %} <td>{{ item }}</td> {% endcomment %}
 </tr>
 {% endfor %}
