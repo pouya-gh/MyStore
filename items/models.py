@@ -6,6 +6,21 @@ from django.conf import settings
 from django.utils import timezone
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.CharField(max_length=100, unique=True)
+    parent = models.ForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="sub_categories")
+
+    def __str__(self):
+        return self.name
+
+    def clean(self):
+        if self.parent and (self.parent == self):
+            raise ValidationError("A category can not be its own parent")
+        return super().clean()
+
+
 def _validate_item_properties(value):
     for k, v in value.items():
         if not isinstance(v, list):
@@ -37,6 +52,9 @@ class Item(models.Model):
         max_length=2, choices=ItemSubmissionStatus, default=ItemSubmissionStatus.PENDING)
     submission_review_message = models.TextField(
         null=True, default="", blank=True)
+
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         ordering = ["-publish", "slug"]
