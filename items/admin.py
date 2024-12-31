@@ -4,7 +4,8 @@ from .models import Item, Category
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ["name", "provider", "submitted_by", "submission_status"]
+    list_display = ["name", "category", "provider",
+                    "submitted_by", "submission_status"]
 
 
 @admin.register(Category)

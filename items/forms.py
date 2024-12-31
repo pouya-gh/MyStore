@@ -10,4 +10,5 @@ class ItemForm(ModelForm):
                   "provider",
                   "properties",
                   "description",
-                  "remaining_items",]
+                  "remaining_items",
+                  "category"]
