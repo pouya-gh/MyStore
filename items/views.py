@@ -16,7 +16,7 @@ class ItemListView(ListView):
 
     def get_queryset(self):
         category_slug = self.request.GET.get("cat", None)
-        if self.request.GET and self.request.GET["cat"]:
+        if self.request.GET and category_slug:
             category = get_object_or_404(Category, slug=category_slug)
             return Item.objects.filter(category=category)
 

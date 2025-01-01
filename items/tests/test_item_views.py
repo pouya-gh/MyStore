@@ -46,6 +46,8 @@ class ItemViewsTestMixin:
 
         category = Category.objects.create(name="Cat 1",
                                            slug="cat1")
+        Category.objects.create(name="Cat 2",
+                                slug="cat2")
 
         Item.objects.create(submitted_by=user1,
                             provider=provider1,
@@ -71,6 +73,25 @@ class ItemListViewTests(ItemViewsTestMixin,
         self.assertTemplateUsed(response, "items/list.html")
         items = response.context["items"]
         self.assertEqual(len(items), 1)
+
+    def test_list_filter_with_category(self):
+        cat1 = Category.objects.get(slug="cat1")
+        cat2 = Category.objects.get(slug="cat2")
+        data = ItemViewsTestMixin.valid_item_data.copy()
+        data["slug"] = "my-new-item"
+        item2 = Item.objects.create(submitted_by_id=1,
+                                    provider_id=1,
+                                    category=cat2,
+                                    **data)
+
+        response = self.client.get(
+            reverse("items:items_list") + f"?cat={cat1.slug}")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("items", response.context)
+        self.assertTemplateUsed(response, "items/list.html")
+        items = response.context["items"]
+        self.assertEqual(len(items), 1)
+        self.assertNotEqual(items[0].slug, item2.slug)
 
     def test_homepage_is_items_list(self):
         url = reverse("home")
