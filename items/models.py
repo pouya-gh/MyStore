@@ -41,6 +41,10 @@ class Item(models.Model):
         PENDING = 'PN', 'Verfication pending'
         DECLINED = 'DC', 'Declined'
 
+    class ItemPriceCurrency(models.TextChoices):
+        USD = 'USD', 'USA Dollar'
+        IRR = 'IRR', 'Iranian Rial'
+
     name = models.CharField(max_length=250)
     slug = models.CharField(max_length=250, unique=True)
     provider = models.ForeignKey(ProviderProfile, on_delete=models.CASCADE)
@@ -49,6 +53,10 @@ class Item(models.Model):
     properties = models.JSONField(validators=[_validate_item_properties])
     description = models.TextField()
     remaining_items = models.PositiveIntegerField(default=0, blank=False)
+    price = models.DecimalField(
+        default=0, blank=False, max_digits=12, decimal_places=2)
+    currency = models.TextField(
+        max_length=3, choices=ItemPriceCurrency, default=ItemPriceCurrency.IRR)
     created = models.DateTimeField(auto_now_add=True)
     publish = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
