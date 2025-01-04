@@ -86,3 +86,26 @@ class Item(models.Model):
 
     def get_absolute_url(self):
         return reverse("items:item_details", kwargs={"pk": self.pk})
+
+
+class ShoppingCartItem(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                 on_delete=models.CASCADE,
+                                 related_name="shopping_cart_items")
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=1)
+    properties = models.JSONField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+    additional_info = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.quantity} {self.item}"
+
+    def generate_sku(self):
+        props = self.properties.items()
+        props_sorted = sorted(props)
+        sku = self.item.slug
+        for _, v in props_sorted:
+            sku += "-" + v.lower()
+        return sku
