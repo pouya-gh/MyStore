@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True)
     parent = models.ForeignKey(
         "self", on_delete=models.CASCADE, null=True, blank=True, related_name="sub_categories")
 
@@ -46,7 +46,7 @@ class Item(models.Model):
         IRR = 'IRR', 'Iranian Rial'
 
     name = models.CharField(max_length=250)
-    slug = models.CharField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique=True)
     provider = models.ForeignKey(ProviderProfile, on_delete=models.CASCADE)
     submitted_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="submitted_items")
