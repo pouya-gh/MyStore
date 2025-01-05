@@ -1,12 +1,15 @@
-from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
+from django.views.decorators.http import require_POST
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from .models import Item, Category
-from .forms import ItemForm
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
+
+from .models import Item, Category, ShoppingCartItem
+from .forms import ItemForm, ShoppingCartForm
 
 
 class ItemListView(ListView):
@@ -27,6 +30,16 @@ class ItemDetailView(DetailView):
     model = Item
     template_name = "items/detail.html"
     context_object_name = "item"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            if ShoppingCartItem.objects.filter(customer=self.request.user,
+                                               item=self.get_object()).exists():
+                context["already_in_cart"] = True
+            else:
+                context["shopping_cart_form"] = ShoppingCartForm()
+        return context
 
 
 class LoadOnlyOwnedItemsMixin:
@@ -64,3 +77,46 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
             form.add_error("provider",
                            ValidationError("item provider is not owned by you"))
             return self.form_invalid(form)
+        
+
+@login_required
+def add_to_shopping_cart(request, pk):
+    item = get_object_or_404(Item, id=pk)
+    user = request.user
+    if not ShoppingCartItem.objects.filter(item=item, customer=user).exists():
+        form = ShoppingCartForm(request.GET)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user.shopping_cart_items.create(item=item,
+                                        properties=item.properties,
+                                        quantity=cd["quantity"])
+    
+    return redirect(item.get_absolute_url())
+
+@login_required
+@require_POST
+def delete_from_shopping_cart(request, pk):
+    cart_item = get_object_or_404(ShoppingCartItem, item_id=pk, customer=request.user)
+    cart_item.delete()
+
+    return redirect(reverse("items:current_user_cart"))
+
+@login_required
+@require_POST
+def update_cart_item_quantity(request, pk):
+    form = ShoppingCartForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        cart_item = get_object_or_404(ShoppingCartItem, item_id=pk, customer=request.user)
+        cart_item.quantity = cd["quantity"]
+        cart_item.save()
+
+    return redirect(reverse("items:current_user_cart"))
+
+@login_required
+def current_user_shopping_cart_details(request):
+    cart_items = ShoppingCartItem.objects.filter(customer=request.user)
+
+    return render(request,
+                  "items/shopping_cart/current_user_cart.html",
+                  context={"cart_items":cart_items})

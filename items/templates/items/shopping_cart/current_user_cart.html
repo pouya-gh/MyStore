@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}My Cart{% endblock title %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Qauntity</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+{% for cart_item in cart_items %}
+<tr>
+    <td><a href="{{ cart_item.item.get_absolute_url }}">{{ cart_item.item }}</a></td>
+    <td>{{ cart_item.quantity }}</td>
+    <td>
+        <form method="post" action="{% url "items:update_cart_item" cart_item.item_id %}">
+            {% csrf_token %}
+            <input type="number" min="1" name="quantity" value="{{ cart_item.quantity }}"/>
+            <input type='submit' Value="Update"/>
+        </form>
+    </td>
+    <td>
+        <form method="post" action="{% url "items:delete_from_cart" cart_item.item_id %}">
+            {% csrf_token %}
+            <input type='submit' Value="Remove"/>
+        </form>
+    </td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock content %}
