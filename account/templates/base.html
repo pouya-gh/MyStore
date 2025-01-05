@@ -30,6 +30,7 @@
 <p><a href="{% url "account:provider_profile_create" %}">Register a provider</a></p>
 <p><a href="{% url "account:my_provider_profiles_list" %}">My registered providers</a></p>
 <p><a href="{% url "items:item_create" %}">Submit An Item</a></p>
+<p><a href="{% url "items:current_user_cart" %}">My Cart</a></p>
 {% else %}
 <p><a href="{% url "account:login" %}">Log in</a></p>
 <p><a href="{% url "account:signup" %}">Sign up</a></p>

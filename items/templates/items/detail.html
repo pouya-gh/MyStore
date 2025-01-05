@@ -11,9 +11,23 @@
 <p>Properties: {{ item.properties }}</p>
 <p>Remaining: {{ item.remaining_items }}</p>
 
-{% if request.user.is_authenticated and item.submitted_by == request.user %}
-<p><form method="get" action="{% url "items:item_update" item.id %}"><input type='submit' Value="Edit"/></form></p>
-<p><form method="get" action="{% url "items:item_delete" item.id %}"><input type='submit' Value="Delete"/></form></p>
+{% if request.user.is_authenticated %}
+    <p>
+        {% if already_in_cart %}
+        <p>Item already in shopping cart</p>
+        {% else %}
+        <form method="get" action="{% url "items:add_to_cart" item.id %}">
+            {{ shopping_cart_form }}
+            <input type='submit' Value="Add to Cart"/>
+            {% comment %} <input type="number" min="1" name="q" value="1"/> {% endcomment %}
+        </form>
+        {% endif %}
+        
+    </p>
+    {% if item.submitted_by == request.user %}
+        <p><form method="get" action="{% url "items:item_update" item.id %}"><input type='submit' Value="Edit"/></form></p>
+        <p><form method="get" action="{% url "items:item_delete" item.id %}"><input type='submit' Value="Delete"/></form></p>
+    {% endif %}
 {% endif %}
 
 {% endblock content %}
