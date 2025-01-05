@@ -14,7 +14,7 @@ from .forms import ItemForm, ShoppingCartForm
 
 class ItemListView(ListView):
     model = Item
-    template_name = "items/list.html"
+    template_name = "items/item/list.html"
     context_object_name = "items"
 
     def get_queryset(self):
@@ -28,7 +28,7 @@ class ItemListView(ListView):
 
 class ItemDetailView(DetailView):
     model = Item
-    template_name = "items/detail.html"
+    template_name = "items/item/detail.html"
     context_object_name = "item"
 
     def get_context_data(self, **kwargs):
@@ -51,7 +51,7 @@ class ItemUpdateView(LoginRequiredMixin,
                      LoadOnlyOwnedItemsMixin,
                      UpdateView):
     model = Item
-    template_name = 'items/form.html'
+    template_name = 'items/item/form.html'
     form_class = ItemForm
 
 
@@ -60,11 +60,12 @@ class ItemDeleteView(LoginRequiredMixin,
                      DeleteView):
     model = Item
     success_url = reverse_lazy("items:items_list")
+    template_name = 'items/item/confirm_delete.html'
 
 
 class ItemCreateView(LoginRequiredMixin, CreateView):
     model = Item
-    template_name = "items/form.html"
+    template_name = "items/item/form.html"
     form_class = ItemForm
 
     def form_valid(self, form):

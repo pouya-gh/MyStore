@@ -62,7 +62,7 @@ class ItemListViewTests(ItemViewsTestMixin,
         response = self.client.get("/items/")
         self.assertEqual(response.status_code, 200)
         self.assertIn("items", response.context)
-        self.assertTemplateUsed(response, "items/list.html")
+        self.assertTemplateUsed(response, "items/item/list.html")
         items = response.context["items"]
         self.assertEqual(len(items), 1)
 
@@ -70,7 +70,7 @@ class ItemListViewTests(ItemViewsTestMixin,
         response = self.client.get(reverse("items:items_list"))
         self.assertEqual(response.status_code, 200)
         self.assertIn("items", response.context)
-        self.assertTemplateUsed(response, "items/list.html")
+        self.assertTemplateUsed(response, "items/item/list.html")
         items = response.context["items"]
         self.assertEqual(len(items), 1)
 
@@ -88,7 +88,7 @@ class ItemListViewTests(ItemViewsTestMixin,
             reverse("items:items_list") + f"?cat={cat1.slug}")
         self.assertEqual(response.status_code, 200)
         self.assertIn("items", response.context)
-        self.assertTemplateUsed(response, "items/list.html")
+        self.assertTemplateUsed(response, "items/item/list.html")
         items = response.context["items"]
         self.assertEqual(len(items), 1)
         self.assertNotEqual(items[0].slug, item2.slug)
@@ -99,7 +99,7 @@ class ItemListViewTests(ItemViewsTestMixin,
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertIn("items", response.context)
-        self.assertTemplateUsed(response, "items/list.html")
+        self.assertTemplateUsed(response, "items/item/list.html")
         items = response.context["items"]
         self.assertEqual(len(items), 1)
 
@@ -110,14 +110,14 @@ class ItemDetailViewTests(ItemViewsTestMixin,
         response = self.client.get("/items/1")
         self.assertEqual(response.status_code, 200)
         self.assertIn("item", response.context)
-        self.assertTemplateUsed(response, "items/detail.html")
+        self.assertTemplateUsed(response, "items/item/detail.html")
 
     def test_detail_url_has_correct_name(self):
         response = self.client.get(
             reverse("items:item_details", kwargs={"pk": 1}))
         self.assertEqual(response.status_code, 200)
         self.assertIn("item", response.context)
-        self.assertTemplateUsed(response, "items/detail.html")
+        self.assertTemplateUsed(response, "items/item/detail.html")
 
 
 class ItemCreateViewTests(ItemViewsTestMixin,
@@ -128,7 +128,7 @@ class ItemCreateViewTests(ItemViewsTestMixin,
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertIsInstance(response.context['form'], ItemForm)
-        self.assertTemplateUsed(response, "items/form.html")
+        self.assertTemplateUsed(response, "items/item/form.html")
 
     def test_create_view_has_correct_name(self):
         self.client.login(username="user1", password="user1user1")
@@ -136,12 +136,12 @@ class ItemCreateViewTests(ItemViewsTestMixin,
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertIsInstance(response.context['form'], ItemForm)
-        self.assertTemplateUsed(response, "items/form.html")
+        self.assertTemplateUsed(response, "items/item/form.html")
 
     def test_create_view_works_only_signed_in(self):
         response = self.client.get(reverse("items:item_create"))
         self.assertEqual(response.status_code, 302)
-        self.assertTemplateNotUsed(response, "items/form.html")
+        self.assertTemplateNotUsed(response, "items/item/form.html")
 
     def test_create_view_works_with_valid_data(self):
         self.client.login(username="user1", password="user1user1")
@@ -185,7 +185,7 @@ class ItemUpdateViewTests(ItemViewsTestMixin,
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertIsInstance(response.context['form'], ItemForm)
-        self.assertTemplateUsed(response, "items/form.html")
+        self.assertTemplateUsed(response, "items/item/form.html")
 
     def test_update_url_has_correct_name(self):
         self.client.login(username="user1", password="user1user1")
@@ -194,20 +194,20 @@ class ItemUpdateViewTests(ItemViewsTestMixin,
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertIsInstance(response.context['form'], ItemForm)
-        self.assertTemplateUsed(response, "items/form.html")
+        self.assertTemplateUsed(response, "items/item/form.html")
 
     def test_update_url_doesnt_work_if_not_loggedin(self):
         response = self.client.get(
             reverse("items:item_update", kwargs={"pk": 1}))
         self.assertEqual(response.status_code, 302)
-        self.assertTemplateNotUsed(response, "items/form.html")
+        self.assertTemplateNotUsed(response, "items/item/form.html")
 
     def test_update_only_works_if_user_owns_item(self):
         self.client.login(username="user1", password="user1user1")
         response = self.client.get(
             reverse("items:item_update", kwargs={"pk": 2}))
         self.assertEqual(response.status_code, 404)
-        self.assertTemplateNotUsed(response, "items/form.html")
+        self.assertTemplateNotUsed(response, "items/item/form.html")
 
     def test_update_url_works_with_valid_data(self):
         self.client.login(username="user1", password="user1user1")
@@ -228,7 +228,7 @@ class ItemDeleteViewTests(ItemViewsTestMixin,
         self.client.login(username="user1", password="user1user1")
         response = self.client.get("/items/delete/1")
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "items/item_confirm_delete.html")
+        self.assertTemplateUsed(response, "items/item/confirm_delete.html")
 
     def test_delete_url_has_correct_name(self):
         self.client.login(username="user1", password="user1user1")
@@ -236,7 +236,7 @@ class ItemDeleteViewTests(ItemViewsTestMixin,
             reverse("items:item_delete", kwargs={"pk": 1})
         )
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "items/item_confirm_delete.html")
+        self.assertTemplateUsed(response, "items/item/confirm_delete.html")
 
     def test_delete_url_doesnt_work_if_not_loggedin(self):
         response = self.client.get(
