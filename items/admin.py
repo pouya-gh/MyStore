@@ -13,6 +13,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ["name", "parent"]
     list_filter = ["name", "parent"]
 
+
 @admin.register(ShoppingCartItem)
 class ShoppingCartItemAdmin(admin.ModelAdmin):
     list_display = ["item", "customer", "quantity"]

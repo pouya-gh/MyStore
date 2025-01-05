@@ -78,7 +78,7 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
             form.add_error("provider",
                            ValidationError("item provider is not owned by you"))
             return self.form_invalid(form)
-        
+
 
 @login_required
 def add_to_shopping_cart(request, pk):
@@ -89,18 +89,21 @@ def add_to_shopping_cart(request, pk):
         if form.is_valid():
             cd = form.cleaned_data
             user.shopping_cart_items.create(item=item,
-                                        properties=item.properties,
-                                        quantity=cd["quantity"])
-    
+                                            properties=item.properties,
+                                            quantity=cd["quantity"])
+
     return redirect(item.get_absolute_url())
+
 
 @login_required
 @require_POST
 def delete_from_shopping_cart(request, pk):
-    cart_item = get_object_or_404(ShoppingCartItem, item_id=pk, customer=request.user)
+    cart_item = get_object_or_404(
+        ShoppingCartItem, item_id=pk, customer=request.user)
     cart_item.delete()
 
     return redirect(reverse("items:current_user_cart"))
+
 
 @login_required
 @require_POST
@@ -108,11 +111,13 @@ def update_cart_item_quantity(request, pk):
     form = ShoppingCartForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
-        cart_item = get_object_or_404(ShoppingCartItem, item_id=pk, customer=request.user)
+        cart_item = get_object_or_404(
+            ShoppingCartItem, item_id=pk, customer=request.user)
         cart_item.quantity = cd["quantity"]
         cart_item.save()
 
     return redirect(reverse("items:current_user_cart"))
+
 
 @login_required
 def current_user_shopping_cart_details(request):
@@ -120,4 +125,4 @@ def current_user_shopping_cart_details(request):
 
     return render(request,
                   "items/shopping_cart/current_user_cart.html",
-                  context={"cart_items":cart_items})
+                  context={"cart_items": cart_items})

@@ -12,7 +12,7 @@ class ItemForm(forms.ModelForm):
                   "description",
                   "remaining_items",
                   "category"]
-        
+
 
 class ShoppingCartForm(forms.Form):
     template_name = "items/shopping_cart/form.html"
