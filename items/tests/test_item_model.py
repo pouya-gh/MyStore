@@ -10,7 +10,7 @@ from django.utils import timezone
 class ItemModelTests(TestCase):
     valid_item_data = {"name": "Shoes",
                        "slug": "shoes",
-                       "properties": {"size": ["8", "9"], "color": ["white", "color"], },
+                       "properties": {"size": "8", "color": "color"},
                        "description": "a pair of very good shoes",
                        "remaining_items": 100}
 
@@ -98,7 +98,7 @@ class ItemModelTests(TestCase):
 
     def test_item_properties_validator(self):
         item = Item.objects.first()
-        item.properties = {"p1": "v1"}
+        item.properties = {"p1": ["v1"]}
         with self.assertRaises(ValidationError):
             item.full_clean()
         item.properties = {"p1": [1]}
@@ -108,7 +108,7 @@ class ItemModelTests(TestCase):
         with self.assertRaises(ValidationError):
             item.full_clean()
 
-        item.properties = {"p1": ["v1"]}
+        item.properties = {"p1": "v1"}
         item.full_clean()
 
     def test_item_provider_is_owned_by_submitter(self):

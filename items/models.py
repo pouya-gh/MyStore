@@ -27,12 +27,9 @@ class Category(models.Model):
 
 def _validate_item_properties(value):
     for k, v in value.items():
-        if not isinstance(v, list):
+        if not isinstance(v, str):
             raise ValidationError(
-                "properties values must only be list of strings")
-        if not all(isinstance(m, str) for m in v):
-            raise ValidationError(
-                "properties values must only be list of stringsdfsdf")
+                "properties values must only be a string")
 
 
 class Item(models.Model):
