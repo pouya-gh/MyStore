@@ -10,6 +10,7 @@ class ItemForm(forms.ModelForm):
                   "provider",
                   "properties",
                   "description",
+                  "price",
                   "remaining_items",
                   "category"]
 

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Order {{ order }}{% endblock title %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Qauntity</th>
+        <th>Price</th>
+    </tr>
+{% for order_item in order.order_items.all %}
+<tr>
+    <td><a href="{{ order_item.item.get_absolute_url }}">{{ order_item.item }}</a></td>
+    <td>{{ order_item.quantity }}</td>
+    <td>{{ order_item.item.price }}</td>
+</tr>
+{% endfor %}
+</table>
+<p><h2>Total Price: {{ order.get_total_price }}</h2></p>
+<p><h2>Status: {{ order.status }}</h2></p>
+{% endblock content %}

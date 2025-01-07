@@ -47,14 +47,13 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
-    
+
     def get_total_price(self):
         price = 0
         for oi in self.order_items.all():
             price += oi.item.price * oi.quantity
 
         return price
-    
+
     def get_absolute_url(self):
         return reverse("orders:order_details", kwargs={"order_id": self.id})
-    
