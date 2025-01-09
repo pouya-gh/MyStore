@@ -177,7 +177,7 @@ class ItemCreateViewTests(ItemViewsTestMixin,
         self.client.login(username="user1", password="user1user1")
         self.assertEqual(Item.objects.count(), 1)
         data = ItemViewsTestMixin.valid_item_data.copy()
-        data['slug'] =  data['slug'] + "new"
+        data['slug'] = data['slug'] + "new"
         data['provider'] = 2
         response = self.client.post(reverse("items:item_create"), data=data)
         self.assertEqual(response.status_code, 200)
