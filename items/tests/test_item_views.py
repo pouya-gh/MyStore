@@ -1,5 +1,5 @@
 from django import test
-from ..models import Item, Category
+from ..models import Item, Category, ShoppingCartItem
 from ..forms import ItemForm
 from account.models import ProviderProfile
 from django.urls import reverse
@@ -119,6 +119,13 @@ class ItemDetailViewTests(ItemViewsTestMixin,
         self.assertEqual(response.status_code, 200)
         self.assertIn("item", response.context)
         self.assertTemplateUsed(response, "items/item/detail.html")
+
+    def test_detail_view_has_add_to_cart_form_if_item_not_in_cart_and_is_logged_in(self):
+        self.client.login(username="user1", password="user1user1")
+        response = self.client.get(
+            reverse("items:item_details", kwargs={"pk": 1}))
+        self.assertEqual(ShoppingCartItem.objects.count(), 0)
+        self.assertIn("shopping_cart_form", response.context)
 
 
 class ItemCreateViewTests(ItemViewsTestMixin,
