@@ -7,8 +7,7 @@ from ..models import Order, OrderItem
 
 from decimal import Decimal
 
-
-class OrderModelTests(TestCase):
+class SetupTestDataMixin:
     @classmethod
     def setUpTestData(cls):
         user_model = get_user_model()
@@ -55,6 +54,8 @@ class OrderModelTests(TestCase):
                                  properties=item2.properties,
                                  quantity=1)
 
+class OrderModelTests(SetupTestDataMixin,
+                      TestCase):
     def test_order_to_string_converter(self):
         order = Order.objects.first()
 
@@ -69,3 +70,11 @@ class OrderModelTests(TestCase):
         order = Order.objects.first()
 
         self.assertEqual(order.get_absolute_url(), f"/orders/{order.id}")
+
+class OrderItemModelTests(SetupTestDataMixin,
+                      TestCase):
+    def test_order_to_string_converter(self):
+        order_item = OrderItem.objects.first()
+
+        self.assertEqual(str(order_item), "Order for 2 of Shoes")
+
