@@ -53,7 +53,7 @@ class Item(models.Model):
     price = models.DecimalField(
         default=0, blank=False, max_digits=12, decimal_places=2)
     currency = models.TextField(
-        max_length=3, choices=ItemPriceCurrency, default=ItemPriceCurrency.IRR)
+        max_length=3, choices=ItemPriceCurrency, default=ItemPriceCurrency.USD)
     created = models.DateTimeField(auto_now_add=True)
     publish = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
