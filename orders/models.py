@@ -41,6 +41,7 @@ class Order(models.Model):
     status = models.CharField(max_length=2,
                               choices=OrderStatus,
                               default=OrderStatus.PENDING)
+    payment_id = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         ordering = ["-created_at"]

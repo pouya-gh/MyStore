@@ -95,7 +95,6 @@ class ShoppingCartItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     additional_info = models.TextField(null=True, blank=True)
-    payment_id = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.quantity} {self.item}"
