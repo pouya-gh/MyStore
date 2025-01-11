@@ -25,6 +25,8 @@ envrion_vars = environ.Env()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = envrion_vars("SECRET_KEY")
+STRIPE_API_KEY = envrion_vars("STRIPE_API_KEY")
+STRIPE_WEBHOOK_ENDPOINT_SECRET = envrion_vars("STRIPE_WEBHOOK_ENDPOINT_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
