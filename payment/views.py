@@ -24,7 +24,7 @@ def start_payment(request, order_id):
         "client_reference_id": order.id,
         "line_items": [],
         "mode": 'payment',
-        "success_url": request.build_absolute_uri(reverse("payment:success")),
+        "success_url": request.build_absolute_uri(reverse("payment:success")) + "?session_id={CHECKOUT_SESSION_ID}",
         "cancel_url": request.build_absolute_uri(reverse("payment:cancel")),
     }
     for order_item in order.order_items.all():
@@ -43,6 +43,9 @@ def start_payment(request, order_id):
 
 @login_required
 def payment_success(request):
+    # session_id = request.GET["session_id"]
+    # session = stripe.checkout.Session.retrieve(session_id)
+    # return render(request, "payment/success.html", {"session": session})
     return render(request, "payment/success.html")
 
 
