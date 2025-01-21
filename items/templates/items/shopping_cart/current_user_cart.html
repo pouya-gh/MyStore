@@ -13,19 +13,15 @@
 {% for cart_item in cart_items %}
 <tr>
     <td><a href="{{ cart_item.item.get_absolute_url }}">{{ cart_item.item }}</a></td>
-    <td>{{ cart_item.quantity }}</td>
+    <td class="itemquantity">{{ cart_item.quantity }}</td>
     <td>
-        <form method="post" action="{% url "items:update_cart_item" cart_item.item_id %}">
-            {% csrf_token %}
+        <form method="post" action="{% url "items:update_cart_item" cart_item.item_id %}" onsubmit="update_shopping_cart_item(event, '{{ csrf_token }}');">
             <input type="number" min="1" name="quantity" value="{{ cart_item.quantity }}"/>
             <input type='submit' Value="Update"/>
         </form>
     </td>
     <td>
-        <form method="post" action="{% url "items:delete_from_cart" cart_item.item_id %}">
-            {% csrf_token %}
-            <input type='submit' Value="Remove"/>
-        </form>
+        <button onclick="delete_from_shopping_cart(event, '{% url 'items:delete_from_cart' cart_item.item_id %}', '{{ csrf_token }}');">Remove</button>
     </td>
 </tr>
 {% endfor %}

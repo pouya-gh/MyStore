@@ -17,11 +17,12 @@
         {% if already_in_cart %}
         <p>Item already in shopping cart</p>
         {% else %}
-        <form method="get" action="{% url "items:add_to_cart" item.id %}">
-            {{ shopping_cart_form }}
-            <input type='submit' Value="Add to Cart"/>
-            {% comment %} <input type="number" min="1" name="q" value="1"/> {% endcomment %}
-        </form>
+        <div id="addtocartform">
+            <form method="post" action="{% url "items:add_to_cart" item.id %}" onsubmit="add_to_shopping_cart(event, '{{ csrf_token }}');">
+                {{ shopping_cart_form }}
+                <input type='submit' Value="Add to Cart" />
+            </form>
+        </div>
         {% endif %}
         
     </p>
