@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
+from django.http.response import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -92,8 +93,9 @@ def add_to_shopping_cart(request, pk):
             user.shopping_cart_items.create(item=item,
                                             properties=item.properties,
                                             quantity=cd["quantity"])
+            return JsonResponse({"message": "added!"})
 
-    return redirect(item.get_absolute_url())
+    return HttpResponseBadRequest("Can't add to cart!")
 
 
 @login_required
@@ -116,8 +118,9 @@ def update_cart_item_quantity(request, pk):
             ShoppingCartItem, item_id=pk, customer=request.user)
         cart_item.quantity = cd["quantity"]
         cart_item.save()
+        return JsonResponse({"message": "updated!"})
 
-    return redirect(reverse("items:current_user_cart"))
+    return HttpResponseBadRequest("Can't update cart!")
 
 
 @login_required
