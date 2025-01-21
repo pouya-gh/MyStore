@@ -43,21 +43,23 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
 
     def test_add_to_shopping_cart_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.post("/items/add_to_cart/1", data= {"quantity": 2})
+        response = self.client.post(
+            "/items/add_to_cart/1", data={"quantity": 2})
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/1")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"{\"message\": \"added!\"}")
 
     def test_add_to_shopping_cart_url_has_correct_name(self):
         self.client.login(username="user1", password="user1user1")
         url = reverse("items:add_to_cart", kwargs={"pk": 1})
-        response = self.client.post(url, data= {"quantity": 2})
+        response = self.client.post(url, data={"quantity": 2})
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/1")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"{\"message\": \"added!\"}")
 
     def test_add_to_cart_only_works_when_signed_in(self):
-        response = self.client.post("/items/add_to_cart/1", data= {"quantity": 2})
+        response = self.client.post(
+            "/items/add_to_cart/1", data={"quantity": 2})
 
         self.assertEqual(response.status_code, 302)
         self.assertTrue(response.url.startswith("/login"))
@@ -69,15 +71,12 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
 
         self.client.login(username="user1", password="user1user1")
         url = reverse("items:add_to_cart", kwargs={"pk": 1})
-        response = self.client.post(url, data= {"quantity": 2})
+        response = self.client.post(url, data={"quantity": 2})
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/1")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"{\"message\": \"added!\"}")
         self.assertEqual(ShoppingCartItem.objects.filter(
             customer_id=1).count(), 1)
-
-        redirect_response = self.client.get(response.url)
-        self.assertIn("already_in_cart", redirect_response.context)
 
     def test_only_adds_an_item_to_cart_once(self):
         item = Item.objects.first()
@@ -87,10 +86,9 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
                                         quantity=2)
         self.client.login(username="user1", password="user1user1")
         url = reverse("items:add_to_cart", kwargs={"pk": 1})
-        response = self.client.post(url, data= {"quantity": 2})
+        response = self.client.post(url, data={"quantity": 2})
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/1")
+        self.assertEqual(response.status_code, 400)
         self.assertEqual(ShoppingCartItem.objects.count(), 1)
 
 
@@ -144,8 +142,8 @@ class ShoppingCartItemUpdateViewTests(ShoppingCartSetupTestDataMixin,
             "/items/update_cart_item/1",
             data={"quantity": 3})
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/my_cart")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"{\"message\": \"updated!\"}")
         new_quant = ShoppingCartItem.objects.filter(
             customer_id=1, item_id=1).first().quantity
         self.assertEqual(new_quant, 3)
@@ -156,8 +154,8 @@ class ShoppingCartItemUpdateViewTests(ShoppingCartSetupTestDataMixin,
             reverse("items:update_cart_item", args=[1]),
             data={"quantity": 3})
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/my_cart")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b"{\"message\": \"updated!\"}")
         new_quant = ShoppingCartItem.objects.filter(
             customer_id=1, item_id=1).first().quantity
         self.assertEqual(new_quant, 3)
