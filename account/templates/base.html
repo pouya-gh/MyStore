@@ -16,6 +16,16 @@
       background-color: #dddddd;
     }
     </style>
+
+    {% load static %}
+    <script src="{% static 'js/cart.js' %}"></script>
+    <script>
+      window.addEventListener("load", function () {
+        load_cart_item_count("{% url "items:my_cart_count_json" %}");
+      });
+    </script>
+    {% block head %}{% endblock head %}
+    
     <title>{% block title %}My Store{% endblock  %}</title>
     </head>
 
@@ -30,7 +40,9 @@
 <p><a href="{% url "account:provider_profile_create" %}">Register a provider</a></p>
 <p><a href="{% url "account:my_provider_profiles_list" %}">My registered providers</a></p>
 <p><a href="{% url "items:item_create" %}">Submit An Item</a></p>
-<p><a href="{% url "items:current_user_cart" %}">My Cart</a></p>
+<p><a href="{% url "items:current_user_cart" %}">
+  My Cart <b id="cart_count"></b>
+</a></p>
 <p><a href="{% url "orders:user_orders_list" %}">My Orders</a></p>
 {% else %}
 <p><a href="{% url "account:login" %}">Log in</a></p>
