@@ -7,6 +7,8 @@ urlpatterns = [
     path("new", view=views.ItemCreateView.as_view(), name="item_create"),
     path("my_cart", view=views.current_user_shopping_cart_details,
          name="current_user_cart"),
+    path("my_cart_count.json", view=views.get_current_user_shopping_cart_item_count,
+         name="my_cart_count_json"),
     path("<pk>", view=views.ItemDetailView.as_view(), name="item_details"),
     path("update/<pk>", view=views.ItemUpdateView.as_view(), name="item_update"),
     path("delete/<pk>", view=views.ItemDeleteView.as_view(), name="item_delete"),

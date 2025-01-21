@@ -130,3 +130,10 @@ def current_user_shopping_cart_details(request):
     return render(request,
                   "items/shopping_cart/current_user_cart.html",
                   context={"cart_items": cart_items})
+
+
+@login_required
+def get_current_user_shopping_cart_item_count(request):
+    count = ShoppingCartItem.objects.filter(customer=request.user).count()
+
+    return JsonResponse({"count": count})
