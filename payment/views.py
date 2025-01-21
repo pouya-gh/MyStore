@@ -53,18 +53,20 @@ def payment_success(request):
 def payment_cancel(request):
     return render(request, "payment/cancel.html")
 
+
 @csrf_exempt
 @require_POST
 def webhook(request):
     endpoint_secret = settings.STRIPE_WEBHOOK_ENDPOINT_SECRET
     sig_header = request.headers['STRIPE_SIGNATURE']
     try:
-        event = stripe.Webhook.construct_event(request.body, sig_header, endpoint_secret)
+        event = stripe.Webhook.construct_event(
+            request.body, sig_header, endpoint_secret)
     except ValueError as e:
         raise e
     except stripe.error.SignatureVerificationError as e:
         raise e
-    
+
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
         order = get_object_or_404(Order, id=session["client_reference_id"])
@@ -72,6 +74,6 @@ def webhook(request):
         order.payment_id = session["payment_intent"]
         order.save()
     else:
-      print('Unhandled event type {}'.format(event['type']))
+        print('Unhandled event type {}'.format(event['type']))
 
     return HttpResponse(str(event), status=200)
