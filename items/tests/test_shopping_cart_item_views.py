@@ -43,7 +43,7 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
 
     def test_add_to_shopping_cart_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/items/add_to_cart/1?quantity=2")
+        response = self.client.post("/items/add_to_cart/1", data= {"quantity": 2})
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/items/1")
@@ -51,13 +51,13 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
     def test_add_to_shopping_cart_url_has_correct_name(self):
         self.client.login(username="user1", password="user1user1")
         url = reverse("items:add_to_cart", kwargs={"pk": 1})
-        response = self.client.get(url + "?quantity=2")
+        response = self.client.post(url, data= {"quantity": 2})
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/items/1")
 
     def test_add_to_cart_only_works_when_signed_in(self):
-        response = self.client.get("/items/add_to_cart/1?quantity=2")
+        response = self.client.post("/items/add_to_cart/1", data= {"quantity": 2})
 
         self.assertEqual(response.status_code, 302)
         self.assertTrue(response.url.startswith("/login"))
@@ -69,7 +69,7 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
 
         self.client.login(username="user1", password="user1user1")
         url = reverse("items:add_to_cart", kwargs={"pk": 1})
-        response = self.client.get(url + "?quantity=2")
+        response = self.client.post(url, data= {"quantity": 2})
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/items/1")
@@ -87,7 +87,7 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
                                         quantity=2)
         self.client.login(username="user1", password="user1user1")
         url = reverse("items:add_to_cart", kwargs={"pk": 1})
-        response = self.client.get(url + "?quantity=2")
+        response = self.client.post(url, data= {"quantity": 2})
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/items/1")

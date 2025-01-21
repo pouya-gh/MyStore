@@ -81,11 +81,12 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 
 
 @login_required
+@require_POST
 def add_to_shopping_cart(request, pk):
     item = get_object_or_404(Item, id=pk)
     user = request.user
     if not ShoppingCartItem.objects.filter(item=item, customer=user).exists():
-        form = ShoppingCartForm(request.GET)
+        form = ShoppingCartForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             user.shopping_cart_items.create(item=item,
