@@ -11,8 +11,9 @@ function load_cart_item_count() {
     }
 }
 
-function add_to_shopping_cart(event, csrf_token) {
+function add_to_shopping_cart(event) {
     event.preventDefault();
+    let csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
     let url = event.target.action;
     let quantity = document.getElementById("id_quantity").value;
     let form_div = event.target.parentNode;
@@ -39,7 +40,10 @@ function add_to_shopping_cart(event, csrf_token) {
                 });
 }
 
-function delete_from_shopping_cart(event, url, csrf_token) {
+function delete_from_shopping_cart(event) {
+    event.preventDefault();
+    let csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
+    let url = event.target.action;
     let table_row = event.target.parentNode.parentNode
     let request = fetch(
         url,
@@ -59,10 +63,11 @@ function delete_from_shopping_cart(event, url, csrf_token) {
     });
 }
 
-function update_shopping_cart_item(event, csrf_token) {
+function update_shopping_cart_item(event) {
     event.preventDefault();
+    let csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
     let url = event.target.action;
-    let quantity = event.target.childNodes[1].value;
+    let quantity = event.target.querySelector("input[name='quantity']").value;
     let form_col = event.target.parentNode;
     let table_row = form_col.parentNode;
     let formData = new FormData();

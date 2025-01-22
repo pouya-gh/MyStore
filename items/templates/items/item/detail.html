@@ -18,7 +18,8 @@
         <p>Item already in shopping cart</p>
         {% else %}
         <div id="addtocartform">
-            <form method="post" action="{% url "items:add_to_cart" item.id %}" onsubmit="add_to_shopping_cart(event, '{{ csrf_token }}');">
+            <form method="post" action="{% url "items:add_to_cart" item.id %}" onsubmit="add_to_shopping_cart(event);">
+                {% csrf_token %}
                 {{ shopping_cart_form }}
                 <input type='submit' Value="Add to Cart" />
             </form>
