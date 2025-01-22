@@ -100,3 +100,4 @@ class ProviderProfileDeleteView(ProviderProfileQuerySetMixin,
                                 LoginRequiredMixin,
                                 DeleteView):
     success_url = reverse_lazy("account:my_provider_profiles_list")
+    template_name = 'account/providerprofile/confirm_delete.html'

@@ -19,10 +19,7 @@
     <td>{{ provider.social_code }}</td>
     <td>{{ provider.status }}</td>
     <td>
-        <form action="{% url "account:provider_profile_delete" provider.id %}" method="post">
-            {% csrf_token %}
-            <input type='submit' value='Delete'/>
-        </form>
+        <a href="{% url "account:provider_profile_delete" provider.id %}"><button>Delete</button></a>
     </td>
 </tr>
 {% endfor %}
