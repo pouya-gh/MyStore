@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+{% block head %}
+{% load static %}
+<script src="{% static 'js/item.js' %}"></script>
+<script>
+    window.load_current_user_provider_profiles_into_selector("load", load_cart_item_count);
+</script>
+{% endblock head %}
+
+
 {% block content %}
 <form method='post'>
 {% csrf_token %}
