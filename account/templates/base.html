@@ -20,9 +20,7 @@
     {% load static %}
     <script src="{% static 'js/cart.js' %}"></script>
     <script>
-      window.addEventListener("load", function () {
-        load_cart_item_count("{% url "items:my_cart_count_json" %}");
-      });
+      window.addEventListener("load", load_cart_item_count);
     </script>
     {% block head %}{% endblock head %}
     

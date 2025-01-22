@@ -1,10 +1,11 @@
-function load_cart_item_count(url) {
+function load_cart_item_count() {
     let cart_elem = document.getElementById("cart_count");
     if (cart_elem) {
-        fetch(url).then(async (response) => {
+        fetch("/items/my_cart_count.json").then(async (response) => {
             let res_json = await response.json();
-            if (response.ok && res_json["count"] > 0) {
-                cart_elem.innerHTML = " (" + res_json["count"] + ")";
+            if (response.ok) {
+                let message = res_json["count"] > 0 ? " (" + res_json["count"] + ")" : ""
+                cart_elem.innerHTML = message;
             } 
         });
     }
@@ -28,6 +29,7 @@ function add_to_shopping_cart(event, csrf_token) {
     request.then(async (response) => {
                     if (response.ok) {
                         form_div.innerHTML = "Item added to your cart!";
+                        load_cart_item_count();
                     } else {
                         form_div.innerHTML += "Something went wrong!</br>";
                     }
@@ -51,6 +53,7 @@ function delete_from_shopping_cart(event, url, csrf_token) {
     request.then(
         async (response) => {
             if (response.ok) {
+                load_cart_item_count();
                 table_row.remove();
             }
     });
