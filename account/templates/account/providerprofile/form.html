@@ -3,7 +3,7 @@
 {% block title %}Provier Profile{% endblock title %}
 
 {% block content %}
-<form method="post" action="{% url "account:provider_profile_create" %}">
+<form method="post">
 {{ form.non_field_errors }}
 {{ form.as_p }}
 {% csrf_token %}
