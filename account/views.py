@@ -6,6 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http.response import JsonResponse
 from .forms import CustomerProfileForm, ProviderProfileForm, MyUserChangeForm
 from .models import ProviderProfile, ProfileStatus
 
@@ -101,3 +102,14 @@ class ProviderProfileDeleteView(ProviderProfileQuerySetMixin,
                                 DeleteView):
     success_url = reverse_lazy("account:my_provider_profiles_list")
     template_name = 'account/providerprofile/confirm_delete.html'
+
+
+@login_required
+def get_current_user_provider_profiles(request):
+    providers = request.user.providers_list.all()
+
+    profile_list = []
+    for p in providers:
+        profile_list.append({"name": str(p), "id": str(p.id)})
+
+    return JsonResponse({"providers_list": profile_list})

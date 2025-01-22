@@ -13,6 +13,8 @@ urlpatterns = [
          name='provider_profile_create'),
     path("myproviderprofiles", view=views.ProviderProfileListview.as_view(),
          name='my_provider_profiles_list'),
+    path("current_user_provider_profiles.json", view=views.get_current_user_provider_profiles,
+         name='current_user_provider_profiles_json'),
     path("providerprofile/<pk>", view=views.ProviderProfileUpdateView.as_view(),
          name='provider_profile_update'),
     path("providerprofile/delete/<pk>",
