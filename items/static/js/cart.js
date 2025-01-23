@@ -1,10 +1,10 @@
 function load_cart_item_count() {
-    let cart_elem = document.getElementById("cart_count");
+    const cart_elem = document.getElementById("cart_count");
     if (cart_elem) {
         fetch("/items/my_cart_count.json").then(async (response) => {
-            let res_json = await response.json();
+            const res_json = await response.json();
             if (response.ok) {
-                let message = res_json["count"] > 0 ? " (" + res_json["count"] + ")" : ""
+                const message = res_json["count"] > 0 ? " (" + res_json["count"] + ")" : ""
                 cart_elem.innerHTML = message;
             } 
         });
@@ -13,11 +13,11 @@ function load_cart_item_count() {
 
 function add_to_shopping_cart(event) {
     event.preventDefault();
-    let csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
-    let url = event.target.action;
-    let quantity = document.getElementById("id_quantity").value;
-    let form_div = event.target.parentNode;
-    let formData = new FormData();
+    const csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
+    const url = event.target.action;
+    const quantity = document.getElementById("id_quantity").value;
+    const form_div = event.target.parentNode;
+    const formData = new FormData();
     formData.append("quantity", quantity);
     let request = fetch(url, 
                     {
@@ -42,10 +42,10 @@ function add_to_shopping_cart(event) {
 
 function delete_from_shopping_cart(event) {
     event.preventDefault();
-    let csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
-    let url = event.target.action;
-    let table_row = event.target.parentNode.parentNode
-    let request = fetch(
+    const csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
+    const url = event.target.action;
+    const table_row = event.target.parentNode.parentNode
+    const request = fetch(
         url,
         {
             method: "POST",
@@ -65,14 +65,14 @@ function delete_from_shopping_cart(event) {
 
 function update_shopping_cart_item(event) {
     event.preventDefault();
-    let csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
-    let url = event.target.action;
-    let quantity = event.target.querySelector("input[name='quantity']").value;
-    let form_col = event.target.parentNode;
-    let table_row = form_col.parentNode;
-    let formData = new FormData();
+    const csrf_token = event.target.querySelector("input[name='csrfmiddlewaretoken']").value;
+    const url = event.target.action;
+    const quantity = event.target.querySelector("input[name='quantity']").value;
+    const form_col = event.target.parentNode;
+    const table_row = form_col.parentNode;
+    const formData = new FormData();
     formData.append("quantity", quantity);
-    let request = fetch(url, 
+    const request = fetch(url, 
                     {
                         method: "POST",
                         headers: {
