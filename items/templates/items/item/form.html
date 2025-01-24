@@ -3,10 +3,9 @@
 {% block head %}
 {% load static %}
 <script src="{% static 'js/item.js' %}"></script>
-<script src="{% static 'js/item_form_properties.js' %}"></script>
+<script type="module" src="{% static 'js/item_form_properties.js' %}"></script>
 <script>
     window.addEventListener("load", load_current_user_provider_profiles_into_selector);
-    window.addEventListener("load", initialSetup);
 </script>
 {% endblock head %}
 
@@ -29,7 +28,7 @@
         <tr id="props_last_row">
             <td></td>
             <td>
-                <button id="props_new_button" onclick="addPropButtonPressed(event);">New</button>
+                <button id="props_new_button">New</button>
             </td>
             <td></td>
         </tr>
