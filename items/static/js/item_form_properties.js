@@ -66,10 +66,10 @@ function initialSetup() {
     input_element.style.display = 'none';
     input_element.parentNode.appendChild(table.table_element);
     table.table_element.style.display = '';
-    turn_prop_json_to_table();
+    turnPropJsonToTable();
 }
 
-function write_prop_table_to_json() {
+function writePropTableToJson() {
     const table = PropsTable.getInstance();
     const rows = table.table_body.querySelectorAll("tr.prop_row");
     const props_map = new Map();
@@ -86,7 +86,7 @@ function write_prop_table_to_json() {
     input_element.value = result;
 }
 
-function turn_prop_json_to_table() {
+function turnPropJsonToTable() {
     const table = PropsTable.getInstance();
 
     const input_element = document.getElementById("id_properties");
@@ -97,21 +97,21 @@ function turn_prop_json_to_table() {
     }
 
     for (let [k, v] of Object.entries(props_json)) {
-        const new_row = table.createNewPropRow(k, v, remove_prop_button_pressed, write_prop_table_to_json);
+        const new_row = table.createNewPropRow(k, v, removePropButtonPressed, writePropTableToJson);
         table.table_body.insertBefore(new_row, table.last_row);
     }
 }
 
-function add_prop_button_pressed(evnt) {
+function addPropButtonPressed(evnt) {
     evnt.preventDefault();
     const table = PropsTable.getInstance();
-    const new_row = table.createNewPropRow("", "", remove_prop_button_pressed, write_prop_table_to_json);
+    const new_row = table.createNewPropRow("", "", removePropButtonPressed, writePropTableToJson);
     table.table_body.insertBefore(new_row, table.last_row);
-    write_prop_table_to_json();
+    writePropTableToJson();
 }
 
-function remove_prop_button_pressed(evnt) {
+function removePropButtonPressed(evnt) {
     evnt.preventDefault();
     evnt.target.parentNode.parentNode.remove();
-    write_prop_table_to_json();
+    writePropTableToJson();
 }
