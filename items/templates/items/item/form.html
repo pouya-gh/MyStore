@@ -3,8 +3,9 @@
 {% block head %}
 {% load static %}
 <script src="{% static 'js/item.js' %}"></script>
+<script src="{% static 'js/item_form_properties.js' %}?r=1"></script>
 <script>
-    window.load_current_user_provider_profiles_into_selector("load", load_cart_item_count);
+    window.addEventListener("load", load_current_user_provider_profiles_into_selector);
 </script>
 {% endblock head %}
 
@@ -14,6 +15,25 @@
 {% csrf_token %}
 {{ form.non_field_errors }}
 {{ form.as_p }}
+<table id="props_table" style='display:none;'>
+    <thead>
+        <tr id="props_first_row">
+            <th>Name</th>
+            <th>Value</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr id="props_last_row">
+            <td></td>
+            <td>
+                <button id="props_new_button" onclick="add_prop_button_pressed(event);">New</button>
+            </td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
 <input type='submit' value="Submit"/>
 </form>
 {% endblock content %}
