@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <p>Are you sure? This can not be reversed!</p>
 
 <form method="post" action="{% url "account:provider_profile_delete" providerprofile.id %}">
@@ -5,3 +8,4 @@
     <input type='submit' Value="Delete"/>
 </form>
 <p><a href="{% url "account:my_provider_profiles_list" %}">Go Back!</a><p>
+{% endblock content %}
