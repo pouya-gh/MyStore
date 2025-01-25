@@ -14,6 +14,12 @@ class ItemForm(forms.ModelForm):
                   "remaining_items",
                   "category"]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            # visible.label_tag(attrs={"class": "label-control"})
+
 
 class ShoppingCartForm(forms.Form):
     template_name = "items/shopping_cart/form.html"
