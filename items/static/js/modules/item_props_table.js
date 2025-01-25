@@ -22,6 +22,7 @@ export const PropsTable = (function () {
             const name_input = document.createElement("input");
             name_input.type = 'text';
             name_input.value = prop_name;
+            name_input.className = "form-control";
             name_input.onchange = input_change_event;
             name_column.appendChild(name_input);
             new_row.appendChild(name_column);
@@ -30,16 +31,18 @@ export const PropsTable = (function () {
             const value_input = document.createElement("input");
             value_input.type = 'text';
             value_input.value = prop_value;
+            value_input.className = "form-control";
             value_input.onchange = input_change_event;
             value_column.appendChild(value_input);
             new_row.appendChild(value_column);
 
             const button_column = document.createElement("td");
             const delete_button = document.createElement("button");
-            delete_button.className = "delete_prop";
+            delete_button.className = "delete_prop btn btn-warning";
             delete_button.onclick = delete_button_event;
-            const text = document.createTextNode("Delete");
-            delete_button.appendChild(text);
+            const icon = document.createElement("i");
+            icon.className = "bi bi-x-circle";
+            delete_button.appendChild(icon);
             button_column.appendChild(delete_button);
             new_row.appendChild(button_column);
 

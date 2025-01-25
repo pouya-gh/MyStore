@@ -8,6 +8,8 @@ function initialSetup() {
     table.table_element.style.display = '';
     document.querySelector("#props_new_button").onclick = addPropButtonPressed;
     turnPropJsonToTable();
+    const new_row = table.createNewPropRow("", "", removePropButtonPressed, writePropTableToJson);
+    table.table_body.insertBefore(new_row, table.last_row);
 }
 
 function writePropTableToJson() {
@@ -53,7 +55,7 @@ function addPropButtonPressed(evnt) {
 
 function removePropButtonPressed(evnt) {
     evnt.preventDefault();
-    evnt.target.parentNode.parentNode.remove();
+    evnt.target.parentNode.parentNode.parentNode.remove();
     writePropTableToJson();
 }
 

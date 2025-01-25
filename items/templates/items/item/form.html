@@ -11,29 +11,35 @@
 
 
 {% block content %}
-<form method='post'>
-{% csrf_token %}
-{{ form.non_field_errors }}
-{{ form.as_p }}
-<table id="props_table" style='display:none;'>
-    <thead>
-        <tr id="props_first_row">
-            <th>Name</th>
-            <th>Value</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
+<div class="row">
+    <div class="mx-auto col-xl-4">
+        {% comment %} <div class="card mb-4"> {% endcomment %}
+            <form method='post'>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.as_p }}
+            <table class="table-borderless" id="props_table" style='display:none;'>
+                <thead>
+                    <tr id="props_first_row">
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
 
-    <tbody>
-        <tr id="props_last_row">
-            <td></td>
-            <td>
-                <button id="props_new_button">New</button>
-            </td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
-<input type='submit' value="Submit"/>
-</form>
+                <tbody>
+                    <tr id="props_last_row">
+                        <td></td>
+                        <td>
+                            <button class="btn btn-success" id="props_new_button"><i class="bi bi-plus-circle"></i></button>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input class="btn btn-primary" type='submit' value="Submit"/>
+            </form>
+        {% comment %} </div> {% endcomment %}
+    </div>
+</div>
 {% endblock content %}

@@ -4,8 +4,7 @@ function load_cart_item_count() {
         fetch("/items/my_cart_count.json").then(async (response) => {
             const res_json = await response.json();
             if (response.ok) {
-                const message = res_json["count"] > 0 ? " (" + res_json["count"] + ")" : ""
-                cart_elem.innerHTML = message;
+                cart_elem.innerHTML = res_json["count"];
             } 
         });
     }
