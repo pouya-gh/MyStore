@@ -1,12 +1,17 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
 
 {% block title %}Provier Profile{% endblock title %}
 
 {% block content %}
-<form method="post">
-{{ form.non_field_errors }}
-{{ form.as_p }}
-{% csrf_token %}
-<input type="submit" value="Submit"/>
-</form>
+<div class="row">
+    <div class="mx-auto col-xl-4">
+        <form method="post">
+            {{ form.non_field_errors }}
+            {% bootstrap_form form %}
+            {% csrf_token %}
+            {% bootstrap_button button_type="submit" content="Submit" %}
+        </form>
+    </div>
+</div>
 {% endblock content %}
