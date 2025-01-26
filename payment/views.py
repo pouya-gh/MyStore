@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.conf import settings
 import stripe.error
@@ -19,7 +19,7 @@ stripe.api_key = settings.STRIPE_API_KEY
 
 @login_required
 def start_payment(request, order_id):
-    order = get_object_or_404(request.user.orders, id=order_id)
+    order = get_object_or_404(request.user.orders.filter(status=Order.OrderStatus.PENDING), id=order_id)
     session_params = {
         "client_reference_id": order.id,
         "line_items": [],
@@ -69,10 +69,16 @@ def webhook(request):
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        order = get_object_or_404(Order, id=session["client_reference_id"])
-        order.status = Order.OrderStatus.PAYMENT_ACCEPTED
-        order.payment_id = session["payment_intent"]
-        order.save()
+        # order = get_object_or_404(Order, id=session["client_reference_id"])
+        try:
+            Order.objects.filter(id=session["client_reference_id"]).\
+                update(status=Order.OrderStatus.PAYMENT_ACCEPTED,
+                    payment_id=session["payment_intent"])
+        except Order.DoesNotExist:
+            raise Http404("Order does not exits")
+        # order.status = Order.OrderStatus.PAYMENT_ACCEPTED
+        # order.payment_id = session["payment_intent"]
+        # order.save()
     else:
         print('Unhandled event type {}'.format(event['type']))
 
