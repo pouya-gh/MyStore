@@ -55,7 +55,13 @@ function addPropButtonPressed(evnt) {
 
 function removePropButtonPressed(evnt) {
     evnt.preventDefault();
-    evnt.target.parentNode.parentNode.parentNode.remove();
+    let parent_row = evnt.target.parentNode;
+    while (parent_row.tagName !== "TR" && parent_row) {
+        parent_row = parent_row.parentNode;
+    }
+    
+    parent_row?.remove();
+
     writePropTableToJson();
 }
 
