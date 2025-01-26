@@ -4,6 +4,7 @@ from django.urls import reverse
 from account.models import ProviderProfile
 from django.conf import settings
 from django.utils import timezone
+from django.utils.text import slugify
 
 
 class Category(models.Model):
@@ -83,6 +84,14 @@ class Item(models.Model):
 
     def get_absolute_url(self):
         return reverse("items:item_details", kwargs={"pk": self.pk})
+    
+    def generate_sku(self):
+        props = self.properties.items()
+        props_sorted = sorted(props)
+        sku = self.slug
+        for _, v in props_sorted:
+            sku += "-" + slugify(v.lower())
+        return sku
 
 
 class ShoppingCartItem(models.Model):
@@ -100,9 +109,4 @@ class ShoppingCartItem(models.Model):
         return f"{self.quantity} {self.item}"
 
     def generate_sku(self):
-        props = self.properties.items()
-        props_sorted = sorted(props)
-        sku = self.item.slug
-        for _, v in props_sorted:
-            sku += "-" + v.lower()
-        return sku
+        return self.item.generate_sku()

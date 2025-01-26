@@ -9,7 +9,7 @@
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
             <div class="col-md-6">
-                <div class="small mb-1">SKU: BST-498</div>
+                <div class="small mb-1">SKU: {{ item.generate_sku }}</div>
                 <h1 class="display-5 fw-bolder">{{ item.name }}</h1>
                 {% if item.category %}
                 <p><a href="{% url "items:items_list" %}?cat={{ item.category.slug }}">{{ item.category }}</a></p>
