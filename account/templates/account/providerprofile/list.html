@@ -1,27 +1,35 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
 
 {% block title %}My Providers{% endblock title %}
 
 {% block content %}
-<table>
-    <tr>
-        {% comment %} <th>Official Name</th> {% endcomment %}
-        <th>Name</th>
-        <th>Social Code</th>
-        <th>Is verified?</th>
-        <th>Delete</th>
-    </tr>
-{% for provider in profiles %}
-<tr>
-    <td><a href="{% url "account:provider_profile_update" provider.id %}">{{ provider }}</a></td>
-    {% comment %} <td>{{ provider.official_name }}</td> {% endcomment %}
-    {% comment %} <td>{{ provider.name }}</td> {% endcomment %}
-    <td>{{ provider.social_code }}</td>
-    <td>{{ provider.status }}</td>
-    <td>
-        <a href="{% url "account:provider_profile_delete" provider.id %}"><button>Delete</button></a>
-    </td>
-</tr>
-{% endfor %}
-</table>
+<section class="py-5">
+    <div class="mx-auto container mt-3">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Name</th>
+                        <th>Social Code</th>
+                        <th>Is verified?</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for provider in profiles %}
+                    <tr>
+                        <td><a href="{% url "account:provider_profile_update" provider.id %}">{{ provider }}</a></td>
+                        <td>{{ provider.social_code }}</td>
+                        <td>{{ provider.status }}</td>
+                        <td>
+                            <a href="{% url "account:provider_profile_delete" provider.id %}">
+                                {% bootstrap_button button_class="btn-danger" content="Delete" %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock content %}
