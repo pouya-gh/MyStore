@@ -1,9 +1,14 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
+
 {% block title %}My Cart{% endblock title %}
 
 {% block content %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
 
-<table>
+<table class="table table-hover">
     <tr>
         <th>Name</th>
         <th>Qauntity</th>
@@ -15,20 +20,24 @@
     <td><a href="{{ cart_item.item.get_absolute_url }}">{{ cart_item.item }}</a></td>
     <td class="itemquantity">{{ cart_item.quantity }}</td>
     <td>
-        <form method="post" action="{% url "items:update_cart_item" cart_item.item_id %}" onsubmit="update_shopping_cart_item(event);">
+        <form class="d-flex" method="post" action="{% url "items:update_cart_item" cart_item.item_id %}" onsubmit="update_shopping_cart_item(event);">
             {% csrf_token %}
-            <input type="number" min="1" name="quantity" value="{{ cart_item.quantity }}"/>
-            <input type='submit' Value="Update"/>
+            <input class="form-control text-center me-3" type="num" min="1" name="quantity" value="{{ cart_item.quantity }}" style="max-width: 3rem"/>
+            {% bootstrap_button button_type="submit" content="Update" %}
         </form>
     </td>
     <td>
         <form method="post" action="{% url 'items:delete_from_cart' cart_item.item_id %}" onsubmit="delete_from_shopping_cart(event);">
             {% csrf_token %}
-            <input type='submit' Value="Remove"/>
+            {% bootstrap_button button_type="submit" button_class="btn-danger" content="Remove" %}
         </form>
     </td>
 </tr>
 {% endfor %}
 </table>
-<p><a href="{% url "orders:place_order" %}">Place order</a></p>
+<p><a class='btn btn-primary' href="{% url "orders:place_order" %}">Place order</a></p>
+
+        </div>
+    </div>
+</section>
 {% endblock content %}
