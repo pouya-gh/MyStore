@@ -215,3 +215,58 @@ class OrdersListViewTests(SetupOrderViewsTestDataMixin,
         orders = response.context['orders']
         self.assertEqual(len(orders), 0)
         self.assertTemplateUsed(response, "orders/list.html")
+
+
+class OrdersCancelViewTests(SetupOrderViewsTestDataMixin,
+                            TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        user = get_user_model().objects.get(username="user1")
+        item1 = Item.objects.get(pk=1)
+        item2 = Item.objects.get(pk=2)
+        order = Order.objects.create(customer=user)
+        order.order_items.create(item=item1,
+                                 sku="shoes-white-8",
+                                 properties=item1.properties,
+                                 quantity=2)
+        order.order_items.create(item=item2,
+                                 sku="coffee-big",
+                                 properties=item2.properties,
+                                 quantity=1)
+
+    def test_order_cancel_view_url_exists(self):
+        self.client.login(username="user1", password="user1user1")
+        order = Order.objects.first()
+        response = self.client.post("/orders/cancel/" + str(order.id))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, order.get_absolute_url())
+        order.refresh_from_db()
+        self.assertEqual(order.status, Order.OrderStatus.CANCELED)
+
+    def test_order_cancel_view_url_has_correct_name(self):
+        self.client.login(username="user1", password="user1user1")
+        order = Order.objects.first()
+        response = self.client.post(reverse("orders:order_cancel", args=[order.id]))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, order.get_absolute_url())
+        order.refresh_from_db()
+        self.assertEqual(order.status, Order.OrderStatus.CANCELED)
+
+    def test_order_cancel_only_works_if_loggedin(self):
+        order = Order.objects.first()
+        response = self.client.post(reverse("orders:order_cancel", args=[order.id]))
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.url.startswith("/login"))
+
+    def test_order_cancel_only_loads_current_user_orders(self):
+        self.client.login(username="user2", password="user2user2")
+        order = Order.objects.first()
+        response = self.client.post(reverse("orders:order_cancel", args=[order.id]))
+
+        self.assertEqual(response.status_code, 404)
+        order.refresh_from_db()
+        self.assertEqual(order.status, Order.OrderStatus.PENDING)

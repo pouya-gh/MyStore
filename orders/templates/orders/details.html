@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load django_bootstrap5 %}
 
 {% block title %}Order {{ order }}{% endblock title %}
 
@@ -23,8 +24,15 @@
             </table>
             <p><h2>Total Price: ${{ order.get_total_price }}</h2></p>
             <p><h2>Status: {{ order.get_status_display }}</h2></p>
-            {% if order.status != "PA" %}
+            {% if order.status == "PN" %}
             <p><a class="btn btn-primary" href="{% url "payment:start" order.id %}">Checkout</a></p>
+            <p>
+                <form method='post' action="{% url "orders:order_cancel" order.id %}">
+                    {% csrf_token %}
+                    {% bootstrap_button button_class="btn-danger" button_type="submit" content="Cancel" %}
+                </form>
+                {% comment %} <a class="btn btn-danger" href="{% url "orders:order_cancel" order.id %}">Cancel</a> {% endcomment %}
+            </p>
             {% endif %}
 
         </div>

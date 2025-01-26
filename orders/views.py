@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.http.response import Http404
 
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.contrib.auth import get_user_model
 
 from items.models import ShoppingCartItem
@@ -30,6 +32,19 @@ def order_details(request, order_id):
     order = get_object_or_404(request.user.orders, id=order_id)
 
     return render(request, "orders/details.html", {"order": order})
+
+@login_required
+@require_POST
+def order_cancel(request, id):
+    try:
+        result = request.user.orders.filter(id=id).update(status=Order.OrderStatus.CANCELED)
+    except Order.DoesNotExist:
+        raise Http404("Order does not exist or it doesn't belong to you.")
+    
+    if result == 0:
+        raise Http404("Order does not exist or it doesn't belong to you.")
+    
+    return redirect(reverse("orders:order_details", args=[id]))
 
 
 @login_required
