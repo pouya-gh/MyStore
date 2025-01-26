@@ -28,7 +28,7 @@ class ShoppingCartItemTest(test.TestCase):
                                            slug="cat1")
         valid_item_data = {"name": "Shoes",
                            "slug": "shoes",
-                           "properties": {"size": ["8"], "color": ["white"], },
+                           "properties": {"size": "8", "color": "white", },
                            "description": "a pair of very good shoes",
                            "remaining_items": 100}
         item = Item.objects.create(submitted_by=user1,

@@ -5,11 +5,13 @@ from account.models import ProviderProfile
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
+import json
+
 
 class ItemViewsTestMixin:
     valid_item_data = {"name": "Shoes",
                        "slug": "shoes",
-                       "properties": '{"size": "8", "color": "white" }',
+                       "properties": {"size": "8", "color": "white" },
                        "description": "a pair of very good shoes",
                        "remaining_items": 100,
                        "price": 10.00}
@@ -159,6 +161,7 @@ class ItemCreateViewTests(ItemViewsTestMixin,
         data['slug'] = "newitem"
         data['provider'] = 1
         data['category'] = 1
+        data['properties'] = json.dumps(data['properties'])
         response = self.client.post(reverse("items:item_create"), data=data)
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Item.objects.count(), 2)
@@ -223,6 +226,7 @@ class ItemUpdateViewTests(ItemViewsTestMixin,
         data = ItemViewsTestMixin.valid_item_data.copy()
         data["description"] = prev_description + "lorem ipsum"
         data["provider"] = 1
+        data['properties'] = json.dumps(data['properties'])
         response = self.client.post(reverse("items:item_update", kwargs={"pk": 1}),
                                     data=data)
         new_description = Item.objects.first().description
