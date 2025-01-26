@@ -3,24 +3,34 @@
 {% block title %}Order {{ order }}{% endblock title %}
 
 {% block content %}
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Qauntity</th>
-        <th>Price</th>
-    </tr>
-{% for order_item in order.order_items.all %}
-<tr>
-    <td><a href="{{ order_item.item.get_absolute_url }}">{{ order_item.item }}</a></td>
-    <td>{{ order_item.quantity }}</td>
-    <td>{{ order_item.item.price }}</td>
-</tr>
-{% endfor %}
-</table>
-<p><h2>Total Price: {{ order.get_total_price }}</h2></p>
-<p><h2>Status: {{ order.status }}</h2></p>
-{% if order.status != "PA" %}
-<p><a href="{% url "payment:start" order.id %}">Checkout</a></p>
-{% endif %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+
+            <table class="table table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>Qauntity</th>
+                    <th>Price</th>
+                </tr>
+            {% for order_item in order.order_items.all %}
+            <tr>
+                <td><a href="{{ order_item.item.get_absolute_url }}">{{ order_item.item }}</a></td>
+                <td>{{ order_item.quantity }}</td>
+                <td>${{ order_item.item.price }}</td>
+            </tr>
+            {% endfor %}
+            </table>
+            <p><h2>Total Price: ${{ order.get_total_price }}</h2></p>
+            <p><h2>Status: {{ order.status }}</h2></p>
+            {% if order.status != "PA" %}
+            <p><a class="btn btn-primary" href="{% url "payment:start" order.id %}">Checkout</a></p>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+
 
 {% endblock content %}
