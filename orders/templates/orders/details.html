@@ -22,7 +22,7 @@
             {% endfor %}
             </table>
             <p><h2>Total Price: ${{ order.get_total_price }}</h2></p>
-            <p><h2>Status: {{ order.status }}</h2></p>
+            <p><h2>Status: {{ order.get_status_display }}</h2></p>
             {% if order.status != "PA" %}
             <p><a class="btn btn-primary" href="{% url "payment:start" order.id %}">Checkout</a></p>
             {% endif %}

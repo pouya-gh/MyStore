@@ -17,7 +17,7 @@
                     <tr>
                         <td><a href="{{ order.get_absolute_url }}">{{ order }}</a></td>
                         <td>${{ order.get_total_price }}</td>
-                        <td>{{ order.status }}</td>
+                        <td>{{ order.get_status_display }}</td>
                     </tr>
                     {% endfor %}
                 </table>
