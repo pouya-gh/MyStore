@@ -19,7 +19,8 @@ stripe.api_key = settings.STRIPE_API_KEY
 
 @login_required
 def start_payment(request, order_id):
-    order = get_object_or_404(request.user.orders.filter(status=Order.OrderStatus.PENDING), id=order_id)
+    order = get_object_or_404(request.user.orders.filter(
+        status=Order.OrderStatus.PENDING), id=order_id)
     session_params = {
         "client_reference_id": order.id,
         "line_items": [],
@@ -73,7 +74,7 @@ def webhook(request):
         try:
             Order.objects.filter(id=session["client_reference_id"]).\
                 update(status=Order.OrderStatus.PAYMENT_ACCEPTED,
-                    payment_id=session["payment_intent"])
+                       payment_id=session["payment_intent"])
         except Order.DoesNotExist:
             raise Http404("Order does not exits")
         # order.status = Order.OrderStatus.PAYMENT_ACCEPTED

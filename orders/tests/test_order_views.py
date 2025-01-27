@@ -248,7 +248,8 @@ class OrdersCancelViewTests(SetupOrderViewsTestDataMixin,
     def test_order_cancel_view_url_has_correct_name(self):
         self.client.login(username="user1", password="user1user1")
         order = Order.objects.first()
-        response = self.client.post(reverse("orders:order_cancel", args=[order.id]))
+        response = self.client.post(
+            reverse("orders:order_cancel", args=[order.id]))
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, order.get_absolute_url())
@@ -257,7 +258,8 @@ class OrdersCancelViewTests(SetupOrderViewsTestDataMixin,
 
     def test_order_cancel_only_works_if_loggedin(self):
         order = Order.objects.first()
-        response = self.client.post(reverse("orders:order_cancel", args=[order.id]))
+        response = self.client.post(
+            reverse("orders:order_cancel", args=[order.id]))
 
         self.assertEqual(response.status_code, 302)
         self.assertTrue(response.url.startswith("/login"))
@@ -265,7 +267,8 @@ class OrdersCancelViewTests(SetupOrderViewsTestDataMixin,
     def test_order_cancel_only_loads_current_user_orders(self):
         self.client.login(username="user2", password="user2user2")
         order = Order.objects.first()
-        response = self.client.post(reverse("orders:order_cancel", args=[order.id]))
+        response = self.client.post(
+            reverse("orders:order_cancel", args=[order.id]))
 
         self.assertEqual(response.status_code, 404)
         order.refresh_from_db()

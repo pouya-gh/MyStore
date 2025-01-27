@@ -33,17 +33,19 @@ def order_details(request, order_id):
 
     return render(request, "orders/details.html", {"order": order})
 
+
 @login_required
 @require_POST
 def order_cancel(request, id):
     try:
-        result = request.user.orders.filter(id=id).update(status=Order.OrderStatus.CANCELED)
+        result = request.user.orders.filter(id=id).update(
+            status=Order.OrderStatus.CANCELED)
     except Order.DoesNotExist:
         raise Http404("Order does not exist or it doesn't belong to you.")
-    
+
     if result == 0:
         raise Http404("Order does not exist or it doesn't belong to you.")
-    
+
     return redirect(reverse("orders:order_details", args=[id]))
 
 
