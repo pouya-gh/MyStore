@@ -6,6 +6,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.text import slugify
 
+import os
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -33,6 +35,10 @@ def _validate_item_properties(value):
                 "properties values must only be a string")
 
 
+def _item_image_directory_path(instance, filename):
+    return 'items/{0}/{1}'.format(instance.slug, filename)
+
+
 class Item(models.Model):
     class ItemSubmissionStatus(models.TextChoices):
         VERIFIED = 'VF', 'Verified'
@@ -50,6 +56,7 @@ class Item(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="submitted_items")
     properties = models.JSONField(validators=[_validate_item_properties])
     description = models.TextField()
+    image = models.ImageField(upload_to=_item_image_directory_path, blank=True)
     remaining_items = models.PositiveIntegerField(default=0, blank=False)
     price = models.DecimalField(
         default=0, blank=False, max_digits=12, decimal_places=2)
@@ -82,9 +89,24 @@ class Item(models.Model):
                 "item provider is not owned by you")
         return super().clean()
 
+    def save(self, *args, **kwargs):
+        """
+        remove the old image if it was changed
+        """
+        if self.id:  # the item is being updated
+            previous = Item.objects.get(pk=self.id)
+
+            if previous.image and (previous.image != self.image):
+                try:
+                    os.remove(previous.image.path)
+                except FileNotFoundError:  # this can happen if file was deleted manually and the db wasn't updated
+                    print("Item image not found")
+
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse("items:item_details", kwargs={"pk": self.pk})
-    
+
     def generate_sku(self):
         props = self.properties.items()
         props_sorted = sorted(props)
