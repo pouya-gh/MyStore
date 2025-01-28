@@ -58,7 +58,7 @@ class ItemViewsTestMixin:
                             category=category,
                             submission_status="VF",
                             **ItemViewsTestMixin.valid_item_data)
-        
+
         new_data = ItemViewsTestMixin.valid_item_data.copy()
         new_data["slug"] += "2"
         Item.objects.create(submitted_by=user1,
@@ -336,4 +336,5 @@ class CurrentUserItemListViewTests(ItemViewsTestMixin,
     def test_current_user_item_list_only_works_if_loggedin(self):
         response = self.client.get(reverse("items:current_user_items"))
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"), "Not redirecting to login page")
+        self.assertTrue(response.url.startswith("/login"),
+                        "Not redirecting to login page")

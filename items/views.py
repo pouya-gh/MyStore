@@ -94,6 +94,8 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
     form_class = ItemForm
 
     def form_valid(self, form):
+        # i have to do this here too for item creation. but for item update
+        # it gets checked in the model.
         self.object = form.save(commit=False)
         if self.object.provider.user_id == self.request.user.id:
             self.object.submitted_by = self.request.user
