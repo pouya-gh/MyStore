@@ -35,6 +35,7 @@
                           <li><a class="dropdown-item" href="{% url "account:provider_profile_create" %}">Register a provider</a></li>
                           <li><a class="dropdown-item" href="{% url "account:my_provider_profiles_list" %}">My registered providers</a></li>
                           <li><a class="dropdown-item" href="{% url "items:item_create" %}">Submit An Item</a></li>
+                          <li><a class="dropdown-item" href="{% url "items:current_user_items" %}">My Items</a></li>
                           <li><a class="dropdown-item" href="{% url "orders:user_orders_list" %}">My Orders</a></li>
                           <li><form  method="post" action="{% url "account:logout" %}">
                               {% csrf_token %}

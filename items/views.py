@@ -27,6 +27,21 @@ class ItemListView(ListView):
         return Item.objects.verified_items()
 
 
+class CurrentUserItemListView(LoginRequiredMixin, ListView):
+    model = Item
+    template_name = "items/item/list.html"
+    context_object_name = "items"
+
+    def get_queryset(self):
+        user = self.request.user
+        category_slug = self.request.GET.get("cat", None)
+        if self.request.GET and category_slug:
+            category = get_object_or_404(Category, slug=category_slug)
+            return user.submitted_items.filter(category=category)
+
+        return user.submitted_items.all()
+
+
 # you will be able to view unverified items but you won't be able to add them to shopping cart.
 # this is so the item owner is able to view and edit their own items
 class ItemDetailView(DetailView):

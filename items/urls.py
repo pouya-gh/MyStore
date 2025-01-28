@@ -4,6 +4,8 @@ from . import views
 app_name = "items"
 urlpatterns = [
     path("", view=views.ItemListView.as_view(), name="items_list"),
+    path("myitems", view=views.CurrentUserItemListView.as_view(),
+         name="current_user_items"),
     path("new", view=views.ItemCreateView.as_view(), name="item_create"),
     path("my_cart", view=views.current_user_shopping_cart_details,
          name="current_user_cart"),
