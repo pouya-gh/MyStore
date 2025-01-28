@@ -15,6 +15,9 @@
             
             <div class="col-md-6">
                 <div class="small mb-1">SKU: {{ item.generate_sku }}</div>
+                {% if item.submission_status != "VF" %}
+                <div class="small mb-1"><span class="badge bg-danger">Unverified</span></div>
+                {% endif %}
                 <h1 class="display-5 fw-bolder">{{ item.name }}</h1>
                 {% if item.category %}
                 <p><a href="{% url "items:items_list" %}?cat={{ item.category.slug }}">{{ item.category }}</a></p>
@@ -40,26 +43,29 @@
                     </div>
                 </p>
                 {% if request.user.is_authenticated %}
-                <div class="d-flex">
-                    {% if already_in_cart %}
-                    <p>Item already in shopping cart</p>
-                    {% else %}
-                    <form class="d-flex" method="post" action="{% url "items:add_to_cart" item.id %}" onsubmit="add_to_shopping_cart(event);">
-                        {% csrf_token %}
-                        <input class="form-control text-center me-3" id="id_quantity" type="num" min="1" name="quantity" style="max-width: 3rem" value="{{ cart_item.quantity }}"/>
-                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Add to cart
-                        </button>
-                    </form>
+                    {% if item.submission_status == "VF"  %}
+                    <div class="d-flex">
+                        {% if already_in_cart %}
+                        <p>Item already in shopping cart</p>
+                        {% else %}
+                        <form class="d-flex" method="post" action="{% url "items:add_to_cart" item.id %}" onsubmit="add_to_shopping_cart(event);">
+                            {% csrf_token %}
+                            <input class="form-control text-center me-3" id="id_quantity" type="num" min="1" name="quantity" style="max-width: 3rem" value="{{ cart_item.quantity }}"/>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                Add to cart
+                            </button>
+                        </form>
+                        {% endif %}
+                    </div>
                     {% endif %}
-                </div>
-                <div>
-                    {% if item.submitted_by == request.user %}
-                        <p><a href="{% url "items:item_update" item.id %}"><button class="btn btn-warning">Edit</button></a></p>
-                        <p><a href="{% url "items:item_delete" item.id %}"><button class="btn btn-danger">Delete</button></a></p>
-                    {% endif %}
-                </div>
+                
+                    <div>
+                        {% if item.submitted_by == request.user %}
+                            <p><a href="{% url "items:item_update" item.id %}"><button class="btn btn-warning">Edit</button></a></p>
+                            <p><a href="{% url "items:item_delete" item.id %}"><button class="btn btn-danger">Delete</button></a></p>
+                        {% endif %}
+                    </div>
                 {% endif %}
             </div>
         </div>

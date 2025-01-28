@@ -22,11 +22,13 @@ class ItemListView(ListView):
         category_slug = self.request.GET.get("cat", None)
         if self.request.GET and category_slug:
             category = get_object_or_404(Category, slug=category_slug)
-            return Item.objects.filter(category=category)
+            return Item.objects.verified_items().filter(category=category)
 
-        return Item.objects.all()
+        return Item.objects.verified_items()
 
 
+# you will be able to view unverified items but you won't be able to add them to shopping cart.
+# this is so the item owner is able to view and edit their own items
 class ItemDetailView(DetailView):
     model = Item
     template_name = "items/item/detail.html"
@@ -48,12 +50,19 @@ class LoadOnlyOwnedItemsMixin:
         return self.request.user.submitted_items
 
 
+# not using verfield_items queryset for item update and delete views because these are used by the item owner anyway
 class ItemUpdateView(LoginRequiredMixin,
                      LoadOnlyOwnedItemsMixin,
                      UpdateView):
     model = Item
     template_name = 'items/item/form.html'
     form_class = ItemForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.submission_status = Item.ItemSubmissionStatus.PENDING
+        self.object.save()
+        return super().form_valid(form)
 
 
 class ItemDeleteView(LoginRequiredMixin,
@@ -84,7 +93,8 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
 @login_required
 @require_POST
 def add_to_shopping_cart(request, pk):
-    item = get_object_or_404(Item, id=pk)
+    # you can only add verfied items
+    item = get_object_or_404(Item.objects.verified_items(), id=pk)
     user = request.user
     if not ShoppingCartItem.objects.filter(item=item, customer=user).exists():
         form = ShoppingCartForm(request.POST)
