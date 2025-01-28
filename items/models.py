@@ -38,6 +38,15 @@ def _validate_item_properties(value):
 def _item_image_directory_path(instance, filename):
     return 'items/{0}/{1}'.format(instance.slug, filename)
 
+class ItemQuerySet(models.QuerySet):
+    def verified_items(self):
+        return self.filter(submission_status="VF")
+    
+    def pending_items(self):
+        return self.filter(submission_status="PN")
+
+    def declined_items(self):
+        return self.filter(submission_status="DC")
 
 class Item(models.Model):
     class ItemSubmissionStatus(models.TextChoices):
@@ -72,6 +81,9 @@ class Item(models.Model):
 
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True)
+    
+
+    objects = ItemQuerySet.as_manager()
 
     class Meta:
         ordering = ["-publish", "slug"]
