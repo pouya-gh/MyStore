@@ -58,6 +58,14 @@
                         </form>
                         {% endif %}
                     </div>
+                    {% elif item.submission_review_message  %}
+                    <p>
+                        <a href="#review_message" class="btn btn-outline-dark" data-bs-toggle="collapse">Admin message</a>
+                        <div id="review_message" class="collapse">
+                            
+                                {{ item.submission_review_message }}
+                        </div>
+                    </p>
                     {% endif %}
                 
                     <div>

@@ -31,6 +31,10 @@
                             {% if item.category %}
                             <a href="{% url "items:items_list" %}?cat={{ item.category.slug }}">{{ item.category }}</a></br>
                             {% endif %}
+                            {% comment %} this is for when this template is used for current user items list {% endcomment %}
+                            {% if item.submission_status != "VF" %}
+                            <div class="small mb-1"><span class="badge bg-danger">{{ item.get_submission_status_display }}</span></div>
+                            {% endif %}
                             <!-- Product price-->
                             ${{ item.price }}
                         </div>
