@@ -23,7 +23,22 @@
                     <span>${{ item.price }}</span>
                 </div>
                 <p class="lead">{{ item.description }}</p>
-                <p>Properties: {{ item.properties }}</p>
+                <p>
+                    <a href="#item_properties" class="btn btn-outline-dark" data-bs-toggle="collapse">More Info</a>
+                    <div id="item_properties" class="collapse">
+                        <table class="table table-borderless">
+                            <tbody>
+                                {% for k, v in item.properties.items %}
+                                <tr>
+                                    <td>{{ k }}</td>
+                                    <td>{{ v }}</td>
+                                </tr>
+                                {% endfor %}
+                              
+                            </tbody>
+                          </table>
+                    </div>
+                </p>
                 {% if request.user.is_authenticated %}
                 <div class="d-flex">
                     {% if already_in_cart %}
