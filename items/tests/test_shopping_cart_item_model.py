@@ -30,6 +30,7 @@ class ShoppingCartItemTest(test.TestCase):
                            "slug": "shoes",
                            "properties": {"size": "8", "color": "white", },
                            "description": "a pair of very good shoes",
+                           "submission_status": "VF",
                            "remaining_items": 100}
         item = Item.objects.create(submitted_by=user1,
                                    provider=provider1,
