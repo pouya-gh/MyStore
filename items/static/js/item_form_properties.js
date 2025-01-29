@@ -17,9 +17,9 @@ function writePropTableToJson() {
     const rows = table.table_body.querySelectorAll("tr.prop_row");
     const props_map = new Map();
     for (const row of rows) {
-        const cols = row.querySelectorAll("td");
-        const name = cols[0].querySelector("input").value;
-        const value = cols[1].querySelector("input").value;
+        const inputs = row.querySelectorAll("input");
+        const name = inputs[0].value;
+        const value = inputs[1].value;
         if (name && value) {
             props_map.set(name, value);
         }
@@ -55,13 +55,7 @@ function addPropButtonPressed(evnt) {
 
 function removePropButtonPressed(evnt) {
     evnt.preventDefault();
-    let parent_row = evnt.target.parentNode;
-    while (parent_row.tagName !== "TR" && parent_row) {
-        parent_row = parent_row.parentNode;
-    }
-    
-    parent_row?.remove();
-
+    evnt.target.closest(".prop_row")?.remove();
     writePropTableToJson();
 }
 
