@@ -11,6 +11,7 @@ urlpatterns = [
          name="current_user_cart"),
     path("my_cart_count.json", view=views.get_current_user_shopping_cart_item_count,
          name="my_cart_count_json"),
+    path("search", view=views.search_items, name="search"),
     path("<pk>", view=views.ItemDetailView.as_view(), name="item_details"),
     path("update/<pk>", view=views.ItemUpdateView.as_view(), name="item_update"),
     path("delete/<pk>", view=views.ItemDeleteView.as_view(), name="item_delete"),

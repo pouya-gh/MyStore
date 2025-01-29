@@ -8,9 +8,12 @@ from django.views.generic.edit import DeleteView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 from .models import Item, Category, ShoppingCartItem
 from .forms import ItemForm, ShoppingCartForm
+
+import json
 
 
 class ItemListView(ListView):
@@ -164,3 +167,28 @@ def get_current_user_shopping_cart_item_count(request):
     count = ShoppingCartItem.objects.filter(customer=request.user).count()
 
     return JsonResponse({"count": count})
+
+
+def search_items(request):
+    q = request.GET.get('q')
+    filters = request.GET.get('filters')
+    category_id = request.GET.get("category")
+    items = Item.objects.verified_items().only("name")
+
+    categories = Category.objects.only("name")
+
+    if q:
+        items = items.filter(name__icontains=q)
+
+    if filters:
+        q_filters = Q()
+        filters_list = json.loads(filters)
+        for f in filters_list:
+            q_filters.add(Q(**{f"properties__{f[0]}__icontains": f[1]}), Q.AND)
+        items = items.filter(q_filters)
+
+    if category_id:
+        items = items.filter(category_id=int(category_id))
+
+
+    return render(request, "items/item/search.html", {"items": items, "categories": categories})
