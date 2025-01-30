@@ -67,7 +67,8 @@ class ItemDetailView(DetailView):
 class LoadOnlyOwnedItemsMixin:
     def get_queryset(self):
         return self.request.user.submitted_items
-    
+
+
 class ItemUpdateAndCreateToolsMixin:
     def strip_and_capitalize_props_keys(self, props: dict):
         """
@@ -217,11 +218,11 @@ def search_items(request):
                 messages.warning(request, f"""filter name \"{f[0]}\" was ignored. 
                                Only alphanumeric characters and space are allowed.""")
                 continue
-            q_filters.add(Q(**{f"properties__{f_name_stripped_capped}__icontains": f[1]}), Q.AND)
+            q_filters.add(
+                Q(**{f"properties__{f_name_stripped_capped}__icontains": f[1]}), Q.AND)
         items = items.filter(q_filters)
 
     if category_id:
         items = items.filter(category_id=int(category_id))
-
 
     return render(request, "items/item/search.html", {"items": items, "categories": categories})

@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Items{% endblock title %}
+
+{% block head %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const content_to_check = window.location.pathname === "/" ? "Home" : "Items"
+        const navLinks = document.getElementsByClassName("nav-link");
+        for (const navLink of navLinks) {
+            if (navLink.innerHTML === content_to_check)
+            navLink.classList.add("active");
+        }
+    });
+    
+</script>
+{% endblock head %}
+
+
 {% block content %}
 <!-- Header-->
 <header class="bg-dark py-5">
