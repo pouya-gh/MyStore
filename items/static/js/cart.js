@@ -31,11 +31,13 @@ function add_to_shopping_cart(event) {
                         form_div.innerHTML = "Item added to your cart!";
                         load_cart_item_count();
                     } else {
-                        form_div.innerHTML += "Something went wrong!</br>";
+                        const toast = document.querySelector(".cart-error");
+                        toast.classList.add("show")
                     }
                 },
                 () => {
-                    form_div.innerHTML += "Something went wrong!</br>";
+                    const toast = document.querySelector(".cart-error");
+                    toast.classList.add("show");
                 });
 }
 
@@ -83,10 +85,14 @@ function update_shopping_cart_item(event) {
                     if (response.ok) {
                         table_row.querySelector("td.itemquantity").innerHTML = quantity;
                     } else {
-                        form_col.innerHTML += "Something went wrong!</br>";
+                        // form_col.innerHTML += "Something went wrong!</br>";
+                        const toast = document.querySelector(".cart-error");
+                        toast.classList.add("show");
                     }
                 },
                 () => {
-                    form_col.innerHTML += "Something went wrong!</br>";
+                    // form_col.innerHTML += "Something went wrong!</br>";
+                    const toast = document.querySelector(".cart-error");
+                    toast.classList.add("show");
                 });
 }

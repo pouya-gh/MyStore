@@ -56,6 +56,15 @@
                                 Add to cart
                             </button>
                         </form>
+
+                        <div class="toast cart-error">
+                            <div class="toast-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                            </div>
+                            <div class="toast-body">
+                            <p>Something went wrong!</p>
+                            </div>
+                        </div>
                         {% endif %}
                     </div>
                     {% elif item.submission_review_message  %}

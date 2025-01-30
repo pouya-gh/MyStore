@@ -148,8 +148,8 @@ def add_to_shopping_cart(request, pk):
                                             properties=item.properties,
                                             quantity=cd["quantity"])
             return JsonResponse({"message": "added!"})
-    else:
-        messages.warning(request, "Item is already in cart!")
+    # else:
+    #     messages.warning(request, "Item is already in cart!")
 
     return HttpResponseBadRequest("Can't add to cart!")
 

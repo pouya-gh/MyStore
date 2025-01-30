@@ -25,6 +25,15 @@
             <input class="form-control text-center me-3" type="num" min="1" name="quantity" value="{{ cart_item.quantity }}" style="max-width: 3rem"/>
             {% bootstrap_button button_type="submit" content="Update" %}
         </form>
+
+        <div class="toast cart-error">
+            <div class="toast-header">
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+            <p>Something went wrong!</p>
+            </div>
+        </div>
     </td>
     <td>
         <form method="post" action="{% url 'items:delete_from_cart' cart_item.item_id %}" onsubmit="delete_from_shopping_cart(event);">
