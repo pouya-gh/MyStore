@@ -9,8 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from django.contrib import messages
 
-from .models import Item, Category, ShoppingCartItem
+from .models import Item, Category, ShoppingCartItem, is_alphnum_and_space
 from .forms import ItemForm, ShoppingCartForm
 
 import json
@@ -66,11 +67,27 @@ class ItemDetailView(DetailView):
 class LoadOnlyOwnedItemsMixin:
     def get_queryset(self):
         return self.request.user.submitted_items
+    
+class ItemUpdateAndCreateToolsMixin:
+    def strip_and_capitalize_props_keys(self, props: dict):
+        """
+        Strip begining and trailing spaces from property keys and capitalize
+        the first letters to make searching with them as filters easier. 
+        """
+        props_to_change = []
+        for k, v in props.items():
+            new_k = k.strip().capitalize()
+            if k != new_k:
+                props_to_change.append([k, v, new_k])
+        for p in props_to_change:
+            del props[p[0]]
+            props[p[2]] = p[1]
 
 
 # not using verfield_items queryset for item update and delete views because these are used by the item owner anyway
 class ItemUpdateView(LoginRequiredMixin,
                      LoadOnlyOwnedItemsMixin,
+                     ItemUpdateAndCreateToolsMixin,
                      UpdateView):
     model = Item
     template_name = 'items/item/form.html'
@@ -79,6 +96,9 @@ class ItemUpdateView(LoginRequiredMixin,
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.submission_status = Item.ItemSubmissionStatus.PENDING
+        if self.object.properties:
+            self.strip_and_capitalize_props_keys(self.object.properties)
+
         self.object.save()
         return super().form_valid(form)
 
@@ -91,7 +111,9 @@ class ItemDeleteView(LoginRequiredMixin,
     template_name = 'items/item/confirm_delete.html'
 
 
-class ItemCreateView(LoginRequiredMixin, CreateView):
+class ItemCreateView(LoginRequiredMixin,
+                     ItemUpdateAndCreateToolsMixin,
+                     CreateView):
     model = Item
     template_name = "items/item/form.html"
     form_class = ItemForm
@@ -100,6 +122,8 @@ class ItemCreateView(LoginRequiredMixin, CreateView):
         # i have to do this here too for item creation. but for item update
         # it gets checked in the model.
         self.object = form.save(commit=False)
+        if self.object.properties:
+            self.strip_and_capitalize_props_keys(self.object.properties)
         if self.object.provider.user_id == self.request.user.id:
             self.object.submitted_by = self.request.user
             self.object.save()
@@ -184,7 +208,14 @@ def search_items(request):
         q_filters = Q()
         filters_list = json.loads(filters)
         for f in filters_list:
-            q_filters.add(Q(**{f"properties__{f[0]}__icontains": f[1]}), Q.AND)
+            # this is to make searching easier
+            f_name_stripped_capped = f[0].strip().capitalize()
+            # making sure they are safe from SQL injection
+            if not is_alphnum_and_space(f_name_stripped_capped):
+                messages.error(request, f"""filter name \"{f[0]}\" was ignored. 
+                               Only alphanumeric characters and space are allowed.""")
+                continue
+            q_filters.add(Q(**{f"properties__{f_name_stripped_capped}__icontains": f[1]}), Q.AND)
         items = items.filter(q_filters)
 
     if category_id:

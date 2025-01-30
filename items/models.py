@@ -27,9 +27,15 @@ class Category(models.Model):
             raise ValidationError("A category can not be its own parent")
         return super().clean()
 
+def is_alphnum_and_space(prop_name: str) -> bool:
+    return prop_name.replace(" ", "").isalnum()
 
 def _validate_item_properties(value):
     for k, v in value.items():
+        if not is_alphnum_and_space(k):
+            raise ValidationError(
+                "property's keys must contain only alphanumeric characters and space")
+
         if not isinstance(v, str):
             raise ValidationError(
                 "properties values must only be a string")
