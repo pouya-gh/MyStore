@@ -148,6 +148,8 @@ def add_to_shopping_cart(request, pk):
                                             properties=item.properties,
                                             quantity=cd["quantity"])
             return JsonResponse({"message": "added!"})
+    else:
+        messages.warning(request, "Item is already in cart!")
 
     return HttpResponseBadRequest("Can't add to cart!")
 
@@ -212,7 +214,7 @@ def search_items(request):
             f_name_stripped_capped = f[0].strip().capitalize()
             # making sure they are safe from SQL injection
             if not is_alphnum_and_space(f_name_stripped_capped):
-                messages.error(request, f"""filter name \"{f[0]}\" was ignored. 
+                messages.warning(request, f"""filter name \"{f[0]}\" was ignored. 
                                Only alphanumeric characters and space are allowed.""")
                 continue
             q_filters.add(Q(**{f"properties__{f_name_stripped_capped}__icontains": f[1]}), Q.AND)
