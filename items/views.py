@@ -15,6 +15,7 @@ from .models import Item, Category, ShoppingCartItem, is_alphnum_and_space
 from .forms import ItemForm, ShoppingCartForm
 
 import json
+from decimal import Decimal, InvalidOperation
 
 
 class ItemListView(ListView):
@@ -200,9 +201,23 @@ def search_items(request):
     q = request.GET.get('q')
     filters = request.GET.get('filters')
     category_id = request.GET.get("category")
+    min_price = request.GET.get("min_price")
+    max_price = request.GET.get("max_price")
     items = Item.objects.verified_items().only("name")
 
     categories = Category.objects.only("name")
+
+    if min_price:
+        try:
+            items = items.filter(price__gte=Decimal(min_price))
+        except InvalidOperation:
+            messages.warning(request, "Invalid min price input.")
+
+    if max_price:
+        try:
+            items = items.filter(price__lte=Decimal(max_price))
+        except InvalidOperation:
+            messages.warning(request, "Invalid max price input.")
 
     if q:
         items = items.filter(name__icontains=q)
@@ -225,7 +240,7 @@ def search_items(request):
     if category_id:
         items = items.filter(category_id=int(category_id))
 
-    if not (q or filters or category_id):
+    if not (q or filters or category_id or min_price or max_price):
         items = []
 
     return render(request, "items/item/search.html", {"items": items, "categories": categories})

@@ -100,16 +100,16 @@
 {% block content %}
 <main class="d-flex flex-nowrap">
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+    <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
       <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold">Collapsible</span>
+      <span class="fs-5 fw-semibold">More Options</span>
     </a>
     <ul class="list-unstyled ps-0 scrollarea">
         <li class="mb-1">
-            <button id="filters-button" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#more-optons-collapse" aria-expanded="false">
+            <button id="filters-button" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#more-options-collapse" aria-expanded="false">
               Filters
             </button>
-            <div class="collapse" id="more-optons-collapse">
+            <div class="collapse" id="more-options-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <div id="filters_section" class="p-2">
                     <div id="filtersContainer" class="list-group-item list-group-item-action active py-3 lh-sm">
@@ -120,18 +120,24 @@
               </ul>
             </div>
       </li>
-      {% comment %} <li class="mb-1">
-        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-          Home
+      <li class="mb-1">
+        <button id="price-range-button" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#price-range-collapse" aria-expanded="false">
+          Price Range
         </button>
-        <div class="collapse" id="home-collapse">
+        <div class="collapse" id="price-range-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Overview</a></li>
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Updates</a></li>
-            <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">Reports</a></li>
+            <div class="p-2 d-flex w-100 align-items-center justify-content-between">
+              <div class="col">
+                <input id="min-price" step=".01" type="number" class="form-control" placeholder="Min Price">
+              </div>
+              <div class="col">
+                <input id="max-price" step=".01" type="number" class="form-control" placeholder="Max Price">
+              </div>
+              
+            </div>
           </ul>
         </div>
-      </li> {% endcomment %}
+      </li>
     </ul>
   </div>
 

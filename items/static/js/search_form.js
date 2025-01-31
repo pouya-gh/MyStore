@@ -44,13 +44,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchForm = document.getElementById('searchForm');
     const searchInput = document.getElementById('search_query');
     const categoryDropdown = document.getElementById("categories_dropdown");
+    const minPriceInput = document.getElementById("min-price");
+    const maxPriceInput = document.getElementById("max-price");
 
     const urlParams = new URLSearchParams(window.location.search);
     const filters = JSON.parse(urlParams.get("filters"));
     const searchQ = urlParams.get("q");
     const categoryId = urlParams.get("category");
+    const minPrice = urlParams.get("min_price");
+    const maxPrice = urlParams.get("max_price");
+
+    if (minPrice || maxPrice) {
+        const filtersSection = document.getElementById('price-range-collapse');
+        filtersSection.classList.add("show");
+        document.getElementById('price-range-button').setAttribute("aria-expanded", "true");
+
+        minPriceInput.value = minPrice;
+        maxPriceInput.value = maxPrice;
+    }
+
     if (filters) {
-        const filtersSection = document.getElementById('more-optons-collapse'); 
+        const filtersSection = document.getElementById('more-options-collapse');
         filtersSection.classList.add("show");
         document.getElementById('filters-button').setAttribute("aria-expanded", "true");
         for (f of filters) {
@@ -97,6 +111,22 @@ document.addEventListener('DOMContentLoaded', function () {
             input.type = "hidden";
             input.name = "filters";
             input.value = JSON.stringify(filters);
+            e.target.appendChild(input);
+        }
+
+        if (minPriceInput.value) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "min_price";
+            input.value = minPriceInput.value;
+            e.target.appendChild(input);
+        }
+
+        if (maxPriceInput.value) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "max_price";
+            input.value = maxPriceInput.value;
             e.target.appendChild(input);
         }
 
