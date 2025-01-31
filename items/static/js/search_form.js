@@ -1,9 +1,9 @@
 function _createNewFilterRow(key = "", value = "") {
     const parent_div = document.createElement("div");
-    parent_div.className = "row";
+    parent_div.className = "p-2 d-flex w-100 align-items-center justify-content-between";
 
     const div1 = document.createElement("div");
-    div1.className = "col-md-3";
+    div1.className = "col";
     const input1 = document.createElement("input");
     input1.type = 'text';
     input1.value = key;
@@ -13,7 +13,7 @@ function _createNewFilterRow(key = "", value = "") {
     parent_div.appendChild(div1);
 
     const div2 = document.createElement("div");
-    div2.className = "col-md-3";
+    div2.className = "col";
     const input2 = document.createElement("input");
     input2.type = 'text';
     input2.value = value;
@@ -28,7 +28,10 @@ function _createNewFilterRow(key = "", value = "") {
     const addButton = document.createElement("button");
     addButton.type = 'button';
     addButton.classList.add("btn", "btn-danger", "remove-filter");
-    addButton.innerHTML = "Remove";
+    const icon = document.createElement("i");
+    icon.classList.add("bi", "bi-x-circle", "remove-filter");
+    addButton.appendChild(icon);
+    // addButton.innerHTML = '<i class="bi-x-circle me-1"></i>';
     div3.appendChild(addButton);
     parent_div.appendChild(div3);
 
@@ -47,8 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchQ = urlParams.get("q");
     const categoryId = urlParams.get("category");
     if (filters) {
-        const filtersSection = document.getElementById('filters_section'); 
+        const filtersSection = document.getElementById('more-optons-collapse'); 
         filtersSection.classList.add("show");
+        document.getElementById('filters-button').setAttribute("aria-expanded", "true");
         for (f of filters) {
             const filterPair = document.createElement('div');
             filterPair.classList.add('filter-pair', 'mb-3');
