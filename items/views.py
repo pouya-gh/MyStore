@@ -225,4 +225,7 @@ def search_items(request):
     if category_id:
         items = items.filter(category_id=int(category_id))
 
+    if not (q or filters or category_id):
+        items = []
+
     return render(request, "items/item/search.html", {"items": items, "categories": categories})
