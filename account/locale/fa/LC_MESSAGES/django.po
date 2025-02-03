@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-03 09:00+0330\n"
-"PO-Revision-Date: 2025-02-03 09:05+0000\n"
+"POT-Creation-Date: 2025-02-03 10:09+0330\n"
+"PO-Revision-Date: 2025-02-03 10:09+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -63,64 +63,113 @@ msgstr "شماره تماس دوم"
 msgid "status"
 msgstr "وضعیت"
 
-#: .\account\templates\base.html:18
+#: .\account\templates\account\customerprofile\form.html:4
+msgid "Set Profile"
+msgstr "حساب کاربری"
+
+#: .\account\templates\account\customerprofile\form.html:15
+#: .\account\templates\account\providerprofile\form.html:14
+#| msgid "Submit An Item"
+msgid "Submit"
+msgstr "ثبت"
+
+#: .\account\templates\account\providerprofile\confirm_delete.html:9
+msgid "Are you sure? This can not be reversed!"
+msgstr "آیا مطمئن هستید؟"
+
+#: .\account\templates\account\providerprofile\confirm_delete.html:13
+#: .\account\templates\account\providerprofile\list.html:17
+#: .\account\templates\account\providerprofile\list.html:19
+msgid "Delete"
+msgstr "حذف کن"
+
+#: .\account\templates\account\providerprofile\confirm_delete.html:15
+msgid "Go Back!"
+msgstr "برگرد!"
+
+#: .\account\templates\account\providerprofile\form.html:5
+msgid "Provier Profile"
+msgstr "حساب توزیع کننده"
+
+#: .\account\templates\account\providerprofile\list.html:5
+msgid "My Providers"
+msgstr "حساب های توزیع کننده من"
+
+#: .\account\templates\account\providerprofile\list.html:14
+msgid "Name"
+msgstr "نام"
+
+#: .\account\templates\account\providerprofile\list.html:15
+msgid "Social Code"
+msgstr "کد ملی"
+
+#: .\account\templates\account\providerprofile\list.html:16
+msgid "Is verified?"
+msgstr "تأیید شده؟"
+
+#: .\account\templates\base.html:20
 msgid "My Store"
 msgstr "فروشگاه من"
 
-#: .\account\templates\base.html:40
+#: .\account\templates\base.html:42
 msgid "Home"
 msgstr "خانه"
 
-#: .\account\templates\base.html:41
+#: .\account\templates\base.html:43
 msgid "Items"
 msgstr "کالاها"
 
-#: .\account\templates\base.html:42
+#: .\account\templates\base.html:44
 msgid "Search"
 msgstr "جست و جو"
 
-#: .\account\templates\base.html:45
-#| msgid "country"
+#: .\account\templates\base.html:47
 msgid "Account"
 msgstr "حساب کاربری"
 
-#: .\account\templates\base.html:47
+#: .\account\templates\base.html:49
 msgid "Update Profile"
 msgstr "حساب کاربری"
 
-#: .\account\templates\base.html:48
+#: .\account\templates\base.html:50
 msgid "Register a provider"
 msgstr "ثب توزیع کننده جدید"
 
-#: .\account\templates\base.html:49
+#: .\account\templates\base.html:51
 msgid "My registered providers"
 msgstr "حساب های توزیع کننده من"
 
-#: .\account\templates\base.html:50
+#: .\account\templates\base.html:52
 msgid "Submit An Item"
 msgstr "ثبت کالای جدید"
 
-#: .\account\templates\base.html:51
-#| msgid "Items"
+#: .\account\templates\base.html:53
 msgid "My Items"
 msgstr "کالاهای من"
 
-#: .\account\templates\base.html:52
+#: .\account\templates\base.html:54
 msgid "My Orders"
 msgstr "صورت حساب های من"
 
-#: .\account\templates\base.html:55
+#: .\account\templates\base.html:57
 msgid "Logout"
 msgstr "خروج"
 
-#: .\account\templates\base.html:61
+#: .\account\templates\base.html:63
+#: .\account\templates\registration\login.html:12
 msgid "Log in"
 msgstr "وارد شدن"
 
-#: .\account\templates\base.html:62
+#: .\account\templates\base.html:64
+#: .\account\templates\registration\signup.html:5
+#: .\account\templates\registration\signup.html:13
 msgid "Sign up"
 msgstr "ثبت نام"
 
-#: .\account\templates\base.html:68
+#: .\account\templates\base.html:70
 msgid "Cart"
 msgstr "سبد خرید"
+
+#: .\account\templates\registration\logout.html:5
+msgid "You just logged out."
+msgstr "خارج شدین"

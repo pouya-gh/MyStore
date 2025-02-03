@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
-{% block title %}Provier Profile{% endblock title %}
+{% block title %}{% trans "Provier Profile" %}{% endblock title %}
 
 {% block content %}
 <div class="row">
@@ -10,7 +11,8 @@
             {{ form.non_field_errors }}
             {% bootstrap_form form %}
             {% csrf_token %}
-            {% bootstrap_button button_type="submit" content="Submit" %}
+            {% trans "Submit" as submit_trans %}
+            {% bootstrap_button button_type="submit" content=submit_trans %}
         </form>
     </div>
 </div>

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-03 09:00+0330\n"
-"PO-Revision-Date: 2025-02-03 09:03+0000\n"
+"POT-Creation-Date: 2025-02-03 10:09+0330\n"
+"PO-Revision-Date: 2025-02-03 10:09+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -63,64 +63,116 @@ msgstr "Phone number (2)"
 msgid "status"
 msgstr "Status"
 
-#: .\account\templates\base.html:18
+#: .\account\templates\account\customerprofile\form.html:4
+msgid "Set Profile"
+msgstr "Set Profile"
+
+#: .\account\templates\account\customerprofile\form.html:15
+#: .\account\templates\account\providerprofile\form.html:14
+#| msgid "Submit An Item"
+msgid "Submit"
+msgstr "Submit"
+
+#: .\account\templates\account\providerprofile\confirm_delete.html:9
+msgid "Are you sure? This can not be reversed!"
+msgstr "Are you sure? This can not be reversed!"
+
+#: .\account\templates\account\providerprofile\confirm_delete.html:13
+#: .\account\templates\account\providerprofile\list.html:17
+#: .\account\templates\account\providerprofile\list.html:19
+msgid "Delete"
+msgstr "Delete"
+
+#: .\account\templates\account\providerprofile\confirm_delete.html:15
+msgid "Go Back!"
+msgstr "Go Back!"
+
+#: .\account\templates\account\providerprofile\form.html:5
+msgid "Provier Profile"
+msgstr "Provider Profile"
+
+#: .\account\templates\account\providerprofile\list.html:5
+msgid "My Providers"
+msgstr "My Providers"
+
+#: .\account\templates\account\providerprofile\list.html:14
+msgid "Name"
+msgstr "Name"
+
+#: .\account\templates\account\providerprofile\list.html:15
+msgid "Social Code"
+msgstr "Social Code"
+
+#: .\account\templates\account\providerprofile\list.html:16
+msgid "Is verified?"
+msgstr "Is verified?"
+
+#: .\account\templates\base.html:20
 msgid "My Store"
 msgstr "My Store"
 
-#: .\account\templates\base.html:40
+#: .\account\templates\base.html:42
 msgid "Home"
 msgstr "Home"
 
-#: .\account\templates\base.html:41
+#: .\account\templates\base.html:43
 msgid "Items"
 msgstr "Items"
 
-#: .\account\templates\base.html:42
+#: .\account\templates\base.html:44
 msgid "Search"
 msgstr "Search"
 
-#: .\account\templates\base.html:45
-#| msgid "country"
+#: .\account\templates\base.html:47
 msgid "Account"
 msgstr "Account"
 
-#: .\account\templates\base.html:47
+#: .\account\templates\base.html:49
 msgid "Update Profile"
 msgstr "Update Profile"
 
-#: .\account\templates\base.html:48
+#: .\account\templates\base.html:50
 msgid "Register a provider"
 msgstr "Register a provider"
 
-#: .\account\templates\base.html:49
+#: .\account\templates\base.html:51
 msgid "My registered providers"
 msgstr "My registered providers"
 
-#: .\account\templates\base.html:50
+#: .\account\templates\base.html:52
 msgid "Submit An Item"
 msgstr "Submit an item"
 
-#: .\account\templates\base.html:51
-#| msgid "Items"
+#: .\account\templates\base.html:53
 msgid "My Items"
 msgstr "My items"
 
-#: .\account\templates\base.html:52
+#: .\account\templates\base.html:54
 msgid "My Orders"
 msgstr "My orders"
 
-#: .\account\templates\base.html:55
+#: .\account\templates\base.html:57
 msgid "Logout"
 msgstr "Logout"
 
-#: .\account\templates\base.html:61
+#: .\account\templates\base.html:63
+#: .\account\templates\registration\login.html:12
 msgid "Log in"
 msgstr "Log in"
 
-#: .\account\templates\base.html:62
+#: .\account\templates\base.html:64
+#: .\account\templates\registration\signup.html:5
+#: .\account\templates\registration\signup.html:13
 msgid "Sign up"
 msgstr "Sign up"
 
-#: .\account\templates\base.html:68
+#: .\account\templates\base.html:70
 msgid "Cart"
 msgstr "Cart"
+
+#: .\account\templates\registration\logout.html:5
+msgid "You just logged out."
+msgstr "You just logged out."
+
+#~ msgid "Sing up"
+#~ msgstr "Sign up"

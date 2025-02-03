@@ -1,17 +1,18 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <div class="row">
     <div class="mx-auto container mt-3">
         <div class="container px-4 px-lg-5 my-5 align-items-center">
 
-            <p class="lead fw-bolder">Are you sure? This can not be reversed!</p>
+            <p class="lead fw-bolder">{% trans "Are you sure? This can not be reversed!" %}</p>
 
             <form method="post" action="{% url "account:provider_profile_delete" providerprofile.id %}">
                 {% csrf_token %}
-                <input class="btn btn-danger" type='submit' Value="Delete"/>
+                <input class="btn btn-danger" type='submit' Value="{% trans "Delete" %}"/>
             </form>
-            <p><a class="btn btn-success" href="{% url "account:my_provider_profiles_list" %}">Go Back!</a><p>
+            <p><a class="btn btn-success" href="{% url "account:my_provider_profiles_list" %}">{% trans "Go Back!" %}</a><p>
         
         </div>
     </div>
