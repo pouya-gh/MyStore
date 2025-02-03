@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-03 10:09+0330\n"
-"PO-Revision-Date: 2025-02-03 10:09+0000\n"
+"POT-Creation-Date: 2025-02-03 10:16+0330\n"
+"PO-Revision-Date: 2025-02-03 10:17+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,57 +19,82 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.10.1\n"
 
-#: .\account\models.py:45
-msgid "user"
+#: .\account\models.py:8
+#| msgid "Is verified?"
+msgid "Verified"
+msgstr "تأیید شده"
+
+#: .\account\models.py:9
+msgid "Verfication pending"
+msgstr "در انتظار تأیید"
+
+#: .\account\models.py:10
+msgid "Declined"
+msgstr "رد شده"
+
+#: .\account\models.py:18
+msgid "User"
 msgstr "کاربر"
 
-#: .\account\models.py:46
-msgid "official name"
-msgstr "نام رسمی"
-
-#: .\account\models.py:47
-msgid "provider name"
-msgstr "نام"
-
-#: .\account\models.py:53
-msgid "social code"
+#: .\account\models.py:24
+#: .\account\templates\account\providerprofile\list.html:15
+msgid "Social Code"
 msgstr "کد ملی"
 
-#: .\account\models.py:54
+#: .\account\models.py:25
+msgid "Birth date"
+msgstr "تاریخ تولد"
+
+#: .\account\models.py:26 .\account\models.py:56
 msgid "country"
 msgstr "کشور"
 
-#: .\account\models.py:55
+#: .\account\models.py:27 .\account\models.py:57
 msgid "province"
 msgstr "استان/ایالت"
 
-#: .\account\models.py:56
+#: .\account\models.py:28 .\account\models.py:58
 msgid "city"
 msgstr "شهر"
 
-#: .\account\models.py:57
+#: .\account\models.py:29 .\account\models.py:59
 msgid "address"
 msgstr "آدرس"
 
-#: .\account\models.py:58
+#: .\account\models.py:30 .\account\models.py:60
 msgid "phone number"
 msgstr "شماره تماس"
 
-#: .\account\models.py:59
+#: .\account\models.py:31 .\account\models.py:61
 msgid "phone number 2"
 msgstr "شماره تماس دوم"
 
-#: .\account\models.py:61
+#: .\account\models.py:33 .\account\models.py:63
 msgid "status"
 msgstr "وضعیت"
 
-#: .\account\templates\account\customerprofile\form.html:4
+#: .\account\models.py:47
+msgid "user"
+msgstr "کاربر"
+
+#: .\account\models.py:48
+msgid "official name"
+msgstr "نام رسمی"
+
+#: .\account\models.py:49
+msgid "provider name"
+msgstr "نام"
+
+#: .\account\models.py:55
+msgid "social code"
+msgstr "کد ملی"
+
+#: .\account\templates\account\customerprofile\form.html:5
 msgid "Set Profile"
 msgstr "حساب کاربری"
 
-#: .\account\templates\account\customerprofile\form.html:15
+#: .\account\templates\account\customerprofile\form.html:16
 #: .\account\templates\account\providerprofile\form.html:14
-#| msgid "Submit An Item"
 msgid "Submit"
 msgstr "ثبت"
 
@@ -98,10 +123,6 @@ msgstr "حساب های توزیع کننده من"
 #: .\account\templates\account\providerprofile\list.html:14
 msgid "Name"
 msgstr "نام"
-
-#: .\account\templates\account\providerprofile\list.html:15
-msgid "Social Code"
-msgstr "کد ملی"
 
 #: .\account\templates\account\providerprofile\list.html:16
 msgid "Is verified?"

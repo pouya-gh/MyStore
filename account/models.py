@@ -5,30 +5,34 @@ from django.utils.translation import gettext_lazy as _
 
 
 class ProfileStatus(models.TextChoices):
-    VERIFIED = 'VF', 'Verified'
-    PENDING = 'PN', 'Verfication pending'
-    DECLINED = 'DC', 'Declined'
+    VERIFIED = 'VF', _('Verified')
+    PENDING = 'PN', _('Verfication pending')
+    DECLINED = 'DC', _('Declined')
 
 
 class CustomerProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
                                 related_name='profile',
-                                primary_key=True)
+                                primary_key=True,
+                                verbose_name=_("User"))
     social_code = models.CharField(max_length=10,
                                    unique=True,
                                    blank=False,
                                    null=False,
-                                   default=None)
-    birth_date = models.DateField()
-    country = CountryField()
-    province = models.CharField(max_length=200)
-    city = models.CharField(max_length=100)
-    address = models.CharField(max_length=300)
-    phone_number = models.CharField(max_length=11)
-    phone_number2 = models.CharField(max_length=11, null=True, blank=True)
+                                   default=None,
+                                   verbose_name=_("Social Code"))
+    birth_date = models.DateField(verbose_name=_("Birth date"))
+    country = CountryField(verbose_name=_("country"))
+    province = models.CharField(max_length=200, verbose_name=_("province"))
+    city = models.CharField(max_length=100, verbose_name=_("city"))
+    address = models.CharField(max_length=300, verbose_name=_("address"))
+    phone_number = models.CharField(
+        max_length=11, verbose_name=_("phone number"))
+    phone_number2 = models.CharField(
+        max_length=11, null=True, blank=True, verbose_name=_("phone number 2"))
     status = models.CharField(
-        max_length=2, choices=ProfileStatus.choices, default=ProfileStatus.PENDING)
+        max_length=2, choices=ProfileStatus.choices, default=ProfileStatus.PENDING, verbose_name=_("status"))
 
     class Meta:
         ordering = ["user", "social_code"]
@@ -43,8 +47,10 @@ class CustomerProfile(models.Model):
 class ProviderProfile(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='providers_list', verbose_name=_("user"))
-    official_name = models.CharField(max_length=100, verbose_name=_("official name"))
-    name = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("provider name"))
+    official_name = models.CharField(
+        max_length=100, verbose_name=_("official name"))
+    name = models.CharField(max_length=100, null=True,
+                            blank=True, verbose_name=_("provider name"))
     social_code = models.CharField(max_length=10,
                                    unique=True,
                                    blank=False,
@@ -55,8 +61,10 @@ class ProviderProfile(models.Model):
     province = models.CharField(max_length=200, verbose_name=_("province"))
     city = models.CharField(max_length=100, verbose_name=_("city"))
     address = models.CharField(max_length=300, verbose_name=_("address"))
-    phone_number = models.CharField(max_length=11, verbose_name=_("phone number"))
-    phone_number2 = models.CharField(max_length=11, null=True, blank=True, verbose_name=_("phone number 2"))
+    phone_number = models.CharField(
+        max_length=11, verbose_name=_("phone number"))
+    phone_number2 = models.CharField(
+        max_length=11, null=True, blank=True, verbose_name=_("phone number 2"))
     status = models.CharField(
         max_length=2, choices=ProfileStatus.choices, default=ProfileStatus.PENDING, verbose_name=_("status"))
 

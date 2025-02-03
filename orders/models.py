@@ -33,13 +33,16 @@ class Order(models.Model):
         PAYMENT_DECLINED = "PD", "Payment Declined"
         CANCELED = "CN", "Canceled"
 
-    id = models.UUIDField(verbose_name=_("id"), primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(verbose_name=_(
+        "id"), primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(settings.AUTH_USER_MODEL,
                                  on_delete=models.PROTECT,
                                  related_name="orders",
                                  verbose_name=_("customer"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
-    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(
+        auto_now=True, verbose_name=_("updated at"))
     status = models.CharField(max_length=2,
                               choices=OrderStatus,
                               default=OrderStatus.PENDING,
