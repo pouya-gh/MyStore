@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-03 09:00+0330\n"
+"PO-Revision-Date: 2025-02-03 09:03+0000\n"
+"Last-Translator: Root Rootian <root@root.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.1\n"
+
+#: .\account\models.py:45
+msgid "user"
+msgstr "User"
+
+#: .\account\models.py:46
+msgid "official name"
+msgstr "Official name"
+
+#: .\account\models.py:47
+msgid "provider name"
+msgstr "Name"
+
+#: .\account\models.py:53
+msgid "social code"
+msgstr "Social Code"
+
+#: .\account\models.py:54
+msgid "country"
+msgstr "Country"
+
+#: .\account\models.py:55
+msgid "province"
+msgstr "Province/State"
+
+#: .\account\models.py:56
+msgid "city"
+msgstr "City"
+
+#: .\account\models.py:57
+msgid "address"
+msgstr "Adress"
+
+#: .\account\models.py:58
+msgid "phone number"
+msgstr "Phone number"
+
+#: .\account\models.py:59
+msgid "phone number 2"
+msgstr "Phone number (2)"
+
+#: .\account\models.py:61
+msgid "status"
+msgstr "Status"
+
+#: .\account\templates\base.html:18
+msgid "My Store"
+msgstr "My Store"
+
+#: .\account\templates\base.html:40
+msgid "Home"
+msgstr "Home"
+
+#: .\account\templates\base.html:41
+msgid "Items"
+msgstr "Items"
+
+#: .\account\templates\base.html:42
+msgid "Search"
+msgstr "Search"
+
+#: .\account\templates\base.html:45
+#| msgid "country"
+msgid "Account"
+msgstr "Account"
+
+#: .\account\templates\base.html:47
+msgid "Update Profile"
+msgstr "Update Profile"
+
+#: .\account\templates\base.html:48
+msgid "Register a provider"
+msgstr "Register a provider"
+
+#: .\account\templates\base.html:49
+msgid "My registered providers"
+msgstr "My registered providers"
+
+#: .\account\templates\base.html:50
+msgid "Submit An Item"
+msgstr "Submit an item"
+
+#: .\account\templates\base.html:51
+#| msgid "Items"
+msgid "My Items"
+msgstr "My items"
+
+#: .\account\templates\base.html:52
+msgid "My Orders"
+msgstr "My orders"
+
+#: .\account\templates\base.html:55
+msgid "Logout"
+msgstr "Logout"
+
+#: .\account\templates\base.html:61
+msgid "Log in"
+msgstr "Log in"
+
+#: .\account\templates\base.html:62
+msgid "Sign up"
+msgstr "Sign up"
+
+#: .\account\templates\base.html:68
+msgid "Cart"
+msgstr "Cart"

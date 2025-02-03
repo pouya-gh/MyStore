@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from items.models import Item
 
@@ -32,16 +33,19 @@ class Order(models.Model):
         PAYMENT_DECLINED = "PD", "Payment Declined"
         CANCELED = "CN", "Canceled"
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(verbose_name=_("id"), primary_key=True, default=uuid.uuid4, editable=False)
     customer = models.ForeignKey(settings.AUTH_USER_MODEL,
                                  on_delete=models.PROTECT,
-                                 related_name="orders")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+                                 related_name="orders",
+                                 verbose_name=_("customer"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("updated at"))
     status = models.CharField(max_length=2,
                               choices=OrderStatus,
-                              default=OrderStatus.PENDING)
-    payment_id = models.CharField(max_length=255, blank=True, null=True)
+                              default=OrderStatus.PENDING,
+                              verbose_name=_("status"))
+    payment_id = models.CharField(max_length=255, blank=True, null=True,
+                                  verbose_name=_("payment id"))
 
     class Meta:
         ordering = ["-created_at"]
