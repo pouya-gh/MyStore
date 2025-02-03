@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+from django.utils.translation import gettext_lazy as _
 
 import os
 from pathlib import Path
@@ -48,11 +49,13 @@ INSTALLED_APPS = [
     "items.apps.ItemsConfig",
     "orders.apps.OrdersConfig",
     "payment.apps.PaymentConfig",
+    'rosetta',
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -141,3 +144,14 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = 'account:login'
 LOGOUT_URL = 'account:logout'
+
+LANGUAGES = [
+    ('en', _('English')),
+    ('fa', _('Farsi')),
+]
+
+LANGUAGE_CODE = 'en'
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]

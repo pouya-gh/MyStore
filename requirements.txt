@@ -4,3 +4,4 @@ django-countries==7.6.1
 stripe==11.4.1
 django-bootstrap5==24.3
 pillow==11.1.0
+django-rosetta==0.10.1
