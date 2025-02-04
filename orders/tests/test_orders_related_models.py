@@ -71,7 +71,7 @@ class OrderModelTests(SetupTestDataMixin,
     def test_get_absolute_url(self):
         order = Order.objects.first()
 
-        self.assertEqual(order.get_absolute_url(), f"/orders/{order.id}")
+        self.assertEqual(order.get_absolute_url(), f"/en/orders/{order.id}")
 
 
 class OrderItemModelTests(SetupTestDataMixin,

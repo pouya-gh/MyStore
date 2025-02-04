@@ -67,7 +67,7 @@ class OrdersCreateViewTests(SetupOrderViewsTestDataMixin,
         self.client.login(username="user1", password="user1user1")
 
         self.assertEqual(Order.objects.count(), 0)
-        response = self.client.get("/orders/new")
+        response = self.client.get("/en/orders/new")
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Order.objects.count(), 1)
@@ -90,7 +90,7 @@ class OrdersCreateViewTests(SetupOrderViewsTestDataMixin,
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(ShoppingCartItem.objects.count(), 2)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_shopping_cart_is_emptied_after_order_creation(self):
         self.client.login(username="user1", password="user1user1")
@@ -106,7 +106,7 @@ class OrdersCreateViewTests(SetupOrderViewsTestDataMixin,
         response = self.client.get(reverse("orders:place_order"))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Order.objects.count(), 0)
-        self.assertEqual(response.url, "/")
+        self.assertEqual(response.url, "/en/")
 
 
 class OrderDetailViewTests(SetupOrderViewsTestDataMixin,
@@ -130,7 +130,7 @@ class OrderDetailViewTests(SetupOrderViewsTestDataMixin,
     def test_order_detail_url_exists(self):
         order = Order.objects.first()
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get(f"/orders/{order.id}")
+        response = self.client.get(f"/en/orders/{order.id}")
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("order", response.context)
@@ -151,7 +151,7 @@ class OrderDetailViewTests(SetupOrderViewsTestDataMixin,
         response = self.client.get(order.get_absolute_url())
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_order_detail_only_loads_current_user_orders(self):
         order = Order.objects.first()
@@ -182,7 +182,7 @@ class OrdersListViewTests(SetupOrderViewsTestDataMixin,
 
     def test_orders_list_view_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/orders/my_orders")
+        response = self.client.get("/en/orders/my_orders")
 
         self.assertEqual(response.status_code, 200)
         self.assertIn("orders", response.context)
@@ -204,7 +204,7 @@ class OrdersListViewTests(SetupOrderViewsTestDataMixin,
         response = self.client.get(reverse("orders:user_orders_list"))
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_order_detail_only_loads_current_user_orders(self):
         self.client.login(username="user2", password="user2user2")
@@ -238,7 +238,7 @@ class OrdersCancelViewTests(SetupOrderViewsTestDataMixin,
     def test_order_cancel_view_url_exists(self):
         self.client.login(username="user1", password="user1user1")
         order = Order.objects.first()
-        response = self.client.post("/orders/cancel/" + str(order.id))
+        response = self.client.post("/en/orders/cancel/" + str(order.id))
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, order.get_absolute_url())
@@ -262,7 +262,7 @@ class OrdersCancelViewTests(SetupOrderViewsTestDataMixin,
             reverse("orders:order_cancel", args=[order.id]))
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_order_cancel_only_loads_current_user_orders(self):
         self.client.login(username="user2", password="user2user2")

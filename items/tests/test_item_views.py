@@ -71,7 +71,7 @@ class ItemListViewTests(ItemViewsTestMixin,
                         test.TestCase):
 
     def test_list_url_exits_and_only_loads_verified_items(self):
-        response = self.client.get("/items/")
+        response = self.client.get("/en/items/")
         self.assertEqual(response.status_code, 200)
         self.assertIn("items", response.context)
         self.assertTemplateUsed(response, "items/item/list.html")
@@ -107,7 +107,7 @@ class ItemListViewTests(ItemViewsTestMixin,
 
     def test_homepage_is_items_list(self):
         url = reverse("home")
-        self.assertEqual(url, "/")
+        self.assertEqual(url, "/en/")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertIn("items", response.context)
@@ -119,7 +119,7 @@ class ItemListViewTests(ItemViewsTestMixin,
 class ItemDetailViewTests(ItemViewsTestMixin,
                           test.TestCase):
     def test_detail_url_exits(self):
-        response = self.client.get("/items/1")
+        response = self.client.get("/en/items/1")
         self.assertEqual(response.status_code, 200)
         self.assertIn("item", response.context)
         self.assertTemplateUsed(response, "items/item/detail.html")
@@ -143,7 +143,7 @@ class ItemCreateViewTests(ItemViewsTestMixin,
                           test.TestCase):
     def test_create_view_exits(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/items/new")
+        response = self.client.get("/en/items/new")
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertIsInstance(response.context['form'], ItemForm)
@@ -201,7 +201,7 @@ class ItemUpdateViewTests(ItemViewsTestMixin,
 
     def test_update_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/items/update/1")
+        response = self.client.get("/en/items/update/1")
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertIsInstance(response.context['form'], ItemForm)
@@ -250,7 +250,7 @@ class ItemDeleteViewTests(ItemViewsTestMixin,
                           test.TestCase):
     def test_delete_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/items/delete/1")
+        response = self.client.get("/en/items/delete/1")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "items/item/confirm_delete.html")
 
@@ -267,7 +267,7 @@ class ItemDeleteViewTests(ItemViewsTestMixin,
             reverse("items:item_delete", kwargs={"pk": 1})
         )
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_delete_only_works_if_current_user_doesnt_own_it(self):
         self.client.login(username="user2", password="user2user2")
@@ -298,7 +298,7 @@ class CurrentUserItemListViewTests(ItemViewsTestMixin,
 
     def test_current_user_item_list_url_exits(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/items/myitems")
+        response = self.client.get("/en/items/myitems")
         self.assertEqual(response.status_code, 200)
         self.assertIn("items", response.context)
         self.assertTemplateUsed(response, "items/item/list.html")
@@ -336,5 +336,5 @@ class CurrentUserItemListViewTests(ItemViewsTestMixin,
     def test_current_user_item_list_only_works_if_loggedin(self):
         response = self.client.get(reverse("items:current_user_items"))
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"),
+        self.assertTrue(response.url.startswith("/en/login"),
                         "Not redirecting to login page")

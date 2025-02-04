@@ -26,13 +26,13 @@ class ProviderProfileCreateViewsTests(TestCase):
         user1.save()
 
     def test_creation_form_url_redirects_when_signedout(self):
-        response = self.client.get("/providerprofile/create")
+        response = self.client.get("/en/providerprofile/create")
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_creation_form_url_loads_when_signedin(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/providerprofile/create")
+        response = self.client.get("/en/providerprofile/create")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "account/providerprofile/form.html")
         self.assertIsInstance(response.context["form"], ProviderProfileForm)
@@ -49,7 +49,7 @@ class ProviderProfileCreateViewsTests(TestCase):
         response = self.client.post(
             reverse("account:provider_profile_create"), data=self.valid_provider_form_data)
         final_profile_count = ProviderProfile.objects.all().count()
-        self.assertRedirects(response, "/myproviderprofiles")
+        self.assertRedirects(response, "/en/myproviderprofiles")
         self.assertEqual(initial_profile_count, 0)
         self.assertEqual(final_profile_count, 1)
 
@@ -88,7 +88,7 @@ class ProviderProfileUpdateAndDeleteTests(TestCase):
 
     def test_update_url_exits(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/providerprofile/1")
+        response = self.client.get("/en/providerprofile/1")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "account/providerprofile/form.html")
         self.assertIsInstance(response.context['form'], ProviderProfileForm)
@@ -105,7 +105,7 @@ class ProviderProfileUpdateAndDeleteTests(TestCase):
         response = self.client.get(
             reverse("account:provider_profile_update", args=[1]))
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_update_loads_only_profiles_of_loggedin_user(self):
         user2 = get_user_model().objects.create_user(
@@ -143,7 +143,7 @@ class ProviderProfileUpdateAndDeleteTests(TestCase):
         new_data = self.valid_provider_form_data.copy()
         new_data['social_code'] = "2222222222"
         ProviderProfile.objects.create(**new_data, user_id=1)
-        response = self.client.post("/providerprofile/delete/2")
+        response = self.client.post("/en/providerprofile/delete/2")
         self.assertEqual(response.status_code, 302)
         self.assertEqual(ProviderProfile.objects.all().count(), 1)
 
@@ -171,7 +171,7 @@ class ProviderProfileUpdateAndDeleteTests(TestCase):
         response = self.client.post(
             reverse("account:provider_profile_delete", args=[1]))
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
 
 class ProviderProfileListViewTests(TestCase):
@@ -206,7 +206,7 @@ class ProviderProfileListViewTests(TestCase):
 
     def test_my_provider_list_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/myproviderprofiles")
+        response = self.client.get("/en/myproviderprofiles")
         self.assertEqual(response.status_code, 200)
 
     def test_my_provider_list_url_has_correct_name(self):
@@ -219,7 +219,7 @@ class ProviderProfileListViewTests(TestCase):
         response = self.client.get(
             reverse("account:my_provider_profiles_list"))
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_my_provider_list_uses_correct_template(self):
         self.client.login(username="user1", password="user1user1")

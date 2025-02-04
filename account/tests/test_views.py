@@ -17,7 +17,7 @@ class SignupViewTests(TestCase):
         user1.save()
 
     def test_signup_page_exists(self):
-        response = self.client.get("/signup/")
+        response = self.client.get("/en/signup/")
         self.assertEqual(response.status_code, 200)
 
     def test_signup_url_has_correct_name(self):
@@ -35,7 +35,7 @@ class SignupViewTests(TestCase):
         response = self.client.post(
             reverse("account:signup"), data=signup_data)
         user_count = get_user_model().objects.all().count()
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, "/en/")
         self.assertEqual(user_count, 2)
 
 
@@ -63,12 +63,12 @@ class UpdateUserViewTests(TestCase):
 
     def test_page_exits_if_logged_in(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/profile/update")
+        response = self.client.get("/en/profile/update")
         self.assertEqual(response.status_code, 200)
 
     def test_redirects_to_login_if_not_logged_in(self):
-        response = self.client.get("/profile/update")
-        self.assertTrue(response.url.startswith("/login"))
+        response = self.client.get("/en/profile/update")
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_update_profile_url_has_correct_name(self):
         self.client.login(username="user1", password="user1user1")
@@ -87,7 +87,7 @@ class UpdateUserViewTests(TestCase):
         self.client.login(username="user1", password="user1user1")
         response = self.client.post(
             reverse("account:cutomer_profile_set"), data=self.valid_profile_form_data)
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, "/en/")
 
     def test_successful_update_profile_request_creates_profile_if_it_doesnt_exist(self):
         self.client.login(username="user1", password="user1user1")

@@ -45,7 +45,7 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
     def test_add_to_shopping_cart_url_exists(self):
         self.client.login(username="user1", password="user1user1")
         response = self.client.post(
-            "/items/add_to_cart/1", data={"quantity": 2})
+            "/en/items/add_to_cart/1", data={"quantity": 2})
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.content, b"{\"message\": \"added!\"}")
@@ -60,10 +60,10 @@ class TestAddShoppingCartItemView(ShoppingCartSetupTestDataMixin,
 
     def test_add_to_cart_only_works_when_signed_in(self):
         response = self.client.post(
-            "/items/add_to_cart/1", data={"quantity": 2})
+            "/en/items/add_to_cart/1", data={"quantity": 2})
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
 
     def test_add_to_cart_works(self):
         # just making sure it was empty before the request
@@ -104,10 +104,10 @@ class ShoppingCartItemDeleteViewTests(ShoppingCartSetupTestDataMixin,
 
     def test_delete_cart_item_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.post("/items/delete_from_cart/1")
+        response = self.client.post("/en/items/delete_from_cart/1")
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/my_cart")
+        self.assertEqual(response.url, "/en/items/my_cart")
         self.assertEqual(ShoppingCartItem.objects.count(), 0)
 
     def test_delete_cart_item_url_has_correct_name(self):
@@ -116,7 +116,7 @@ class ShoppingCartItemDeleteViewTests(ShoppingCartSetupTestDataMixin,
             reverse("items:delete_from_cart", args=[1]))
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/items/my_cart")
+        self.assertEqual(response.url, "/en/items/my_cart")
         self.assertEqual(ShoppingCartItem.objects.count(), 0)
 
     def test_delete_view_works_only_signed_in(self):
@@ -124,7 +124,7 @@ class ShoppingCartItemDeleteViewTests(ShoppingCartSetupTestDataMixin,
             reverse("items:delete_from_cart", args=[1]))
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
         self.assertEqual(ShoppingCartItem.objects.count(), 1)
 
 
@@ -140,7 +140,7 @@ class ShoppingCartItemUpdateViewTests(ShoppingCartSetupTestDataMixin,
     def test_update_cart_item_url_exists(self):
         self.client.login(username="user1", password="user1user1")
         response = self.client.post(
-            "/items/update_cart_item/1",
+            "/en/items/update_cart_item/1",
             data={"quantity": 3})
 
         self.assertEqual(response.status_code, 200)
@@ -167,7 +167,7 @@ class ShoppingCartItemUpdateViewTests(ShoppingCartSetupTestDataMixin,
             data={"quantity": 3})
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
         new_quant = ShoppingCartItem.objects.filter(
             customer_id=1, item_id=1).first().quantity
         self.assertEqual(new_quant, 2)
@@ -184,7 +184,7 @@ class ShoppingCartListViewTests(ShoppingCartSetupTestDataMixin,
 
     def test_cart_list_url_exists(self):
         self.client.login(username="user1", password="user1user1")
-        response = self.client.get("/items/my_cart")
+        response = self.client.get("/en/items/my_cart")
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(
@@ -204,4 +204,4 @@ class ShoppingCartListViewTests(ShoppingCartSetupTestDataMixin,
         response = self.client.get(reverse("items:current_user_cart"))
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.url.startswith("/login"))
+        self.assertTrue(response.url.startswith("/en/login"))
