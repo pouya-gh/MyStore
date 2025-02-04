@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 21:22+0330\n"
+"POT-Creation-Date: 2025-02-04 21:44+0330\n"
 "PO-Revision-Date: 2025-02-04 21:23+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,131 +23,131 @@ msgstr ""
 msgid "Name"
 msgstr "نام"
 
-#: .\items\models.py:15
+#: .\items\models.py:16
 msgid "Slug"
 msgstr "تیتر"
 
-#: .\items\models.py:21
+#: .\items\models.py:22
 msgid "parent"
 msgstr "سر دسته"
 
-#: .\items\models.py:44
+#: .\items\models.py:45
 msgid "property's keys must contain only alphanumeric characters and space"
 msgstr "نام ویژگی کالا باید فقط شامل الفبا, عدد و فضای خالی باشد"
 
-#: .\items\models.py:48
+#: .\items\models.py:49
 msgid "properties values must only be a string"
 msgstr "مقدار ویژگی کالا باید فقط نوشته باشد"
 
-#: .\items\models.py:68
+#: .\items\models.py:69
 msgid "Verified"
 msgstr "تأیید شده"
 
-#: .\items\models.py:69
+#: .\items\models.py:70
 msgid "Verfication pending"
 msgstr "در انتظار تأیید"
 
-#: .\items\models.py:70
+#: .\items\models.py:71
 msgid "Declined"
 msgstr "رد شده"
 
-#: .\items\models.py:73
+#: .\items\models.py:74
 msgid "USA Dollar"
 msgstr "دلار آمریکا"
 
-#: .\items\models.py:74
+#: .\items\models.py:75
 msgid "Iranian Rial"
 msgstr "ریال"
 
-#: .\items\models.py:76
+#: .\items\models.py:77
 msgid "name"
 msgstr "نام"
 
-#: .\items\models.py:77
+#: .\items\models.py:79
 msgid "slug"
 msgstr "تیتر"
 
-#: .\items\models.py:80
+#: .\items\models.py:82
 msgid "provider"
 msgstr "توزیع کننده"
 
-#: .\items\models.py:84
+#: .\items\models.py:86
 msgid "submitted by"
 msgstr "ثبت شده توسط"
 
-#: .\items\models.py:85 .\items\models.py:159
+#: .\items\models.py:88 .\items\models.py:173
 msgid "properties"
 msgstr "ویژگی ها"
 
-#: .\items\models.py:86
+#: .\items\models.py:89
 msgid "description"
 msgstr "توصیف"
 
-#: .\items\models.py:87
+#: .\items\models.py:92
 msgid "image"
 msgstr "تصویر"
 
-#: .\items\models.py:88
+#: .\items\models.py:94
 msgid "remaining items"
 msgstr "کالای های مانده"
 
-#: .\items\models.py:90
+#: .\items\models.py:97
 msgid "price"
 msgstr "قیمت"
 
-#: .\items\models.py:94
+#: .\items\models.py:101
 msgid "currency"
 msgstr "واحد ارز"
 
-#: .\items\models.py:95
+#: .\items\models.py:103
 msgid "created"
 msgstr "ثبت شده در تاریخ"
 
-#: .\items\models.py:96
+#: .\items\models.py:105
 msgid "publish"
 msgstr "منتشر شده در تاریخ"
 
-#: .\items\models.py:97
+#: .\items\models.py:106
 msgid "updated"
 msgstr "به روز رسانی شده در تاریخ"
 
-#: .\items\models.py:101
+#: .\items\models.py:110
 msgid "submission status"
 msgstr "وضعیت ثبت"
 
-#: .\items\models.py:103
+#: .\items\models.py:113
 msgid "submission review message"
 msgstr "پیام بازنگری"
 
-#: .\items\models.py:106
+#: .\items\models.py:118
 msgid "category"
 msgstr "دسته"
 
-#: .\items\models.py:122
+#: .\items\models.py:134
 msgid "item provider is not owned by you"
 msgstr "توزیع کننده کالا به نام شما نیست"
 
-#: .\items\models.py:156
+#: .\items\models.py:168
 msgid "customer"
 msgstr "مشتری"
 
-#: .\items\models.py:157
+#: .\items\models.py:170
 msgid "item"
 msgstr "کالا"
 
-#: .\items\models.py:158
+#: .\items\models.py:172
 msgid "quantity"
 msgstr "تعداد"
 
-#: .\items\models.py:160
+#: .\items\models.py:175
 msgid "date added"
 msgstr "تاریخ ثبت"
 
-#: .\items\models.py:161
+#: .\items\models.py:177
 msgid "date updated"
 msgstr "تاریخ به روز رسانی"
 
-#: .\items\models.py:162
+#: .\items\models.py:179
 msgid "additional info"
 msgstr "اطاعات اضافه"
 

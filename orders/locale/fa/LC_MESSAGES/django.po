@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 21:32+0330\n"
+"POT-Creation-Date: 2025-02-04 21:44+0330\n"
 "PO-Revision-Date: 2025-02-04 21:29+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,51 +31,51 @@ msgstr "کالا"
 msgid "sku"
 msgstr "SKU"
 
-#: .\orders\models.py:25
+#: .\orders\models.py:26
 msgid "quantity"
 msgstr "تعداد"
 
-#: .\orders\models.py:26
+#: .\orders\models.py:27
 msgid "properties"
 msgstr "ویژگی ها"
 
-#: .\orders\models.py:27 .\orders\models.py:48
+#: .\orders\models.py:29 .\orders\models.py:50
 msgid "created at"
 msgstr "تاریخ ثبت"
 
-#: .\orders\models.py:36
+#: .\orders\models.py:38
 msgid "Pending"
 msgstr "در انتظار"
 
-#: .\orders\models.py:37
+#: .\orders\models.py:39
 msgid "Payment Accepted"
 msgstr "پرداخت پذیرفته شد"
 
-#: .\orders\models.py:38
+#: .\orders\models.py:40
 msgid "Payment Declined"
 msgstr "پرداخت رد شد"
 
-#: .\orders\models.py:39
+#: .\orders\models.py:41
 msgid "Canceled"
 msgstr "لغو شد"
 
-#: .\orders\models.py:42
+#: .\orders\models.py:44
 msgid "id"
 msgstr "آیدی"
 
-#: .\orders\models.py:46
+#: .\orders\models.py:48
 msgid "customer"
 msgstr "مشتری"
 
-#: .\orders\models.py:50
+#: .\orders\models.py:52
 msgid "updated at"
 msgstr "تاریخ آپدیت"
 
-#: .\orders\models.py:54
+#: .\orders\models.py:56
 msgid "status"
 msgstr "وضعیت"
 
-#: .\orders\models.py:56
+#: .\orders\models.py:58
 msgid "payment id"
 msgstr "آیدی پرداخت"
 

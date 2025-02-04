@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 21:32+0330\n"
+"POT-Creation-Date: 2025-02-04 21:44+0330\n"
 "PO-Revision-Date: 2025-02-04 21:33+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,10 +32,10 @@ msgstr "Farsi"
 msgid "Payment Canceled"
 msgstr "Payment Canceled"
 
-#: .\payment\templates\payment\success.html:3
+#: .\payment\templates\payment\success.html:4
 msgid "Payment Succeeded"
 msgstr "Payment Succeeded"
 
-#: .\payment\templates\payment\success.html:6
+#: .\payment\templates\payment\success.html:7
 msgid "Thank you for your purchase!"
 msgstr "Thank you for your purchase!"

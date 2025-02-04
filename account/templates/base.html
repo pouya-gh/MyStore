@@ -3,6 +3,10 @@
 {% load django_bootstrap5 %}
 
 {% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+
+{% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_CODE == "fa" %}dir="rtl"{% endif %}>
   <head>
     <meta charset="utf-8" />
@@ -42,6 +46,14 @@
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url "home" %}">{% trans "Home" %}</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url "items:items_list" %}">{% trans "Items" %}</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url "items:search" %}">{% trans "Search" %}</a></li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Language" %}</a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          {% for language in languages %}
+                          <li><a class="dropdown-item" href="/{{ language.code }}/" {% if language.code == LANGUAGE_CODE %} class="selected"{% endif %}>{{ language.name_local }}</a></li>
+                          {% endfor %}
+                      </ul>
+                    </li>
                     {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Account" %}</a>

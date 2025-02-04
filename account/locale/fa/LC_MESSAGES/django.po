@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 11:43+0330\n"
-"PO-Revision-Date: 2025-02-04 21:30+0000\n"
+"POT-Creation-Date: 2025-02-04 21:47+0330\n"
+"PO-Revision-Date: 2025-02-04 21:44+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -127,66 +127,70 @@ msgstr "نام"
 msgid "Is verified?"
 msgstr "تأیید شده؟"
 
-#: .\account\templates\base.html:21
+#: .\account\templates\base.html:25
 msgid "My Store"
 msgstr "فروشگاه من"
 
-#: .\account\templates\base.html:43
+#: .\account\templates\base.html:47
 msgid "Home"
 msgstr "خانه"
 
-#: .\account\templates\base.html:44
+#: .\account\templates\base.html:48
 msgid "Items"
 msgstr "کالاها"
 
-#: .\account\templates\base.html:45
+#: .\account\templates\base.html:49
 msgid "Search"
 msgstr "جست و جو"
 
-#: .\account\templates\base.html:48
+#: .\account\templates\base.html:51
+msgid "Language"
+msgstr "زبان"
+
+#: .\account\templates\base.html:60
 msgid "Account"
 msgstr "حساب کاربری"
 
-#: .\account\templates\base.html:50
+#: .\account\templates\base.html:62
 msgid "Update Profile"
 msgstr "حساب کاربری"
 
-#: .\account\templates\base.html:51
+#: .\account\templates\base.html:63
 msgid "Register a provider"
 msgstr "ثب توزیع کننده جدید"
 
-#: .\account\templates\base.html:52
+#: .\account\templates\base.html:64
 msgid "My registered providers"
 msgstr "حساب های توزیع کننده من"
 
-#: .\account\templates\base.html:53
+#: .\account\templates\base.html:65
 msgid "Submit An Item"
 msgstr "ثبت کالای جدید"
 
-#: .\account\templates\base.html:54
+#: .\account\templates\base.html:66
 msgid "My Items"
 msgstr "کالاهای من"
 
-#: .\account\templates\base.html:55
+#: .\account\templates\base.html:67
 msgid "My Orders"
 msgstr "سفارش های من"
 
-#: .\account\templates\base.html:58
+#: .\account\templates\base.html:70
 msgid "Logout"
 msgstr "خروج"
 
-#: .\account\templates\base.html:64
+#: .\account\templates\base.html:76
 #: .\account\templates\registration\login.html:12
 msgid "Log in"
 msgstr "وارد شدن"
 
-#: .\account\templates\base.html:65
+#: .\account\templates\base.html:77
 #: .\account\templates\registration\signup.html:5
 #: .\account\templates\registration\signup.html:13
 msgid "Sign up"
 msgstr "ثبت نام"
 
-#: .\account\templates\base.html:71
+#: .\account\templates\base.html:83
 msgid "Cart"
 msgstr "سبد خرید"
 
