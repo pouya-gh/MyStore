@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
-{% block title %}Order {{ order }}{% endblock title %}
+{% block title %}{% trans "Order" %} {{ order }}{% endblock title %}
 
 {% block content %}
 <section class="py-5">
@@ -10,9 +11,9 @@
 
             <table class="table table-hover">
                 <tr>
-                    <th>Name</th>
-                    <th>Qauntity</th>
-                    <th>Price</th>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Qauntity" %}</th>
+                    <th>{% trans "Price" %}</th>
                 </tr>
             {% for order_item in order.order_items.all %}
             <tr>
@@ -22,14 +23,15 @@
             </tr>
             {% endfor %}
             </table>
-            <p><h2>Total Price: ${{ order.get_total_price }}</h2></p>
-            <p><h2>Status: {{ order.get_status_display }}</h2></p>
+            <p><h2>{% trans "Total Price" %}: ${{ order.get_total_price }}</h2></p>
+            <p><h2>{% trans "Status" %}: {{ order.get_status_display }}</h2></p>
             {% if order.status == "PN" %}
-            <p><a class="btn btn-primary" href="{% url "payment:start" order.id %}">Checkout</a></p>
+            <p><a class="btn btn-primary" href="{% url "payment:start" order.id %}">{% trans "Checkout" %}</a></p>
             <p>
                 <form method='post' action="{% url "orders:order_cancel" order.id %}">
                     {% csrf_token %}
-                    {% bootstrap_button button_class="btn-danger" button_type="submit" content="Cancel" %}
+                    {% trans "Cancel" as cancel_trans %}
+                    {% bootstrap_button button_class="btn-danger" button_type="submit" content=cancel_trans %}
                 </form>
                 {% comment %} <a class="btn btn-danger" href="{% url "orders:order_cancel" order.id %}">Cancel</a> {% endcomment %}
             </p>

@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext as _not_lazy
 
 from items.models import Item
 
@@ -11,27 +12,31 @@ import uuid
 class OrderItem(models.Model):
     order = models.ForeignKey("Order",
                               on_delete=models.CASCADE,
-                              related_name="order_items")
+                              related_name="order_items",
+                              verbose_name=_("order"))
     item = models.ForeignKey(Item,
-                             on_delete=models.PROTECT)
+                             on_delete=models.PROTECT,
+                             verbose_name=_("item"))
     sku = models.SlugField(max_length=255,
                            blank=False,
                            null=False,
-                           default=None)
-    quantity = models.PositiveIntegerField(null=False, blank=False)
-    properties = models.JSONField()
-    created_at = models.DateTimeField(auto_now_add=True)
+                           default=None,
+                           verbose_name=_("sku"))
+    quantity = models.PositiveIntegerField(null=False, blank=False, verbose_name=_("quantity"))
+    properties = models.JSONField(verbose_name=_("properties"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
 
     def __str__(self):
-        return f"Order for {self.quantity} of {self.item}"
+        return _not_lazy("Order for {quantity} of {item}".format(quantity=self.quantity, item=self.item))
+        # return f"Order for {self.quantity} of {self.item}"
 
 
 class Order(models.Model):
     class OrderStatus(models.TextChoices):
-        PENDING = "PN", "Pending"
-        PAYMENT_ACCEPTED = "PA", "Payment Accepted"
-        PAYMENT_DECLINED = "PD", "Payment Declined"
-        CANCELED = "CN", "Canceled"
+        PENDING = "PN", _("Pending")
+        PAYMENT_ACCEPTED = "PA", _("Payment Accepted")
+        PAYMENT_DECLINED = "PD", _("Payment Declined")
+        CANCELED = "CN", _("Canceled")
 
     id = models.UUIDField(verbose_name=_(
         "id"), primary_key=True, default=uuid.uuid4, editable=False)

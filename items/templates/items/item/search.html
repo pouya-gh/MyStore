@@ -149,7 +149,7 @@
                     <form id="searchForm" method="get" class="row g-3 mt-2">
                         <div class="col-md-3">
                             <select name="category" class="form-select" id="categories_dropdown">
-                                <option value="">All</option>
+                                <option value="">{% trans "All" %}</option>
                                 {% for cat in categories %}
                                 <option value="{{ cat.id }}">{{ cat.name }}</option>
                                 {% endfor %}

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 12:16+0330\n"
-"PO-Revision-Date: 2025-02-04 12:16+0000\n"
+"POT-Creation-Date: 2025-02-04 21:22+0330\n"
+"PO-Revision-Date: 2025-02-04 21:23+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -246,6 +246,10 @@ msgstr "Add Filter"
 msgid "Price Range"
 msgstr "Price Range"
 
+#: .\items\templates\items\item\search.html:152
+msgid "All"
+msgstr "All"
+
 #: .\items\templates\items\shopping_cart\current_user_cart.html:5
 msgid "My Cart"
 msgstr "My Cart"
@@ -292,9 +296,6 @@ msgstr "Invalid max price input."
 
 #: .\items\views.py:234
 #, python-brace-format
-#| msgid ""
-#| "Filter name %(filter_name) was ignored. Only alphanumeric characters and "
-#| "space are allowed."
 msgid ""
 "Filter name {filter_name} was ignored. Only alphanumeric characters and "
 "space are allowed."

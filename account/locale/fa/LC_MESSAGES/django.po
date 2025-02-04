@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-04 11:43+0330\n"
-"PO-Revision-Date: 2025-02-03 10:17+0000\n"
+"PO-Revision-Date: 2025-02-04 21:30+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -169,7 +169,7 @@ msgstr "کالاهای من"
 
 #: .\account\templates\base.html:55
 msgid "My Orders"
-msgstr "صورت حساب های من"
+msgstr "سفارش های من"
 
 #: .\account\templates\base.html:58
 msgid "Logout"
