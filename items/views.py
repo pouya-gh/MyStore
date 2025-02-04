@@ -231,7 +231,8 @@ def search_items(request):
             f_name_stripped_capped = f[0].strip().capitalize()
             # making sure they are safe from SQL injection
             if not is_alphnum_and_space(f_name_stripped_capped):
-                msg = _("Filter name {filter_name} was ignored. Only alphanumeric characters and space are allowed.").format(filter_name=f[0])
+                msg = _("Filter name {filter_name} was ignored. Only alphanumeric characters and space are allowed.").format(
+                    filter_name=f[0])
                 messages.warning(request, msg)
                 continue
             q_filters.add(

@@ -22,9 +22,11 @@ class OrderItem(models.Model):
                            null=False,
                            default=None,
                            verbose_name=_("sku"))
-    quantity = models.PositiveIntegerField(null=False, blank=False, verbose_name=_("quantity"))
+    quantity = models.PositiveIntegerField(null=False, blank=False,
+                                           verbose_name=_("quantity"))
     properties = models.JSONField(verbose_name=_("properties"))
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    created_at = models.DateTimeField(auto_now_add=True,
+                                      verbose_name=_("created at"))
 
     def __str__(self):
         return _not_lazy("Order for {quantity} of {item}".format(quantity=self.quantity, item=self.item))

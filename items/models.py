@@ -12,7 +12,8 @@ import os
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name=_("Name"))
-    slug = models.SlugField(max_length=100, unique=True, verbose_name=_("Slug"))
+    slug = models.SlugField(max_length=100, unique=True,
+                            verbose_name=_("Slug"))
     parent = models.ForeignKey("self",
                                on_delete=models.CASCADE,
                                null=True,
@@ -74,7 +75,8 @@ class Item(models.Model):
         IRR = 'IRR', _('Iranian Rial')
 
     name = models.CharField(max_length=250, verbose_name=_("name"))
-    slug = models.SlugField(max_length=250, unique=True, verbose_name=_("slug"))
+    slug = models.SlugField(max_length=250, unique=True,
+                            verbose_name=_("slug"))
     provider = models.ForeignKey(ProviderProfile,
                                  on_delete=models.CASCADE,
                                  verbose_name=_("provider"))
@@ -82,28 +84,38 @@ class Item(models.Model):
                                      on_delete=models.CASCADE,
                                      related_name="submitted_items",
                                      verbose_name=_("submitted by"))
-    properties = models.JSONField(validators=[_validate_item_properties], verbose_name=_("properties"))
+    properties = models.JSONField(
+        validators=[_validate_item_properties], verbose_name=_("properties"))
     description = models.TextField(verbose_name=_("description"))
-    image = models.ImageField(upload_to=_item_image_directory_path, blank=True, verbose_name=_("image"))
-    remaining_items = models.PositiveIntegerField(default=0, blank=False, verbose_name=_("remaining items"))
-    price = models.DecimalField(
-        default=0, blank=False, max_digits=12, decimal_places=2, verbose_name=_("price"))
+    image = models.ImageField(upload_to=_item_image_directory_path,
+                              blank=True,
+                              verbose_name=_("image"))
+    remaining_items = models.PositiveIntegerField(
+        default=0, blank=False, verbose_name=_("remaining items"))
+    price = models.DecimalField(default=0, blank=False,
+                                max_digits=12, decimal_places=2,
+                                verbose_name=_("price"))
     currency = models.TextField(max_length=3,
                                 choices=ItemPriceCurrency,
                                 default=ItemPriceCurrency.USD,
                                 verbose_name=_("currency"))
-    created = models.DateTimeField(auto_now_add=True, verbose_name=_("created"))
-    publish = models.DateTimeField(default=timezone.now, verbose_name=_("publish"))
+    created = models.DateTimeField(auto_now_add=True,
+                                   verbose_name=_("created"))
+    publish = models.DateTimeField(default=timezone.now,
+                                   verbose_name=_("publish"))
     updated = models.DateTimeField(auto_now=True, verbose_name=_("updated"))
     submission_status = models.CharField(max_length=2,
                                          choices=ItemSubmissionStatus,
                                          default=ItemSubmissionStatus.PENDING,
                                          verbose_name=_("submission status"))
-    submission_review_message = models.TextField(
-        null=True, default="", blank=True, verbose_name=_("submission review message"))
+    submission_review_message = models.TextField(null=True, default="",
+                                                 blank=True,
+                                                 verbose_name=_("submission review message"))
 
-    category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("category"))
+    category = models.ForeignKey(Category,
+                                 on_delete=models.SET_NULL,
+                                 null=True, blank=True,
+                                 verbose_name=_("category"))
 
     objects = ItemQuerySet.as_manager()
 
@@ -154,12 +166,17 @@ class ShoppingCartItem(models.Model):
                                  on_delete=models.CASCADE,
                                  related_name="shopping_cart_items",
                                  verbose_name=_("customer"))
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name=_("item"))
-    quantity = models.PositiveSmallIntegerField(default=1, verbose_name=_("quantity"))
+    item = models.ForeignKey(
+        Item, on_delete=models.CASCADE, verbose_name=_("item"))
+    quantity = models.PositiveSmallIntegerField(
+        default=1, verbose_name=_("quantity"))
     properties = models.JSONField(verbose_name=_("properties"))
-    date_added = models.DateTimeField(auto_now_add=True, verbose_name=_("date added"))
-    date_updated = models.DateTimeField(auto_now=True, verbose_name=_("date updated"))
-    additional_info = models.TextField(null=True, blank=True, verbose_name=_("additional info"))
+    date_added = models.DateTimeField(
+        auto_now_add=True, verbose_name=_("date added"))
+    date_updated = models.DateTimeField(
+        auto_now=True, verbose_name=_("date updated"))
+    additional_info = models.TextField(
+        null=True, blank=True, verbose_name=_("additional info"))
 
     def __str__(self):
         return f"{self.quantity} {self.item}"
