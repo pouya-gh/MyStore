@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Payment Succeeded{% endblock title %}
+{% block title %}{% trans "Payment Succeeded" %}{% endblock title %}
 
 {% block content %}
-<p>Thank you for your purchase!</p>
+<p>{% trans "Thank you for your purchase!" %}</p>
 {% comment %} <div><p>
     {{ session }}
 </p></div> {% endcomment %}

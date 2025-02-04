@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 21:28+0330\n"
+"POT-Creation-Date: 2025-02-04 21:32+0330\n"
 "PO-Revision-Date: 2025-02-04 21:29+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,17 +48,14 @@ msgid "Pending"
 msgstr "در انتظار"
 
 #: .\orders\models.py:37
-#| msgid "payment id"
 msgid "Payment Accepted"
 msgstr "پرداخت پذیرفته شد"
 
 #: .\orders\models.py:38
-#| msgid "payment id"
 msgid "Payment Declined"
 msgstr "پرداخت رد شد"
 
 #: .\orders\models.py:39
-#| msgid "Cancel"
 msgid "Canceled"
 msgstr "لغو شد"
 
