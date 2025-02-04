@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-03 10:16+0330\n"
+"POT-Creation-Date: 2025-02-03 10:30+0330\n"
 "PO-Revision-Date: 2025-02-03 10:17+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,6 @@ msgstr ""
 "X-Translated-Using: django-rosetta 0.10.1\n"
 
 #: .\account\models.py:8
-#| msgid "Is verified?"
 msgid "Verified"
 msgstr "تأیید شده"
 
@@ -45,47 +44,47 @@ msgstr "کد ملی"
 msgid "Birth date"
 msgstr "تاریخ تولد"
 
-#: .\account\models.py:26 .\account\models.py:56
+#: .\account\models.py:26 .\account\models.py:60
 msgid "country"
 msgstr "کشور"
 
-#: .\account\models.py:27 .\account\models.py:57
+#: .\account\models.py:27 .\account\models.py:61
 msgid "province"
 msgstr "استان/ایالت"
 
-#: .\account\models.py:28 .\account\models.py:58
+#: .\account\models.py:28 .\account\models.py:62
 msgid "city"
 msgstr "شهر"
 
-#: .\account\models.py:29 .\account\models.py:59
+#: .\account\models.py:29 .\account\models.py:63
 msgid "address"
 msgstr "آدرس"
 
-#: .\account\models.py:30 .\account\models.py:60
+#: .\account\models.py:31 .\account\models.py:65
 msgid "phone number"
 msgstr "شماره تماس"
 
-#: .\account\models.py:31 .\account\models.py:61
+#: .\account\models.py:33 .\account\models.py:67
 msgid "phone number 2"
 msgstr "شماره تماس دوم"
 
-#: .\account\models.py:33 .\account\models.py:63
+#: .\account\models.py:35 .\account\models.py:69
 msgid "status"
 msgstr "وضعیت"
 
-#: .\account\models.py:47
+#: .\account\models.py:49
 msgid "user"
 msgstr "کاربر"
 
-#: .\account\models.py:48
+#: .\account\models.py:51
 msgid "official name"
 msgstr "نام رسمی"
 
-#: .\account\models.py:49
+#: .\account\models.py:53
 msgid "provider name"
 msgstr "نام"
 
-#: .\account\models.py:55
+#: .\account\models.py:59
 msgid "social code"
 msgstr "کد ملی"
 

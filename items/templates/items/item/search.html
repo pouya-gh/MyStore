@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Search{% endblock title %}
+{% block title %}{% trans "Search" %}{% endblock title %}
 
 {% block head %}
 <script src="{% static 'js/search_form.js' %}"></script>
@@ -89,7 +90,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const navLinks = document.getElementsByClassName("nav-link");
         for (const navLink of navLinks) {
-            if (navLink.innerHTML === "Search")
+            if (navLink.innerHTML === "{% trans "Search" %}")
             navLink.classList.add("active");
         }
     });
@@ -102,12 +103,12 @@
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;">
     <a href="#" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
       <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold">More Options</span>
+      <span class="fs-5 fw-semibold">{% trans "More Options" %}</span>
     </a>
     <ul class="list-unstyled ps-0 scrollarea">
         <li class="mb-1">
             <button id="filters-button" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#more-options-collapse" aria-expanded="false">
-              Filters
+              {% trans "Filters" %}
             </button>
             <div class="collapse" id="more-options-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -115,14 +116,14 @@
                     <div id="filtersContainer" class="list-group-item list-group-item-action active py-3 lh-sm">
                     </div>
                     <!-- Add Filter Button -->
-                    <button type="button" id="addFilter" class="btn btn-secondary mb-3">Add Filter</button>
+                    <button type="button" id="addFilter" class="btn btn-secondary mb-3">{% trans "Add Filter" %}</button>
                 </div>
               </ul>
             </div>
       </li>
       <li class="mb-1">
         <button id="price-range-button" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#price-range-collapse" aria-expanded="false">
-          Price Range
+          {% trans "Price Range" %}
         </button>
         <div class="collapse" id="price-range-collapse">
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -145,7 +146,6 @@
     <div class="row d-flex justify-content-center">
         <div class="col-md-10">
             <div class="p-3 py-4">
-
                     <form id="searchForm" method="get" class="row g-3 mt-2">
                         <div class="col-md-3">
                             <select name="category" class="form-select" id="categories_dropdown">
@@ -159,11 +159,9 @@
                             <input id="search_query" name="q" type="text" class="form-control" placeholder="...">
                         </div>
                         <div class="col-md-3">
-                            <button class="btn btn-primary">Search</button>
+                            <button class="btn btn-primary">{% trans "Search" %}</button>
                         </div>
                     </form>
-                    
-
                 	{% for item in items  %}
                     <p><a href="{{ item.get_absolute_url }}">{{ item }}</a></p>
                     {% endfor %}				

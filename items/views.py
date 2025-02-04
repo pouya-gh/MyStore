@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.contrib import messages
+from django.utils.translation import gettext as _
 
 from .models import Item, Category, ShoppingCartItem, is_alphnum_and_space
 from .forms import ItemForm, ShoppingCartForm
@@ -132,7 +133,7 @@ class ItemCreateView(LoginRequiredMixin,
             return super().form_valid(form)
         else:
             form.add_error("provider",
-                           ValidationError("item provider is not owned by you"))
+                           ValidationError(_("Item provider is not owned by you.")))
             return self.form_invalid(form)
 
 
@@ -153,7 +154,7 @@ def add_to_shopping_cart(request, pk):
     # else:
     #     messages.warning(request, "Item is already in cart!")
 
-    return HttpResponseBadRequest("Can't add to cart!")
+    return HttpResponseBadRequest(_("Can't add to cart!"))
 
 
 @login_required
@@ -178,7 +179,7 @@ def update_cart_item_quantity(request, pk):
         cart_item.save()
         return JsonResponse({"message": "updated!"})
 
-    return HttpResponseBadRequest("Can't update cart!")
+    return HttpResponseBadRequest(_("Can't update cart!"))
 
 
 @login_required
@@ -211,13 +212,13 @@ def search_items(request):
         try:
             items = items.filter(price__gte=Decimal(min_price))
         except InvalidOperation:
-            messages.warning(request, "Invalid min price input.")
+            messages.warning(request, _("Invalid min price input."))
 
     if max_price:
         try:
             items = items.filter(price__lte=Decimal(max_price))
         except InvalidOperation:
-            messages.warning(request, "Invalid max price input.")
+            messages.warning(request, _("Invalid max price input."))
 
     if q:
         items = items.filter(name__icontains=q)
@@ -230,8 +231,8 @@ def search_items(request):
             f_name_stripped_capped = f[0].strip().capitalize()
             # making sure they are safe from SQL injection
             if not is_alphnum_and_space(f_name_stripped_capped):
-                messages.warning(request, f"""filter name \"{f[0]}\" was ignored. 
-                               Only alphanumeric characters and space are allowed.""")
+                messages.warning(request, _(f"""filter name \"%(filter_name)\" was ignored. 
+                               Only alphanumeric characters and space are allowed.""") % {'filter_name': f[0]})
                 continue
             q_filters.add(
                 Q(**{f"properties__{f_name_stripped_capped}__icontains": f[1]}), Q.AND)

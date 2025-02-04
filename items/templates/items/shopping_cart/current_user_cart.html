@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
-{% block title %}My Cart{% endblock title %}
+{% block title %}{% trans "My Cart" %}{% endblock title %}
 
 {% block content %}
 <section class="py-5">
@@ -10,10 +11,10 @@
 
 <table class="table table-hover">
     <tr>
-        <th>Name</th>
-        <th>Qauntity</th>
-        <th>Update</th>
-        <th>Delete</th>
+        <th>{% trans "Item name" %}</th>
+        <th>{% trans "Qauntity" %}</th>
+        <th>{% trans "Update" %}</th>
+        <th>{% trans "Delete" %}</th>
     </tr>
 {% for cart_item in cart_items %}
 <tr>
@@ -31,21 +32,21 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
             </div>
             <div class="toast-body">
-            <p>Something went wrong!</p>
+            <p>{% trans "Something went wrong!" %}</p>
             </div>
         </div>
     </td>
     <td>
         <form method="post" action="{% url 'items:delete_from_cart' cart_item.item_id %}" onsubmit="delete_from_shopping_cart(event);">
             {% csrf_token %}
-            {% bootstrap_button button_type="submit" button_class="btn-danger" content="Remove" %}
+            {% trans "Remove" as remove_trans %}
+            {% bootstrap_button button_type="submit" button_class="btn-danger" content=remove_trans %}
         </form>
     </td>
 </tr>
 {% endfor %}
 </table>
-<p><a class='btn btn-primary' href="{% url "orders:place_order" %}">Place order</a></p>
-
+<p><a class='btn btn-primary' href="{% url "orders:place_order" %}">{% trans "Place order" %}</a></p>
         </div>
     </div>
 </section>

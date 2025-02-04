@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 {% block title %}Form{% endblock title %}
 
@@ -23,9 +24,9 @@
             <table class="table-borderless" id="props_table" style='display:none;'>
                 <thead>
                     <tr id="props_first_row">
-                        <th>Name</th>
-                        <th>Value</th>
-                        <th>Delete</th>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "Value" %}</th>
+                        <th>{% trans "Delete" %}</th>
                     </tr>
                 </thead>
 
@@ -39,7 +40,8 @@
                     </tr>
                 </tbody>
             </table>
-            {% bootstrap_button button_type="submit" content="Submit" %}
+            {% trans "Submit" as submit_trans %}
+            {% bootstrap_button button_type="submit" content=submit_trans %}
             </form>
     </div>
 </div>

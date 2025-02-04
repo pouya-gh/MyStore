@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-02 18:22+0330\n"
+"POT-Creation-Date: 2025-02-03 10:30+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,26 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: .\orders\models.py:36
+
+#: .\orders\models.py:37
 msgid "id"
 msgstr "آیدی"
 
-#: .\orders\models.py:40
+#: .\orders\models.py:41
 msgid "customer"
 msgstr "مشتری"
 
-#: .\orders\models.py:41
+#: .\orders\models.py:43
 msgid "created at"
 msgstr "تاریخ ثبت"
 
-#: .\orders\models.py:42
+#: .\orders\models.py:45
 msgid "updated at"
 msgstr "تاریخ آپدیت"
 
-#: .\orders\models.py:46
+#: .\orders\models.py:49
 msgid "status"
 msgstr "وضعیت"
 
-#: .\orders\models.py:48
+#: .\orders\models.py:51
 msgid "payment id"
 msgstr "آیدی پرداخت"

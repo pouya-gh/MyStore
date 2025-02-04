@@ -1,0 +1,298 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-04 11:19+0330\n"
+"PO-Revision-Date: 2025-02-04 11:12+0000\n"
+"Last-Translator: Root Rootian <root@root.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.1\n"
+
+#: .\items\models.py:14 .\items\templates\items\item\form.html:27
+msgid "Name"
+msgstr "Name"
+
+#: .\items\models.py:15
+msgid "Slug"
+msgstr "Slug"
+
+#: .\items\models.py:21
+msgid "parent"
+msgstr "Parent"
+
+#: .\items\models.py:44
+msgid "property's keys must contain only alphanumeric characters and space"
+msgstr "Property's keys must contain only alphanumeric characters and space."
+
+#: .\items\models.py:48
+msgid "properties values must only be a string"
+msgstr "Properties values must only be a string"
+
+#: .\items\models.py:68
+msgid "Verified"
+msgstr "Verified"
+
+#: .\items\models.py:69
+msgid "Verfication pending"
+msgstr "Verification pending"
+
+#: .\items\models.py:70
+msgid "Declined"
+msgstr "Declined"
+
+#: .\items\models.py:73
+msgid "USA Dollar"
+msgstr "USA dollar"
+
+#: .\items\models.py:74
+msgid "Iranian Rial"
+msgstr "Iranian rial"
+
+#: .\items\models.py:76
+msgid "name"
+msgstr "Name"
+
+#: .\items\models.py:77
+msgid "slug"
+msgstr "Slug"
+
+#: .\items\models.py:80
+msgid "provider"
+msgstr "Provider"
+
+#: .\items\models.py:84
+msgid "submitted by"
+msgstr "Submitted by"
+
+#: .\items\models.py:85 .\items\models.py:159
+msgid "properties"
+msgstr "Properties"
+
+#: .\items\models.py:86
+msgid "description"
+msgstr "Description"
+
+#: .\items\models.py:87
+msgid "image"
+msgstr "Image"
+
+#: .\items\models.py:88
+msgid "remaining items"
+msgstr "Remaining items"
+
+#: .\items\models.py:90
+msgid "price"
+msgstr "Price"
+
+#: .\items\models.py:94
+msgid "currency"
+msgstr "Currency"
+
+#: .\items\models.py:95
+msgid "created"
+msgstr "Creeated"
+
+#: .\items\models.py:96
+msgid "publish"
+msgstr "Publish"
+
+#: .\items\models.py:97
+msgid "updated"
+msgstr "Updated"
+
+#: .\items\models.py:101
+msgid "submission status"
+msgstr "Submission status"
+
+#: .\items\models.py:103
+msgid "submission review message"
+msgstr "Submission review message"
+
+#: .\items\models.py:106
+msgid "category"
+msgstr "Category"
+
+#: .\items\models.py:122
+msgid "item provider is not owned by you"
+msgstr "Item provider is not owned by you."
+
+#: .\items\models.py:156
+msgid "customer"
+msgstr "Customer"
+
+#: .\items\models.py:157
+msgid "item"
+msgstr "Item"
+
+#: .\items\models.py:158
+msgid "quantity"
+msgstr "Quantity"
+
+#: .\items\models.py:160
+msgid "date added"
+msgstr "Date added"
+
+#: .\items\models.py:161
+msgid "date updated"
+msgstr "Date updated"
+
+#: .\items\models.py:162
+msgid "additional info"
+msgstr "Additional info"
+
+#: .\items\templates\items\item\confirm_delete.html:9
+msgid "Are you sure? This can not be reversed!"
+msgstr "Are you sure? This can not be reversed!"
+
+#: .\items\templates\items\item\confirm_delete.html:13
+#: .\items\templates\items\item\detail.html:83
+#: .\items\templates\items\item\form.html:29
+#: .\items\templates\items\shopping_cart\current_user_cart.html:17
+msgid "Delete"
+msgstr "Delete"
+
+#: .\items\templates\items\item\confirm_delete.html:15
+msgid "Go Back!"
+msgstr "Go Back!"
+
+#: .\items\templates\items\item\detail.html:20
+msgid "Unverified"
+msgstr "Unverified"
+
+#: .\items\templates\items\item\detail.html:31
+msgid "More Info"
+msgstr "More Info"
+
+#: .\items\templates\items\item\detail.html:50
+msgid "Item already in shopping cart."
+msgstr "Item already in shopping cart."
+
+#: .\items\templates\items\item\detail.html:57
+msgid "Add to cart"
+msgstr "Add to cart"
+
+#: .\items\templates\items\item\detail.html:66
+#: .\items\templates\items\shopping_cart\current_user_cart.html:35
+msgid "Something went wrong!"
+msgstr "Something went wrong!"
+
+#: .\items\templates\items\item\detail.html:73
+msgid "Admin message"
+msgstr "Admin message"
+
+#: .\items\templates\items\item\detail.html:82
+msgid "Edit"
+msgstr "Edit"
+
+#: .\items\templates\items\item\form.html:28
+msgid "Value"
+msgstr "Value"
+
+#: .\items\templates\items\item\form.html:43
+msgid "Submit"
+msgstr "Submit"
+
+#: .\items\templates\items\item\list.html:3
+#: .\items\templates\items\item\list.html:8
+msgid "Items"
+msgstr "Items"
+
+#: .\items\templates\items\item\list.html:8
+msgid "Home"
+msgstr "Home"
+
+#: .\items\templates\items\item\list.html:25
+msgid "Shop in style"
+msgstr "Shop in style"
+
+#: .\items\templates\items\item\list.html:26
+msgid "With this shop hompeage template"
+msgstr "With this shop hompeage template"
+
+#: .\items\templates\items\item\list.html:62
+msgid "View"
+msgstr "View"
+
+#: .\items\templates\items\item\search.html:4
+msgid "Search"
+msgstr "Search"
+
+#: .\items\templates\items\item\search.html:106
+msgid "More Options"
+msgstr "More Options"
+
+#: .\items\templates\items\item\search.html:111
+msgid "Filters"
+msgstr "Filters"
+
+#: .\items\templates\items\item\search.html:119
+msgid "Add Filter"
+msgstr "Add Filter"
+
+#: .\items\templates\items\item\search.html:126
+msgid "Price Range"
+msgstr "Price Range"
+
+#: .\items\templates\items\shopping_cart\current_user_cart.html:5
+msgid "My Cart"
+msgstr "My Cart"
+
+#: .\items\templates\items\shopping_cart\current_user_cart.html:14
+msgid "Item name"
+msgstr "Item name"
+
+#: .\items\templates\items\shopping_cart\current_user_cart.html:15
+msgid "Qauntity"
+msgstr "Quantity"
+
+#: .\items\templates\items\shopping_cart\current_user_cart.html:16
+msgid "Update"
+msgstr "Update"
+
+#: .\items\templates\items\shopping_cart\current_user_cart.html:42
+msgid "Remove"
+msgstr "Remove"
+
+#: .\items\templates\items\shopping_cart\current_user_cart.html:49
+msgid "Place order"
+msgstr "Place order"
+
+#: .\items\views.py:136
+msgid "Item provider is not owned by you."
+msgstr "Item provider is not owned by you."
+
+#: .\items\views.py:157
+msgid "Can't add to cart!"
+msgstr "Can't add to cart!"
+
+#: .\items\views.py:182
+msgid "Can't update cart!"
+msgstr "Can't update cart!"
+
+#: .\items\views.py:215
+msgid "Invalid min price input."
+msgstr "Invalid min price input."
+
+#: .\items\views.py:221
+msgid "Invalid max price input."
+msgstr "Invalid max price input."
+
+#: .\items\views.py:234
+msgid ""
+"filter name \"%(filter_name)\" was ignored. \n"
+"                               Only alphanumeric characters and space are "
+"allowed."
+msgstr ""
+"filter name \"%(filter_name)\" was ignored.\n"
+"Only alphanumeric characters and space are allowed."
