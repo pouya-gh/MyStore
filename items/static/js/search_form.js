@@ -8,7 +8,7 @@ function _createNewFilterRow(key = "", value = "") {
     input1.type = 'text';
     input1.value = key;
     input1.classList.add("form-control", "filter-key");
-    input1.placeholder = "Key";
+    input1.placeholder = gettext('Key');
     div1.appendChild(input1);
     parent_div.appendChild(div1);
 
@@ -18,7 +18,7 @@ function _createNewFilterRow(key = "", value = "") {
     input2.type = 'text';
     input2.value = value;
     input2.classList.add("form-control", "filter-value");
-    input2.placeholder = "Value";
+    input2.placeholder = gettext("Value");
     div2.appendChild(input2);
     parent_div.appendChild(div2);
 

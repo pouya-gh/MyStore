@@ -21,6 +21,7 @@ from items.views import ItemListView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import JavaScriptCatalog
 from payment.views import webhook as stripe_webhook
 
 urlpatterns = i18n_patterns(
@@ -29,6 +30,7 @@ urlpatterns = i18n_patterns(
     path("orders/", include("orders.urls", namespace="orders")),
     path("payment/", include("payment.urls", namespace="payment")),
     path('rosetta/', include('rosetta.urls')),
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("", view=ItemListView.as_view(), name="home"),
     path("", include("account.urls", namespace="account")),
 )

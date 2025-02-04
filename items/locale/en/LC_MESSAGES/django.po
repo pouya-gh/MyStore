@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 11:19+0330\n"
-"PO-Revision-Date: 2025-02-04 11:12+0000\n"
+"POT-Creation-Date: 2025-02-04 12:16+0330\n"
+"PO-Revision-Date: 2025-02-04 12:16+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -224,7 +224,9 @@ msgstr "With this shop hompeage template"
 msgid "View"
 msgstr "View"
 
-#: .\items\templates\items\item\search.html:4
+#: .\items\templates\items\item\search.html:5
+#: .\items\templates\items\item\search.html:93
+#: .\items\templates\items\item\search.html:162
 msgid "Search"
 msgstr "Search"
 
@@ -289,10 +291,13 @@ msgid "Invalid max price input."
 msgstr "Invalid max price input."
 
 #: .\items\views.py:234
+#, python-brace-format
+#| msgid ""
+#| "Filter name %(filter_name) was ignored. Only alphanumeric characters and "
+#| "space are allowed."
 msgid ""
-"filter name \"%(filter_name)\" was ignored. \n"
-"                               Only alphanumeric characters and space are "
-"allowed."
+"Filter name {filter_name} was ignored. Only alphanumeric characters and "
+"space are allowed."
 msgstr ""
-"filter name \"%(filter_name)\" was ignored.\n"
+"Filter name {filter_name} was ignored.\n"
 "Only alphanumeric characters and space are allowed."

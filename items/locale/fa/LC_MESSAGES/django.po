@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 11:19+0330\n"
-"PO-Revision-Date: 2025-02-04 11:17+0000\n"
+"POT-Creation-Date: 2025-02-04 12:16+0330\n"
+"PO-Revision-Date: 2025-02-04 12:19+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -224,7 +224,9 @@ msgstr "With this shop hompeage template"
 msgid "View"
 msgstr "مشاهده کن"
 
-#: .\items\templates\items\item\search.html:4
+#: .\items\templates\items\item\search.html:5
+#: .\items\templates\items\item\search.html:93
+#: .\items\templates\items\item\search.html:162
 msgid "Search"
 msgstr "جست و جو"
 
@@ -289,10 +291,13 @@ msgid "Invalid max price input."
 msgstr "مقدار حداکثر قیمت درست نیست"
 
 #: .\items\views.py:234
+#, python-brace-format
+#| msgid ""
+#| "Filter name %(filter_name) was ignored. Only alphanumeric characters and "
+#| "space are allowed."
 msgid ""
-"filter name \"%(filter_name)\" was ignored. \n"
-"                               Only alphanumeric characters and space are "
-"allowed."
+"Filter name {filter_name} was ignored. Only alphanumeric characters and "
+"space are allowed."
 msgstr ""
-"فیلتر \"%(filter_name)\" در نظر گرفته نشد. نام فیلتر ها فقط میتوانند شامل "
-"الفبا, عدد و فضای خالی باشند."
+"فیلتر {filter_name} اعمال نشد. نام فیلتر ها می توانند فقط شامل الفبا, عدد و "
+"فضای خالی باشند."
