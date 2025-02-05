@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load base_extras %}
 
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
@@ -49,9 +50,9 @@
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{% trans "Language" %}</a>
                       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          {% for language in languages %}
-                          <li><a class="dropdown-item" href="/{{ language.code }}/" {% if language.code == LANGUAGE_CODE %} class="selected"{% endif %}>{{ language.name_local }}</a></li>
-                          {% endfor %}
+                        {% for language in languages %}
+                          <li><a class="dropdown-item" href="{% make_lang_selection_url request.get_full_path LANGUAGE_CODE language.code %}" {% if language.code == LANGUAGE_CODE %} class="selected"{% endif %}>{{ language.name_local }}</a></li>
+                        {% endfor %}
                       </ul>
                     </li>
                     {% if request.user.is_authenticated %}
