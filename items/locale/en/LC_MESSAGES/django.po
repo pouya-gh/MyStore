@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 21:44+0330\n"
-"PO-Revision-Date: 2025-02-04 21:23+0000\n"
+"POT-Creation-Date: 2025-02-05 11:04+0330\n"
+"PO-Revision-Date: 2025-02-05 10:28+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -246,9 +246,29 @@ msgstr "Add Filter"
 msgid "Price Range"
 msgstr "Price Range"
 
+#: .\items\templates\items\item\search.html:132
+msgid "Min Price"
+msgstr "Min Price"
+
+#: .\items\templates\items\item\search.html:135
+msgid "Max Price"
+msgstr "Max Price"
+
 #: .\items\templates\items\item\search.html:152
 msgid "All"
 msgstr "All"
+
+#: .\items\templates\items\item\search.html:171
+msgid "ID"
+msgstr "ID"
+
+#: .\items\templates\items\item\search.html:172
+msgid "Price"
+msgstr "Price"
+
+#: .\items\templates\items\item\search.html:173
+msgid "Category"
+msgstr "Category"
 
 #: .\items\templates\items\shopping_cart\current_user_cart.html:5
 msgid "My Cart"

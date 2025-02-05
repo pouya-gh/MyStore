@@ -204,7 +204,7 @@ def search_items(request):
     category_id = request.GET.get("category")
     min_price = request.GET.get("min_price")
     max_price = request.GET.get("max_price")
-    items = Item.objects.verified_items().only("name")
+    items = Item.objects.verified_items().only("name", "category", "price")
 
     categories = Category.objects.only("name")
 

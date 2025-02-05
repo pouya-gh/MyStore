@@ -129,10 +129,10 @@
           <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
             <div class="p-2 d-flex w-100 align-items-center justify-content-between">
               <div class="col">
-                <input id="min-price" step=".01" type="number" class="form-control" placeholder="Min Price">
+                <input id="min-price" step=".01" type="number" class="form-control" placeholder="{% trans "Min Price" %}">
               </div>
               <div class="col">
-                <input id="max-price" step=".01" type="number" class="form-control" placeholder="Max Price">
+                <input id="max-price" step=".01" type="number" class="form-control" placeholder="{% trans "Max Price" %}">
               </div>
               
             </div>
@@ -162,9 +162,32 @@
                             <button class="btn btn-primary">{% trans "Search" %}</button>
                         </div>
                     </form>
-                	{% for item in items  %}
+                    {% if items %}
+                    <div class="mx-auto container mt-3">
+                      <div class="container px-4 px-lg-5 my-5">
+                          <div class="row gx-4 gx-lg-5 align-items-center">
+                              <table class="table table-hover">
+                                  <tr>
+                                      <th>{% trans "ID" %}</th>
+                                      <th>{% trans "Price" %}</th>
+                                      <th>{% trans "Category" %}</th>
+                                  </tr>
+                                  {% for item in items  %}
+                                  <tr>
+                                      <td><a href="{{ item.get_absolute_url }}">{{ item }}</a></td>
+                                      <td>${{ item.price }}</td>
+                                      <td>{{ item.category }}</td>
+                                  </tr>
+                                  {% endfor %}
+                              </table>
+                          </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    
+                	{% comment %} {% for item in items  %}
                     <p><a href="{{ item.get_absolute_url }}">{{ item }}</a></p>
-                    {% endfor %}				
+                    {% endfor %}				 {% endcomment %}
             </div>
         </div>
     </div>

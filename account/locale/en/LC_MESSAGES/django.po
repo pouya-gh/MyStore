@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-04 21:47+0330\n"
+"POT-Creation-Date: 2025-02-05 11:04+0330\n"
 "PO-Revision-Date: 2025-02-04 21:44+0000\n"
 "Last-Translator: Root Rootian <root@root.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,70 +127,70 @@ msgstr "Name"
 msgid "Is verified?"
 msgstr "Is verified?"
 
-#: .\account\templates\base.html:25
+#: .\account\templates\base.html:26
 msgid "My Store"
 msgstr "My Store"
 
-#: .\account\templates\base.html:47
+#: .\account\templates\base.html:48
 msgid "Home"
 msgstr "Home"
 
-#: .\account\templates\base.html:48
+#: .\account\templates\base.html:49
 msgid "Items"
 msgstr "Items"
 
-#: .\account\templates\base.html:49
+#: .\account\templates\base.html:50
 msgid "Search"
 msgstr "Search"
 
-#: .\account\templates\base.html:51
+#: .\account\templates\base.html:52
 msgid "Language"
 msgstr "Language"
 
-#: .\account\templates\base.html:60
+#: .\account\templates\base.html:61
 msgid "Account"
 msgstr "Account"
 
-#: .\account\templates\base.html:62
+#: .\account\templates\base.html:63
 msgid "Update Profile"
 msgstr "Update Profile"
 
-#: .\account\templates\base.html:63
+#: .\account\templates\base.html:64
 msgid "Register a provider"
 msgstr "Register a provider"
 
-#: .\account\templates\base.html:64
+#: .\account\templates\base.html:65
 msgid "My registered providers"
 msgstr "My registered providers"
 
-#: .\account\templates\base.html:65
+#: .\account\templates\base.html:66
 msgid "Submit An Item"
 msgstr "Submit an item"
 
-#: .\account\templates\base.html:66
+#: .\account\templates\base.html:67
 msgid "My Items"
 msgstr "My items"
 
-#: .\account\templates\base.html:67
+#: .\account\templates\base.html:68
 msgid "My Orders"
 msgstr "My orders"
 
-#: .\account\templates\base.html:70
+#: .\account\templates\base.html:71
 msgid "Logout"
 msgstr "Logout"
 
-#: .\account\templates\base.html:76
+#: .\account\templates\base.html:77
 #: .\account\templates\registration\login.html:12
 msgid "Log in"
 msgstr "Log in"
 
-#: .\account\templates\base.html:77
+#: .\account\templates\base.html:78
 #: .\account\templates\registration\signup.html:5
 #: .\account\templates\registration\signup.html:13
 msgid "Sign up"
 msgstr "Sign up"
 
-#: .\account\templates\base.html:83
+#: .\account\templates\base.html:84
 msgid "Cart"
 msgstr "Cart"
 
