@@ -5,3 +5,5 @@ stripe==11.4.1
 django-bootstrap5==24.3
 pillow==11.1.0
 django-rosetta==0.10.1
+celery==5.4.0
+redis==5.2.1
