@@ -14,6 +14,7 @@ from django.utils.translation import gettext as _
 
 from .models import Item, Category, ShoppingCartItem, is_alphnum_and_space
 from .forms import ItemForm, ShoppingCartForm
+from tracker.models import SiteVisitTracker
 
 import json
 from decimal import Decimal, InvalidOperation
@@ -31,6 +32,20 @@ class ItemListView(ListView):
             return Item.objects.verified_items().filter(category=category)
 
         return Item.objects.verified_items()
+    
+    def get(self, request, *args, **kwargs):
+
+        curr_ip = request.META["REMOTE_ADDR"]
+        try:
+            tracker = SiteVisitTracker.objects.get(ip=curr_ip)
+            tracker.counter = SiteVisitTracker.counter + 1
+            tracker.save()
+        except SiteVisitTracker.DoesNotExist:
+            if SiteVisitTracker.objects.count() >= 500:
+                SiteVisitTracker.objects.last().delete()
+            tracker = SiteVisitTracker.objects.create(ip=curr_ip)
+
+        return super().get(request, *args, **kwargs)
 
 
 class CurrentUserItemListView(LoginRequiredMixin, ListView):
