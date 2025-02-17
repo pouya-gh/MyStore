@@ -18,13 +18,14 @@ import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+dotenv_file_path = os.path.join(BASE_DIR, '.env')
+if os.path.isfile(dotenv_file_path):
+    environ.Env.read_env(dotenv_file_path)
 envrion_vars = environ.Env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = envrion_vars("SECRET_KEY")
 STRIPE_API_KEY = envrion_vars("STRIPE_API_KEY")
 STRIPE_WEBHOOK_ENDPOINT_SECRET = envrion_vars("STRIPE_WEBHOOK_ENDPOINT_SECRET")
