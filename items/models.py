@@ -90,6 +90,7 @@ class Item(models.Model):
     image = models.ImageField(upload_to=_item_image_directory_path,
                               blank=True,
                               verbose_name=_("image"))
+    image_url = models.URLField(verbose_name=_("image"), blank=True)
     remaining_items = models.PositiveIntegerField(
         default=0, blank=False, verbose_name=_("remaining items"))
     price = models.DecimalField(default=0, blank=False,
