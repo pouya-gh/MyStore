@@ -10,23 +10,37 @@ from django.contrib.auth import get_user_model
 from django.http.response import JsonResponse
 from .forms import CustomerProfileForm, ProviderProfileForm, MyUserChangeForm
 from .models import ProviderProfile, ProfileStatus
-from items.models import Category
+from items.models import Category, Item
 
 from django.conf import settings
 
 from django.core.management import call_command
 
 import os
+import json
 
 @login_required
 def populate_db_default_data(request):
-    if request.user.username != "pouya":
+    if request.user.username != "pouya" or Category.objects.count() != 0:# just a stupid check
         return JsonResponse({"msg": "no"})
     
-    if Category.objects.count() == 0: # just a stupid check
-        call_command('loaddata', 
-                     settings.BASE_DIR / 'account_default_db_data.js', 
-                     settings.BASE_DIR / 'items_default_db_data.js')
+    with open(settings.BASE_DIR / 'account_default_db_data.js') as f:
+        contents = json.loads(f.read())
+        for obj in contents:
+            if obj["model"] == "items.category":
+                Category.objects.create(**obj["fields"])
+            elif obj["model"] == "items.item":
+                Item.objects.create(**obj["fields"])
+
+    with open(settings.BASE_DIR / 'items_default_db_data.js') as f:
+        contents = json.loads(f.read())
+        for obj in contents:
+            if obj["model"] == "account.providerprofile":
+                ProviderProfile.objects.create(**obj["fields"])
+        # call_command('loaddata', 
+        #              settings.BASE_DIR / 'account_default_db_data.js', 
+        #              settings.BASE_DIR / 'items_default_db_data.js')
+
 
     return JsonResponse({"msg": "ok"})
 
