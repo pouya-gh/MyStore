@@ -7,3 +7,5 @@ pillow==11.1.0
 django-rosetta==0.10.1
 celery==5.4.0
 redis==5.2.1
+psycopg2-binary==2.9.10
+dj-database-url==2.3.0
