@@ -18,6 +18,7 @@ from tracker.models import SiteVisitTracker
 from tracker.tasks import get_ip_location
 
 import json
+import urllib.request
 from decimal import Decimal, InvalidOperation
 
 
@@ -35,7 +36,11 @@ class ItemListView(ListView):
         return Item.objects.verified_items()
     
     def get(self, request, *args, **kwargs):
-
+        """
+        hadles site's visit tracker for every request coming through this view.
+        i should be using asyn tasks for this but i'm using render's free hosts to 
+        host this work sample, so i have no choice.
+        """
         curr_ip = request.META["REMOTE_ADDR"]
         try:
             tracker = SiteVisitTracker.objects.get(ip=curr_ip)
@@ -44,8 +49,17 @@ class ItemListView(ListView):
         except SiteVisitTracker.DoesNotExist:
             if SiteVisitTracker.objects.count() >= 500:
                 SiteVisitTracker.objects.last().delete()
-            tracker = SiteVisitTracker.objects.create(ip=curr_ip)
-            get_ip_location.delay(curr_ip)
+            # trying to figure out ip location.
+            with urllib.request.urlopen(f"http://ip-api.com/json/{curr_ip}") as url:
+                data = url.read().decode()
+                j = json.loads(data)
+            try:
+                location = f"{j['country']}:{j['regionName']}:{j['city']}"
+            except KeyError:
+                location = "something went wrong"
+            tracker = SiteVisitTracker.objects.create(ip=curr_ip, location=location)
+            # i can't use celery for now because i'm going to use render's free version
+            # get_ip_location.delay(curr_ip)
 
         return super().get(request, *args, **kwargs)
 
