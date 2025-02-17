@@ -30,6 +30,9 @@ SECRET_KEY = envrion_vars("SECRET_KEY")
 STRIPE_API_KEY = envrion_vars("STRIPE_API_KEY")
 STRIPE_WEBHOOK_ENDPOINT_SECRET = envrion_vars("STRIPE_WEBHOOK_ENDPOINT_SECRET")
 
+SUPERUSER_USERNAME = envrion_vars("SUPERUSER_USERNAME")
+SUPERUSER_PASSWORD = envrion_vars("SUPERUSER_PASSWORD")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
