@@ -10,58 +10,9 @@ from django.contrib.auth import get_user_model
 from django.http.response import JsonResponse
 from .forms import CustomerProfileForm, ProviderProfileForm, MyUserChangeForm
 from .models import ProviderProfile, ProfileStatus
-from items.models import Category, Item
 
 from django.conf import settings
 
-from django.core.management import call_command
-
-import os
-import json
-
-@login_required
-def populate_db_default_data(request):
-    if request.user.username != "pouya" or Category.objects.count() != 0:# just a stupid check
-        return JsonResponse({"msg": "no"})
-    
-    with open(settings.BASE_DIR / 'items_default_db_data.js') as f:
-        contents = json.loads(f.read())
-        for obj in contents:
-            if obj["model"] == "items.category":
-                Category.objects.create(name=obj["fields"]["name"],
-                                        slug=obj["fields"]["slug"],
-                                        parent_id=obj["fields"]["parent"])
-            elif obj["model"] == "items.item":
-                Item.objects.create(name=obj["fields"]["name"],
-                                    slug=obj["fields"]["slug"],
-                                    provider_id=obj["fields"]["provider"],
-                                    submitted_by_id=obj["fields"]["submitted_by"],
-                                    properties=json.dumps(obj["fields"]["properties"]),
-                                    description=obj["fields"]["description"],
-                                    remaining_items=obj["fields"]["remaining_items"],
-                                    price=obj["fields"]["price"],
-                                    category_id=obj["fields"]["category"])
-
-    with open(settings.BASE_DIR / 'account_default_db_data.js') as f:
-        contents = json.loads(f.read())
-        for obj in contents:
-            if obj["model"] == "account.providerprofile":
-                ProviderProfile.objects.create(user_id=obj["fields"]["user"],
-                                                official_name=obj["fields"]["official_name"],
-                                                name=obj["fields"]["name"],
-                                                social_code=obj["fields"]["social_code"],
-                                                country=json.dumps(obj["fields"]["country"]),
-                                                province=obj["fields"]["province"],
-                                                city=obj["fields"]["city"],
-                                                address=obj["fields"]["address"],
-                                                phone_number=obj["fields"]["phone_number"],
-                                                phone_number2=obj["fields"]["phone_number2"])
-        # call_command('loaddata', 
-        #              settings.BASE_DIR / 'account_default_db_data.js', 
-        #              settings.BASE_DIR / 'items_default_db_data.js')
-
-
-    return JsonResponse({"msg": "ok"})
 
 def user_create(request):
     # auto creating super user as a workaround for render
@@ -72,7 +23,6 @@ def user_create(request):
             password=settings.SUPERUSER_PASSWORD
         )
         new_superuser.save()
-    
     if request.POST:
         form = UserCreationForm(request.POST)
         if form.is_valid():
