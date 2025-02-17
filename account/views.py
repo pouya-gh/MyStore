@@ -24,7 +24,7 @@ def populate_db_default_data(request):
     if request.user.username != "pouya" or Category.objects.count() != 0:# just a stupid check
         return JsonResponse({"msg": "no"})
     
-    with open(settings.BASE_DIR / 'account_default_db_data.js') as f:
+    with open(settings.BASE_DIR / 'items_default_db_data.js') as f:
         contents = json.loads(f.read())
         for obj in contents:
             if obj["model"] == "items.category":
@@ -32,7 +32,7 @@ def populate_db_default_data(request):
             elif obj["model"] == "items.item":
                 Item.objects.create(**obj["fields"])
 
-    with open(settings.BASE_DIR / 'items_default_db_data.js') as f:
+    with open(settings.BASE_DIR / 'account_default_db_data.js') as f:
         contents = json.loads(f.read())
         for obj in contents:
             if obj["model"] == "account.providerprofile":
