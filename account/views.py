@@ -16,13 +16,17 @@ from django.conf import settings
 
 from django.core.management import call_command
 
+import os
+
 @login_required
 def populate_db_default_data(request):
     if request.user.username != "pouya":
         return JsonResponse({"msg": "no"})
     
     if Category.objects.count() == 0: # just a stupid check
-        call_command('loaddata', 'account_default_db_data.js', 'items_default_db_data.js')
+        call_command('loaddata', 
+                     settings.BASE_DIR / 'account_default_db_data.js', 
+                     settings.BASE_DIR / 'items_default_db_data.js')
 
     return JsonResponse({"msg": "ok"})
 
