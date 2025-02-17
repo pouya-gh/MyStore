@@ -11,7 +11,7 @@ import stripe.webhook
 from orders.models import Order
 
 import stripe
-
+import json
 from decimal import Decimal
 
 stripe.api_key = settings.STRIPE_API_KEY
@@ -58,15 +58,24 @@ def payment_cancel(request):
 @csrf_exempt
 @require_POST
 def webhook(request):
-    endpoint_secret = settings.STRIPE_WEBHOOK_ENDPOINT_SECRET
-    sig_header = request.headers['STRIPE_SIGNATURE']
+    # endpoint_secret = settings.STRIPE_WEBHOOK_ENDPOINT_SECRET
+    # sig_header = request.headers['STRIPE_SIGNATURE']
+    payload = request.body
+    event = None
     try:
-        event = stripe.Webhook.construct_event(
-            request.body, sig_header, endpoint_secret)
+        event = stripe.Event.construct_from(
+        json.loads(payload), stripe.api_key
+        )
     except ValueError as e:
-        raise e
-    except stripe.error.SignatureVerificationError as e:
-        raise e
+        # Invalid payload
+        return HttpResponse(status=400)
+    # try:
+    #     event = stripe.Webhook.construct_event(
+    #         request.body, sig_header, endpoint_secret)
+    # except ValueError as e:
+    #     raise e
+    # except stripe.error.SignatureVerificationError as e:
+    #     raise e
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
