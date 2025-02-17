@@ -28,15 +28,34 @@ def populate_db_default_data(request):
         contents = json.loads(f.read())
         for obj in contents:
             if obj["model"] == "items.category":
-                Category.objects.create(**obj["fields"])
+                Category.objects.create(name=obj["fields"]["name"],
+                                        slug=obj["fields"]["slug"],
+                                        parent_id=obj["fields"]["parent"])
             elif obj["model"] == "items.item":
-                Item.objects.create(**obj["fields"])
+                Item.objects.create(name=obj["fields"]["name"],
+                                    slug=obj["fields"]["slug"],
+                                    provider_id=obj["fields"]["provider"],
+                                    submitted_by_id=obj["fields"]["submitted_by"],
+                                    properties=json.dumps(obj["fields"]["properties"]),
+                                    description=obj["fields"]["description"],
+                                    remaining_items=obj["fields"]["remaining_items"],
+                                    price=obj["fields"]["price"],
+                                    category_id=obj["fields"]["category"])
 
     with open(settings.BASE_DIR / 'account_default_db_data.js') as f:
         contents = json.loads(f.read())
         for obj in contents:
             if obj["model"] == "account.providerprofile":
-                ProviderProfile.objects.create(**obj["fields"])
+                ProviderProfile.objects.create(user_id=obj["fields"]["user"],
+                                                official_name=obj["fields"]["official_name"],
+                                                name=obj["fields"]["name"],
+                                                social_code=obj["fields"]["social_code"],
+                                                country=json.dumps(obj["fields"]["country"]),
+                                                province=obj["fields"]["province"],
+                                                city=obj["fields"]["city"],
+                                                address=obj["fields"]["address"],
+                                                phone_number=obj["fields"]["phone_number"],
+                                                phone_number2=obj["fields"]["phone_number2"])
         # call_command('loaddata', 
         #              settings.BASE_DIR / 'account_default_db_data.js', 
         #              settings.BASE_DIR / 'items_default_db_data.js')
