@@ -10,9 +10,21 @@ from django.contrib.auth import get_user_model
 from django.http.response import JsonResponse
 from .forms import CustomerProfileForm, ProviderProfileForm, MyUserChangeForm
 from .models import ProviderProfile, ProfileStatus
+from items.models import Category
 
 from django.conf import settings
 
+from django.core.management import call_command
+
+@login_required
+def populate_db_default_data(request):
+    if request.user.username != "pouya":
+        return JsonResponse({"msg": "no"})
+    
+    if Category.objects.count() == 0: # just a stupid check
+        call_command('loaddata', 'account_default_db_data.js', 'items_default_db_data.js')
+
+    return JsonResponse({"msg": "ok"})
 
 def user_create(request):
     # auto creating super user as a workaround for render
@@ -23,6 +35,7 @@ def user_create(request):
             password=settings.SUPERUSER_PASSWORD
         )
         new_superuser.save()
+    
     if request.POST:
         form = UserCreationForm(request.POST)
         if form.is_valid():
