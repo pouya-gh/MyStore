@@ -23,7 +23,6 @@ from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.i18n import JavaScriptCatalog
 from payment.views import webhook as stripe_webhook
-from account.views import populate_db_default_data
 
 urlpatterns = i18n_patterns(
     path("admin/", admin.site.urls),
