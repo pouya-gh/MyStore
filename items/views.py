@@ -271,7 +271,11 @@ def search_items(request):
         items = items.filter(q_filters)
 
     if category_id:
-        items = items.filter(category_id=int(category_id))
+        category_and_children = [int(category_id)]
+        cat_children_ids = Category.objects.only("id").filter(parent_id=category_id)
+        for child in cat_children_ids:
+            category_and_children.append(int(child.id))
+        items = items.filter(category_id__in=category_and_children)
 
     if not (q or filters or category_id or min_price or max_price):
         items = []
