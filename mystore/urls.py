@@ -38,7 +38,6 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += [
     path("payment/webhook", view=stripe_webhook, name="stripe-webhook"),
-    path("account/autodb", view=populate_db_default_data, name="db-auto-populate"),
 ]
 
 if settings.DEBUG:
