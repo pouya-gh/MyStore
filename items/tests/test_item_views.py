@@ -14,7 +14,7 @@ class ItemViewsTestMixin:
                        "properties": {"size": "8", "color": "white"},
                        "description": "a pair of very good shoes",
                        "remaining_items": 100,
-                       'image': '',
+                       'image_url': '',
                        "price": 10.00}
 
     @classmethod
@@ -231,17 +231,18 @@ class ItemUpdateViewTests(ItemViewsTestMixin,
 
     def test_update_url_works_with_valid_data(self):
         self.client.login(username="user1", password="user1user1")
-        item = Item.objects.first()
+        item = Item.objects.get(id=1)
         prev_description = item.description
 
         data = ItemViewsTestMixin.valid_item_data.copy()
         data["description"] = prev_description + "lorem ipsum"
         data["provider"] = 1
         data['properties'] = json.dumps(data['properties'])
-        data['image'] = ''
+        data['category'] = 1
         response = self.client.post(reverse("items:item_update", kwargs={"pk": 1}),
                                     data=data)
-        new_description = Item.objects.first().description
+        
+        new_description = Item.objects.get(id=1).description
         self.assertEqual(response.status_code, 302)
         self.assertEqual(new_description, prev_description + "lorem ipsum")
 

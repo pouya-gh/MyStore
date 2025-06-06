@@ -34,9 +34,11 @@ class SignupViewTests(TestCase):
                        "password1": "user2user2", "password2": "user2user2"}
         response = self.client.post(
             reverse("account:signup"), data=signup_data)
+        
         user_count = get_user_model().objects.all().count()
         self.assertRedirects(response, "/en/")
-        self.assertEqual(user_count, 2)
+        self.assertEqual(user_count, 3) # its 3 users now since i'm adding 1 super user in views if one doens't already exist.
+        # this is because i'm using free render and i don't have access to terminal with free render account.
 
 
 class UpdateUserViewTests(TestCase):
