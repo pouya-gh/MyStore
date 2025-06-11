@@ -29,7 +29,7 @@ function add_to_shopping_cart(event) {
     request.then(async (response) => {
                     if (response.ok) {
                         form_div.innerHTML = "Item added to your cart!";
-                        load_cart_item_count();
+                        //load_cart_item_count();
                     } else {
                         const toast = document.querySelector(".cart-error");
                         toast.classList.add("show")
@@ -58,7 +58,7 @@ function delete_from_shopping_cart(event) {
     request.then(
         async (response) => {
             if (response.ok) {
-                load_cart_item_count();
+                //load_cart_item_count();
                 table_row.remove();
             }
     });

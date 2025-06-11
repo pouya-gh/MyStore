@@ -164,3 +164,6 @@ LANGUAGE_CODE = 'en'
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+
+EVENTSTREAM_CHANNELMANAGER_CLASS = 'account.event_stream_setup.NotificationsChannelManager'

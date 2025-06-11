@@ -19,8 +19,26 @@
     <script src="{% url 'javascript-catalog' %}"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
+    <script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
     <script>
       window.addEventListener("load", load_cart_item_count);
+
+      const es = new ReconnectingEventSource('/events/');
+      //const evtSource = new EventSource("/events/", {
+      //  withCredentials: true,
+      ///});
+    
+      //evtSource.addEventListener("cart_message", (event) => {
+      //  const cart_elem = document.getElementById("cart_count");
+
+      //    cart_elem.innerHTML = event.data;
+      //});
+      es.addEventListener('cart_message', function (e) {
+          const cart_elem = document.getElementById("cart_count");
+
+          cart_elem.innerHTML = e.data;
+      }, false);
     </script>
     {% block head %}{% endblock head %}
     {% trans "My Store" as site_name %}

@@ -183,7 +183,7 @@ def add_to_shopping_cart(request, pk):
             user.shopping_cart_items.create(item=item,
                                             properties=item.properties,
                                             quantity=cd["quantity"])
-            send_event("test", "cart_message", str(user.shopping_cart_items.count()))
+            send_event(f"user:{user.id}", "cart_message", user.shopping_cart_items.count())
             return JsonResponse({"message": "added!"})
     # else:
     #     messages.warning(request, "Item is already in cart!")
@@ -197,7 +197,7 @@ def delete_from_shopping_cart(request, pk):
     cart_item = get_object_or_404(
         ShoppingCartItem, item_id=pk, customer=request.user)
     cart_item.delete()
-    send_event("test", "cart_message", str(request.user.shopping_cart_items.count()))
+    send_event(f"user:{request.user.id}", "cart_message", request.user.shopping_cart_items.count())
     return redirect(reverse("items:current_user_cart"))
 
 
