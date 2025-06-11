@@ -43,6 +43,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "daphne",
+    "django_eventstream",
     "account.apps.AccountConfig",
     "django.contrib.admin",
     "django.contrib.auth",

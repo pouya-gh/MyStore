@@ -22,6 +22,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 from django.views.i18n import JavaScriptCatalog
+import django_eventstream
+
 from payment.views import webhook as stripe_webhook
 
 urlpatterns = i18n_patterns(
@@ -37,6 +39,7 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += [
     path("payment/webhook", view=stripe_webhook, name="stripe-webhook"),
+    path("events/", include(django_eventstream.urls), {"channels": ["test"]}),
 ]
 
 if settings.DEBUG:

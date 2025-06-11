@@ -12,6 +12,8 @@ from django.db.models import Q
 from django.contrib import messages
 from django.utils.translation import gettext as _
 
+from django_eventstream import send_event
+
 from .models import Item, Category, ShoppingCartItem, is_alphnum_and_space
 from .forms import ItemForm, ShoppingCartForm
 from tracker.models import SiteVisitTracker
@@ -181,6 +183,7 @@ def add_to_shopping_cart(request, pk):
             user.shopping_cart_items.create(item=item,
                                             properties=item.properties,
                                             quantity=cd["quantity"])
+            send_event("test", "cart_message", str(user.shopping_cart_items.count()))
             return JsonResponse({"message": "added!"})
     # else:
     #     messages.warning(request, "Item is already in cart!")
@@ -194,7 +197,7 @@ def delete_from_shopping_cart(request, pk):
     cart_item = get_object_or_404(
         ShoppingCartItem, item_id=pk, customer=request.user)
     cart_item.delete()
-
+    send_event("test", "cart_message", str(request.user.shopping_cart_items.count()))
     return redirect(reverse("items:current_user_cart"))
 
 
