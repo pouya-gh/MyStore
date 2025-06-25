@@ -24,6 +24,10 @@ jobs:
     - name: Run Tests
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        POSTGRESQL_URL: ${{ secrets.POSTGRESQL_URL }}
+        ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+        STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
+        STRIPE_WEBHOOK_ENDPOINT_SECRET: ${{ secrets.STRIPE_WEBHOOK_ENDPOINT_SECRET }}
         SUPERUSER_USERNAME: ${{ secrets.SUPERUSER_USERNAME }}
         SUPERUSER_PASSWORD: ${{ secrets.SUPERUSER_PASSWORD }}
       run: |
