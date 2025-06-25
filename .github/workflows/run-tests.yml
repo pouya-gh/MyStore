@@ -13,6 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: 'Create env file'
+      run: |
+          touch .env
+          echo SUPERUSER_PASSWORD=${{ secrets.SUPERUSER_PASSWORD }} >> .env
+          echo SUPERUSER_USERNAME=${{ secrets.SUPERUSER_USERNAME }} >> .env
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          cat .env
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
